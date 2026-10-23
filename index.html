@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>S•K•Y | Aesthetic Blueprint — Skin Keep Youthful (Málaga · Marbella · Mijas)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #080706;
+      --bg-card: #12100E;
+      --bg-surface: #181512;
+      --gold-primary: #C9A86A;
+      --gold-light: #EBD6AD;
+      --gold-dark: #8C6F3B;
+      --gold-glow: rgba(201, 168, 106, 0.35);
+      --gold-hairline: rgba(201, 168, 106, 0.26);
+      --text-main: #F5EFEB;
+      --text-muted: #A1978A;
+      --text-dim: #6E665C;
+      --glass-bg: rgba(18, 16, 14, 0.88);
+      --glass-border: rgba(201, 168, 106, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient background gradient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(201, 168, 106, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ======================================================================
+       HEADER & NAVIGATION
+       ====================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(8, 7, 6, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gold-hairline);
+    }
+
+    .header-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-group {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .brand-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      letter-spacing: 5px;
+      font-weight: 300;
+      color: #FFF;
+      line-height: 1;
+    }
+
+    .brand-logo span {
+      color: var(--gold-primary);
+    }
+
+    .brand-sub {
+      font-size: 8px;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      margin-top: 3px;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Desktop Navigation Links */
+    .desktop-nav {
+      display: none;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.25s ease;
+      background: none;
+      border: none;
+      font-family: inherit;
+    }
+
+    .nav-link:hover {
+      color: var(--gold-light);
+    }
+
+    .nav-link.active-item {
+      color: var(--gold-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-price-tab {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: var(--gold-light);
+      background: rgba(201, 168, 106, 0.1);
+      border: 1px solid var(--gold-hairline);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .btn-price-tab:hover {
+      background: rgba(201, 168, 106, 0.22);
+      border-color: var(--gold-primary);
+    }
+
+    .btn-header-cta {
+      display: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #0E0C09;
+      background: linear-gradient(135deg, #DFBE82 0%, #B89250 100%);
+      border: none;
+      padding: 9px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .btn-header-cta:hover {
+      box-shadow: 0 4px 18px var(--gold-glow);
+      transform: translateY(-1px);
+    }
+
+    /* ======================================================================
+       MAIN CONTENT LAYOUT (RESPONSIVE SPLIT ON DESKTOP, FLUID ON MOBILE)
+       ====================================================================== */
+    .main-wrapper {
+      flex: 1;
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Mobile First: Fullscreen Hero Canvas */
+    .hero-split-grid {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding-top: 10px;
+      padding-bottom: 24px;
+      gap: 20px;
+    }
+
+    /* Editorial Text Content (Desktop emphasis) */
+    .editorial-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      z-index: 20;
+    }
+
+    .geo-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+    }
+
+    .geo-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 8px var(--gold-primary);
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      line-height: 1.1;
+      font-weight: 300;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-headline span {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .trust-pill {
+      font-size: 11px;
+      color: #CFC5B6;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 168, 106, 0.18);
+      padding: 6px 14px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .trust-pill strong {
+      color: var(--gold-light);
+    }
+
+    /* 3D Visual Stage (Adaptive for Phone & Desktop) */
+    .visual-col {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      min-height: 480px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), inset 0 0 1px 1px rgba(201, 168, 106, 0.25);
+      background: #000;
+    }
+
+    .visual-stage-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('winner_concept_1_facemesh.jpg');
+      background-size: cover;
+      background-position: center center;
+      transform-style: preserve-3d;
+      transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+    }
+
+    /* Ambient Holographic Vignette Overlay */
+    .visual-vignette {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 35%, rgba(8, 7, 6, 0.7) 85%, #080706 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Animated Gold Laser Scan Line */
+    .laser-scan {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 106, 0.7) 50%, transparent 100%);
+      box-shadow: 0 0 14px var(--gold-primary);
+      animation: scanSweep 6.5s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes scanSweep {
+      0% { top: 18%; opacity: 0.15; }
+      50% { opacity: 0.8; }
+      100% { top: 62%; opacity: 0.15; }
+    }
+
+    /* Interactive 3D Hotspot Nodes */
+    .hotspot {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 25;
+      transform: translate(-50%, -50%);
+    }
+
+    .hotspot::before {
+      content: '';
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 10px #FFF, 0 0 20px var(--gold-primary);
+    }
+
+    .hotspot::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px dashed var(--gold-primary);
+      animation: rotatePulse 3s infinite linear;
+    }
+
+    @keyframes rotatePulse {
+      0% { transform: scale(0.85) rotate(0deg); opacity: 0.9; }
+      50% { transform: scale(1.3) rotate(180deg); opacity: 0.35; }
+      100% { transform: scale(0.85) rotate(360deg); opacity: 0.9; }
+    }
+
+    /* Hotspot positions aligned to face mesh */
+    .hotspot-smas { top: 40%; left: 34%; }
+    .hotspot-collagen { top: 32%; left: 66%; }
+    .hotspot-hydration { top: 48%; left: 64%; }
+
+    .hotspot-badge-label {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(18, 16, 14, 0.85);
+      padding: 2px 7px;
+      border-radius: 10px;
+      border: 1px solid var(--gold-hairline);
+      pointer-events: none;
+    }
+
+    /* Floating Hotspot Tooltip Card */
+    .hotspot-card {
+      position: absolute;
+      bottom: 24px;
+      left: 20px;
+      right: 20px;
+      max-width: 440px;
+      margin: 0 auto;
+      background: rgba(18, 16, 14, 0.94);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--gold-primary);
+      border-radius: 18px;
+      padding: 16px 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(201, 168, 106, 0.15);
+      z-index: 40;
+      display: none;
+      animation: cardFadeIn 0.25s ease-out;
+    }
+
+    .hotspot-card.active {
+      display: block;
+    }
+
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', monospace;
+    }
+
+    .card-close {
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1;
+      padding: 2px 6px;
+    }
+
+    .card-close:hover {
+      color: #FFF;
+    }
+
+    .card-body {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #DDD5CB;
+    }
+
+    /* ======================================================================
+       BOTTOM ACTION CONTROLS (HERO FOOTER)
+       ====================================================================== */
+    .hero-actions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin-top: 10px;
+      z-index: 30;
+    }
+
+    .btn-villa-banner {
+      background: linear-gradient(135deg, rgba(201, 168, 106, 0.18) 0%, rgba(201, 168, 106, 0.06) 100%);
+      border: 1px solid var(--gold-primary);
+      border-radius: 24px;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(201, 168, 106, 0.12);
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-villa-banner:hover {
+      background: linear-gradient(135deg, rgba(201, 168, 106, 0.28) 0%, rgba(201, 168, 106, 0.12) 100%);
+      box-shadow: 0 10px 30px var(--gold-glow);
+      transform: translateY(-1px);
+    }
+
+    .villa-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .villa-icon {
+      font-size: 18px;
+    }
+
+    .villa-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .villa-locations {
+      font-size: 10px;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .villa-banner-arrow {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold-primary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-sculpt-cta {
+      background: linear-gradient(135deg, #DFBE82 0%, #B89250 100%);
+      color: #0E0C09;
+      border: none;
+      border-radius: 24px;
+      padding: 16px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(201, 168, 106, 0.35);
+      transition: all 0.25s ease;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-sculpt-cta:hover {
+      box-shadow: 0 12px 32px rgba(201, 168, 106, 0.55);
+      transform: translateY(-1px);
+    }
+
+    /* ======================================================================
+       MODAL & SLIDE-OUT DRAWER SYSTEM (RESPONSIVE)
+       ====================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Drawers: On mobile bottom-sheet, on desktop slide-in from right */
+    .drawer {
+      position: fixed;
+      z-index: 210;
+      background: var(--bg-card);
+      border: 1px solid var(--gold-hairline);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Mobile Sheet Mode */
+    @media (max-width: 899px) {
+      .drawer {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        max-height: 85vh;
+        max-height: 85dvh;
+        border-radius: 28px 28px 0 0;
+        transform: translateY(105%);
+      }
+      .drawer.active {
+        transform: translateY(0);
+      }
+      .drawer-grabber {
+        width: 44px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 2px;
+        margin: 12px auto 4px;
+      }
+    }
+
+    /* Desktop Side Drawer Mode */
+    @media (min-width: 900px) {
+      .drawer {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 480px;
+        height: 100vh;
+        border-radius: 0;
+        border-left: 1px solid var(--gold-primary);
+        transform: translateX(105%);
+      }
+      .drawer.active {
+        transform: translateX(0);
+      }
+      .drawer-grabber {
+        display: none;
+      }
+    }
+
+    .drawer-header {
+      padding: 16px 24px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: #FFFFFF;
+    }
+
+    .drawer-title span {
+      color: var(--gold-primary);
+      font-style: italic;
+    }
+
+    .drawer-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .drawer-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .drawer-content {
+      padding: 22px 24px 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Content styling inside drawers */
+    .badge-pill-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(201, 168, 106, 0.12);
+      border: 1px solid var(--gold-hairline);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      width: fit-content;
+      font-family: 'Space Grotesk', monospace;
+    }
+
+    .drawer-intro-text {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #D6CEC3;
+    }
+
+    .villa-feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(201, 168, 106, 0.2);
+      border-radius: 18px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .v-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #C7BFAA;
+    }
+
+    .v-line strong {
+      color: #FFF;
+    }
+
+    .v-sparkle {
+      color: var(--gold-primary);
+      font-size: 12px;
+    }
+
+    .notice-box {
+      background: rgba(201, 168, 106, 0.08);
+      border-left: 3px solid var(--gold-primary);
+      border-radius: 4px 12px 12px 4px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: var(--gold-light);
+      line-height: 1.5;
+    }
+
+    /* Pricing Cards */
+    .price-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .price-card.featured {
+      border-color: var(--gold-hairline);
+      background: rgba(201, 168, 106, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .p-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .p-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .p-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .p-meta {
+      display: flex;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Space Grotesk', monospace;
+    }
+
+    .p-desc {
+      font-size: 11px;
+      color: #A39B8F;
+      line-height: 1.45;
+    }
+
+    .deposit-strip {
+      background: rgba(201, 168, 106, 0.14);
+      border: 1px solid var(--gold-primary);
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #FFF;
+    }
+
+    .deposit-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    /* Buttons inside Drawers */
+    .btn-drawer-primary {
+      background: linear-gradient(135deg, #DFBE82 0%, #B89250 100%);
+      color: #0E0C09;
+      border: none;
+      border-radius: 24px;
+      padding: 15px 0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(201, 168, 106, 0.35);
+      cursor: pointer;
+      margin-top: 6px;
+      display: block;
+      transition: all 0.25s ease;
+    }
+
+    .btn-drawer-primary:hover {
+      box-shadow: 0 12px 30px rgba(201, 168, 106, 0.55);
+      transform: translateY(-1px);
+    }
+
+    /* ======================================================================
+       DESKTOP & TABLET ENHANCEMENTS (@media min-width: 900px)
+       ====================================================================== */
+    @media (min-width: 900px) {
+      .header-container {
+        padding: 18px 40px;
+      }
+      .desktop-nav {
+        display: flex;
+      }
+      .btn-header-cta {
+        display: block;
+      }
+      .hero-split-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 1.15fr;
+        gap: 50px;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 50px;
+        min-height: calc(100vh - 120px);
+      }
+      .hero-headline {
+        font-size: 52px;
+        line-height: 1.08;
+      }
+      .hero-description {
+        font-size: 15px;
+      }
+      .visual-col {
+        min-height: 640px;
+        height: 100%;
+      }
+      .hero-actions-container {
+        max-width: 480px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .hero-split-grid {
+        grid-template-columns: 1fr 1.2fr;
+        gap: 70px;
+      }
+      .hero-headline {
+        font-size: 60px;
+      }
+      .visual-col {
+        min-height: 700px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== UNIVERSAL LUXURY HEADER ==================== -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-group" id="brandLogoHome">
+        <div class="brand-logo">S•K•Y<span>.</span></div>
+        <div class="brand-sub">Skin Keep Youthful</div>
+      </div>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav">
+        <button class="nav-link" id="navVillaLink">Виїзд на Віллу</button>
+        <button class="nav-link" id="navServicesLink">Послуги & Прайс</button>
+        <button class="nav-link" id="navSpecialistLink">Про спеціаліста</button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Separate Pricing Pill Button (Hero is 100% price-free) -->
+        <button class="btn-price-tab" id="openServicesBtn">
+          <span>ПОСЛУГИ / ПРАЙС</span>
+        </button>
+
+        <!-- Desktop Quick Consultation CTA -->
+        <button class="btn-header-cta" id="headerCtaBtn">
+          Консультація
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+  <main class="main-wrapper">
+    <div class="hero-split-grid">
+
+      <!-- LEFT COLUMN: EDITORIAL BRAND NARRATIVE & CONVERSION CONTROLS -->
+      <section class="editorial-col">
+        <div class="geo-eyebrow">
+          36.51° N · MÁLAGA · MARBELLA · MIJAS
+        </div>
+
+        <h1 class="hero-headline">
+          Архітектура вашої молодості <span>без болю</span> та ін'єкцій.
+        </h1>
+
+        <p class="hero-description">
+          Міжнародний протокол безін'єкційної естетичної косметології на обладнанні нового покоління <strong>Zemits Verstand HD</strong>. Відновлення тонусу, SMAS-ліфтинг та зволоження преміального рівня в студії Малаги або з приватним виїздом на вашу віллу.
+        </p>
+
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+          <div class="trust-pill">
+            <span>★</span> <strong>5.0</strong> (140+ відгуків)
+          </div>
+          <div class="trust-pill">
+            <span>🇩🇪 🇺🇸</span> <strong>Zemits HD</strong> Medical-Grade
+          </div>
+          <div class="trust-pill">
+            <span>🗝️</span> <strong>Costa del Sol</strong> Private Concierge
+          </div>
+        </div>
+
+        <!-- Conversion Triggers Block -->
+        <div class="hero-actions-container">
+          <!-- Villa Highlight Button -->
+          <div class="btn-villa-banner" id="openVillaBanner">
+            <div class="villa-banner-left">
+              <span class="villa-icon">🗝️</span>
+              <div>
+                <div class="villa-title">Люксовий виїзд на Віллу</div>
+                <div class="villa-locations">Марбелья · Малага · Міхас</div>
+              </div>
+            </div>
+            <div class="villa-banner-arrow">
+              Деталі ➔
+            </div>
+          </div>
+
+          <!-- Primary Consultation Button -->
+          <button class="btn-sculpt-cta" id="primaryConsultBtn">
+            01 Забронювати консультацію
+          </button>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: 3D HOLOGRAPHIC FACE MESH INTERACTIVE STAGE -->
+      <section class="visual-col" id="visualCol">
+        <!-- 3D Face Mesh Asset Layer -->
+        <div class="visual-stage-inner" id="visualStageInner"></div>
+
+        <!-- Ambient Vignette -->
+        <div class="visual-vignette"></div>
+
+        <!-- Gold Laser Scan Sweep -->
+        <div class="laser-scan"></div>
+
+        <!-- Interactive Hotspot 1: SMAS Vectors -->
+        <div class="hotspot hotspot-smas" data-title="SMAS VECTORS" data-text="RF-моделювання овалу обличчя та контуру щелепи на апараті Zemits Verstand HD. Безін'єкційний ліфтинг без болю, набряків та синців.">
+          <span class="hotspot-badge-label">SMAS</span>
+        </div>
+
+        <!-- Interactive Hotspot 2: Collagen Lattice -->
+        <div class="hotspot hotspot-collagen" data-title="COLLAGEN LATTICE" data-text="Стимуляція власного колагенового каркасу в періорбітальній зоні та на лобі. Розгладження мімічних ліній та ущільнення тургору.">
+          <span class="hotspot-badge-label">COLLAGEN</span>
+        </div>
+
+        <!-- Interactive Hotspot 3: Hydration Core -->
+        <div class="hotspot hotspot-hydration" data-title="HYDRATION CORE" data-text="Глибока вакуумна пептидна інфузія та кріо-заспокоєння дерми. Відновлення після середземноморського сонця та сяйво зсередини.">
+          <span class="hotspot-badge-label">HYDRATION</span>
+        </div>
+
+        <!-- Dynamic Hotspot Information Card -->
+        <div class="hotspot-card" id="hotspotCard">
+          <div class="card-head">
+            <span class="card-tag" id="cardTag">SMAS VECTORS</span>
+            <span class="card-close" id="cardClose">✕</span>
+          </div>
+          <p class="card-body" id="cardBody">
+            RF-моделювання овалу обличчя та контуру щелепи на апараті Zemits Verstand HD.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== UNIVERSAL MODAL BACKDROP ==================== -->
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+
+  <!-- ==================== DRAWER 1: ЛЮКСОВИЙ ВИЇЗД НА ВІЛЛУ ==================== -->
+  <aside class="drawer" id="drawerVilla">
+    <div class="drawer-grabber"></div>
+    <div class="drawer-header">
+      <h2 class="drawer-title">Люксовий виїзд <span>на Віллу</span></h2>
+      <div class="drawer-close" data-close>✕</div>
+    </div>
+    <div class="drawer-content">
+      <div class="badge-pill-gold">
+        ● Private Residence Protocol
+      </div>
+      <p class="drawer-intro-text">
+        Індивідуальний ритуал преміальної апаратної косметології у бездоганній приватності вашої вілли, резиденції чи апартаментів на узбережжі Costa del Sol.
+      </p>
+
+      <div class="villa-feature-card">
+        <div class="v-line">
+          <span class="v-sparkle">✦</span>
+          <div><strong>Географія виїзду:</strong> Марбелья (Golden Mile, La Zagaleta, Sierra Blanca, Puerto Banús), Малага та Міхас.</div>
+        </div>
+        <div class="v-line">
+          <span class="v-sparkle">✦</span>
+          <div><strong>Новітнє обладнання:</strong> Портативний комплекс Zemits Verstand HD преміум-серії.</div>
+        </div>
+        <div class="v-line">
+          <span class="v-sparkle">✦</span>
+          <div><strong>Автономна SPA-зона:</strong> Експерт прибуває з власною стерильною розкладною кушеткою, анатомічними матрацами, одноразовою білизною та професійним світлом.</div>
+        </div>
+        <div class="v-line">
+          <span class="v-sparkle">✦</span>
+          <div><strong>100% Конфіденційність:</strong> Безпечний протокол для резидентів закритих клубів та урбанізацій.</div>
+        </div>
+      </div>
+
+      <div class="notice-box">
+        ℹ️ <strong>Регламент виїзду:</strong> Деталі та персональний підбір комплексу обладнання надаються <strong>після запису на первинну консультацію</strong>.
+      </div>
+
+      <a class="btn-drawer-primary" href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%A6%D1%96%D0%BA%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%D0%9B%D1%8E%D0%BA%D1%81%D0%BE%D0%B2%D0%B8%D0%B9%20%D0%B2%D0%B8%D1%97%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%92%D1%96%D0%BB%D0%BB%D1%83%20S%E2%80%A2K%E2%80%A2Y." target="_blank">
+        Записатись на консультацію для виїзду
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== DRAWER 2: ПОСЛУГИ ТА ПРОЗОРИЙ ПРАЙС ==================== -->
+  <aside class="drawer" id="drawerServices">
+    <div class="drawer-grabber"></div>
+    <div class="drawer-header">
+      <h2 class="drawer-title">Послуги та <span>Протоколи</span></h2>
+      <div class="drawer-close" data-close>✕</div>
+    </div>
+    <div class="drawer-content">
+      <!-- Service Item 1 -->
+      <div class="price-card featured">
+        <div class="p-head">
+          <div class="p-name">S•K•Y Glow & Hydro-Reset</div>
+          <div class="p-price">150 €</div>
+        </div>
+        <div class="p-meta">
+          <span>📍 Студія Малага</span> · <span>75 хв</span>
+        </div>
+        <p class="p-desc">
+          Глибоке 3-етапне очищення, вакуумна гідродермабразія Zemits HD, насичення пептидними сироватками та кріо-заспокоєння.
+        </p>
+      </div>
+
+      <!-- Service Item 2 -->
+      <div class="price-card featured">
+        <div class="p-head">
+          <div class="p-name">SMAS & Collagen Boost Architecture</div>
+          <div class="p-price">220 €</div>
+        </div>
+        <div class="p-meta">
+          <span>📍 Студія Малага</span> · <span>90 хв</span>
+        </div>
+        <p class="p-desc">
+          RF-ліфтинг глибоких шарів дерми, моделювання овалу обличчя, мікроструми та альгінатна компресна матриця.
+        </p>
+      </div>
+
+      <!-- Service Item 3 -->
+      <div class="price-card">
+        <div class="p-head">
+          <div class="p-name">Люксовий виїзд на Віллу (Марбелья / Малага / Міхас)</div>
+          <div class="p-price">від 350 €</div>
+        </div>
+        <div class="p-meta">
+          <span>🗝️ Private Residence</span> · <span>120 хв</span>
+        </div>
+        <p class="p-desc">
+          Повний комплекс апаратних ритуалів Zemits HD у вашій резиденції з доставкою та монтажем приватної SPA-зони.
+        </p>
+      </div>
+
+      <!-- Deposit Assurance -->
+      <div class="deposit-strip">
+        <div>
+          <div style="font-weight:700;">Фіксація слоту (Гарантійний депозит):</div>
+          <div style="color:var(--text-muted); font-size:10px; margin-top:2px;">Захист вашого графіку. Зараховується у повну вартість.</div>
+        </div>
+        <div class="deposit-val">50 €</div>
+      </div>
+
+      <a class="btn-drawer-primary" href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D0%BD%D1%8E%D0%B2%D0%B0%D1%82%D0%B8%20%D1%81%D0%B5%D0%B0%D0%BD%D1%81%20S%E2%80%A2K%E2%80%A2Y." target="_blank">
+        Забронювати сеанс у WhatsApp
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== DRAWER 3: ДІАГНОСТИКА ТА СПЕЦІАЛІСТ ==================== -->
+  <aside class="drawer" id="drawerDiagnostic">
+    <div class="drawer-grabber"></div>
+    <div class="drawer-header">
+      <h2 class="drawer-title">Персональна <span>Консультація</span></h2>
+      <div class="drawer-close" data-close>✕</div>
+    </div>
+    <div class="drawer-content">
+      <div class="badge-pill-gold">
+        ● Спеціаліст: Марія Стефанюк
+      </div>
+      <p class="drawer-intro-text">
+        Сертифікований міжнародний експерт з апаратної косметології Zemits. Рейтинг <strong>★ 5.0</strong> (140+ відгуків в Іспанії, профіль <code>@cosmetolog.sky</code>).
+      </p>
+
+      <div class="villa-feature-card">
+        <div style="font-size:12px; font-weight:700; color:#FFF; margin-bottom:4px;">Доступні локації та формати:</div>
+        <div class="v-line">
+          <span class="v-sparkle">📍</span>
+          <div><strong>Студія в центрі Малаги</strong> — повне стаціонарне апаратне оснащення Zemits HD.</div>
+        </div>
+        <div class="v-line">
+          <span class="v-sparkle">🗝️</span>
+          <div><strong>Люксовий виїзд на Віллу</strong> — Марбелья, Малага, Міхас.</div>
+        </div>
+      </div>
+
+      <div class="notice-box">
+        💬 Під час короткого діалогу ми визначимо стан шкіри, виключимо протипоказання та підберемо точний протокол процедури.
+      </div>
+
+      <a class="btn-drawer-primary" href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D1%80%D0%BE%D0%B9%D1%82%D0%B8%20%D0%B4%D1%96%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D1%83%20%D1%82%D0%B0%20%D0%BE%D1%82%D1%80%D0%B8%D0%BC%D0%B0%D1%82%D0%B8%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D1%96%D1%8E%20S%E2%80%A2K%E2%80%A2Y." target="_blank">
+        Розпочати діагностику у WhatsApp
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== INTERACTIVE JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // Visual Stage and Parallax
+    const visualCol = document.getElementById('visualCol');
+    const visualStageInner = document.getElementById('visualStageInner');
+
+    if (visualCol && visualStageInner) {
+      visualCol.addEventListener('mousemove', (e) => {
+        const rect = visualCol.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        visualStageInner.style.transform = `scale(1.05) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+      });
+
+      visualCol.addEventListener('mouseleave', () => {
+        visualStageInner.style.transform = 'scale(1) rotateY(0deg) rotateX(0deg)';
+      });
+    }
+
+    // Hotspot Info Display
+    const hotspotCard = document.getElementById('hotspotCard');
+    const cardTag = document.getElementById('cardTag');
+    const cardBody = document.getElementById('cardBody');
+    const cardClose = document.getElementById('cardClose');
+
+    document.querySelectorAll('.hotspot').forEach(spot => {
+      spot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cardTag.textContent = spot.getAttribute('data-title');
+        cardBody.textContent = spot.getAttribute('data-text');
+        hotspotCard.classList.add('active');
+      });
+    });
+
+    if (cardClose) {
+      cardClose.addEventListener('click', () => {
+        hotspotCard.classList.remove('active');
+      });
+    }
+
+    // Drawers & Modals
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const drawerVilla = document.getElementById('drawerVilla');
+    const drawerServices = document.getElementById('drawerServices');
+    const drawerDiagnostic = document.getElementById('drawerDiagnostic');
+
+    function closeAllDrawers() {
+      modalBackdrop.classList.remove('active');
+      drawerVilla.classList.remove('active');
+      drawerServices.classList.remove('active');
+      drawerDiagnostic.classList.remove('active');
+      if (hotspotCard) hotspotCard.classList.remove('active');
+    }
+
+    modalBackdrop.addEventListener('click', closeAllDrawers);
+    document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', closeAllDrawers));
+
+    function openDrawer(drawer) {
+      closeAllDrawers();
+      modalBackdrop.classList.add('active');
+      drawer.classList.add('active');
+    }
+
+    // Trigger bindings
+    const openVillaBanner = document.getElementById('openVillaBanner');
+    const navVillaLink = document.getElementById('navVillaLink');
+    if (openVillaBanner) openVillaBanner.addEventListener('click', () => openDrawer(drawerVilla));
+    if (navVillaLink) navVillaLink.addEventListener('click', () => openDrawer(drawerVilla));
+
+    const openServicesBtn = document.getElementById('openServicesBtn');
+    const navServicesLink = document.getElementById('navServicesLink');
+    if (openServicesBtn) openServicesBtn.addEventListener('click', () => openDrawer(drawerServices));
+    if (navServicesLink) navServicesLink.addEventListener('click', () => openDrawer(drawerServices));
+
+    const primaryConsultBtn = document.getElementById('primaryConsultBtn');
+    const headerCtaBtn = document.getElementById('headerCtaBtn');
+    const navSpecialistLink = document.getElementById('navSpecialistLink');
+    if (primaryConsultBtn) primaryConsultBtn.addEventListener('click', () => openDrawer(drawerDiagnostic));
+    if (headerCtaBtn) headerCtaBtn.addEventListener('click', () => openDrawer(drawerDiagnostic));
+    if (navSpecialistLink) navSpecialistLink.addEventListener('click', () => openDrawer(drawerDiagnostic));
+
+    const brandLogoHome = document.getElementById('brandLogoHome');
+    if (brandLogoHome) brandLogoHome.addEventListener('click', closeAllDrawers);
+  </script>
+</body>
+</html>
