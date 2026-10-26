@@ -3,31 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>S•K•Y | Візуальні Прототипи Нового Покоління</title>
+  <title>S • K • Y — Архітектура Живого Обличчя</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Three.js for interactive WebGL 3D dynamics -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- GSAP for buttery smooth timelines & physics -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
     :root {
-      --bg-void: #050505;
-      --bg-surface: #0c0b0a;
+      --void: #030303;
       --gold-pure: #D4AF37;
-      --gold-champagne: #EBD6AD;
-      --gold-bright: #FDF4E3;
-      --gold-dim: #7A663F;
-      --gold-glow: rgba(212, 175, 55, 0.4);
-      --gold-hairline: rgba(212, 175, 55, 0.22);
-      --text-bright: #FAF7F2;
-      --text-muted: #9E978C;
-      --text-dim: #5A544A;
-      --amber-liquid: rgba(212, 140, 55, 0.25);
+      --gold-light: #F4E8D1;
+      --gold-deep: #8E733E;
+      --gold-glow: rgba(212, 175, 55, 0.45);
+      --gold-border: rgba(212, 175, 55, 0.2);
+      --text-pure: #FAF8F5;
+      --text-sub: #A8A298;
+      --glass-panel: rgba(8, 7, 6, 0.78);
     }
 
     * {
@@ -38,1210 +32,701 @@
       user-select: none;
     }
 
-    body {
-      background-color: var(--bg-void);
-      color: var(--text-bright);
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: var(--void);
+      color: var(--text-pure);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow-x: hidden;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    /* Ambient noise & cinematic vignette */
-    .viewport-vignette {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      background: radial-gradient(circle at center, transparent 35%, rgba(5, 5, 5, 0.65) 75%, #050505 100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* ======================================================================
-       TOP PROTOTYPE SWITCHER (LUXURY FLOATING HUD CONTROLLER)
-       ====================================================================== */
-    .top-controller-bar {
-      position: fixed;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 960px;
-      padding: 8px 12px;
-      background: rgba(12, 11, 10, 0.85);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      z-index: 100;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.1);
-    }
-
-    .brand-title {
-      font-family: 'Cinzel', serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      color: var(--gold-champagne);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding-left: 8px;
-      white-space: nowrap;
-    }
-
-    .brand-title-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--gold-pure);
-      box-shadow: 0 0 8px var(--gold-pure);
-      animation: pulseDot 2s infinite ease-in-out;
-    }
-
-    @keyframes pulseDot {
-      0%, 100% { opacity: 0.5; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.3); }
-    }
-
-    .proto-nav {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .proto-nav::-webkit-scrollbar { display: none; }
-
-    .proto-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-muted);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    .proto-btn:hover {
-      color: var(--text-bright);
-      background: rgba(212, 175, 55, 0.08);
-    }
-
-    .proto-btn.active {
-      background: linear-gradient(135deg, var(--gold-pure) 0%, #A88422 100%);
-      color: #050505;
-      font-weight: 700;
-      border-color: var(--gold-pure);
-      box-shadow: 0 0 16px var(--gold-glow);
-    }
-
-    /* ======================================================================
-       STAGE CONTAINER & PROTOTYPE PANELS
-       ====================================================================== */
-    .prototype-stage {
-      position: relative;
-      width: 100vw;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 16px 40px 16px;
       overflow: hidden;
+      position: relative;
     }
 
-    .proto-panel {
+    /* ======================================================================
+       ORGANIC FULL-VIEWPORT VISUAL CANVAS (NO PHONE INSIDE PHONE)
+       ====================================================================== */
+    .viewport-canvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 85px 20px 30px 20px;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-      transform: scale(0.96);
-      z-index: 5;
-    }
-
-    .proto-panel.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: scale(1);
-    }
-
-    /* ======================================================================
-       PROTOTYPE 1: 3D KINETIC HOLOGRAPHIC SCANNER
-       ====================================================================== */
-    #proto1 {
-      perspective: 1400px;
-    }
-
-    .holo-scanner-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 480px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .holo-header-block {
-      text-align: center;
-      margin-bottom: 20px;
-      z-index: 10;
-    }
-
-    .holo-tag {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold-pure);
-      margin-bottom: 6px;
+      height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-    }
-
-    .holo-title {
-      font-family: 'Cinzel', serif;
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      line-height: 1.2;
-      background: linear-gradient(135deg, #FAF7F2 30%, var(--gold-champagne) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    @media (min-width: 768px) {
-      .holo-title { font-size: 34px; }
-    }
-
-    /* The Interactive 3D Hologram Stage */
-    .holo-3d-stage {
-      position: relative;
-      width: 100%;
-      max-width: 420px;
-      aspect-ratio: 9 / 13;
-      border-radius: 28px;
-      border: 1px solid var(--gold-hairline);
-      background: rgba(12, 11, 10, 0.7);
-      box-shadow: 
-        0 30px 80px rgba(0, 0, 0, 0.9),
-        0 0 60px rgba(212, 175, 55, 0.15),
-        inset 0 0 40px rgba(0, 0, 0, 0.8);
       overflow: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
       cursor: grab;
     }
 
-    .holo-3d-stage:active {
+    .viewport-canvas:active {
       cursor: grabbing;
     }
 
-    .holo-art-image {
+    /* Layer containing the imagery with transform origin control */
+    .visual-stage {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-      transform: scale(1.04);
-      transition: transform 0.3s ease;
-      filter: contrast(1.08) brightness(0.96);
-    }
-
-    /* Kinetic Laser Beam with Chromatic Glow */
-    .kinetic-laser {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.9) 30%, #FFF8E7 50%, rgba(212, 175, 55, 0.9) 70%, transparent 100%);
-      box-shadow: 
-        0 0 15px var(--gold-pure),
-        0 0 35px var(--gold-pure),
-        0 0 60px rgba(212, 175, 55, 0.6);
-      pointer-events: none;
-      z-index: 15;
-      animation: laserSweep 3.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes laserSweep {
-      0% { top: 6%; opacity: 0.3; }
-      50% { opacity: 1; }
-      100% { top: 94%; opacity: 0.3; }
-    }
-
-    /* Interactive Holographic HUD Pins */
-    .holo-pin {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .pin-target {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--gold-pure);
-      box-shadow: 0 0 16px var(--gold-pure);
-      position: relative;
-    }
-
-    .pin-target::before {
-      content: '';
-      position: absolute;
-      top: -8px;
-      left: -8px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      border: 1px solid var(--gold-pure);
-      opacity: 0.7;
-      animation: pinPing 2.2s infinite cubic-bezier(0, 0, 0.2, 1);
-    }
-
-    @keyframes pinPing {
-      0% { transform: scale(0.6); opacity: 0.9; }
-      100% { transform: scale(1.6); opacity: 0; }
-    }
-
-    .pin-card-data {
-      background: rgba(14, 13, 12, 0.88);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold-champagne);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-      transition: all 0.25s ease;
-      white-space: nowrap;
-    }
-
-    .holo-pin:hover .pin-card-data {
-      border-color: var(--gold-pure);
-      color: #FFF;
-      transform: scale(1.05);
-    }
-
-    .pin-p1 { top: 48%; left: 34%; }
-    .pin-p2 { top: 35%; left: 65%; }
-    .pin-p3 { top: 68%; left: 52%; }
-
-    /* Bottom HUD Telemetry Strip */
-    .holo-bottom-hud {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      background: rgba(8, 7, 6, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 14px;
-      padding: 10px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 25;
-    }
-
-    .telemetry-col {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .telemetry-label {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 8px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    .telemetry-val {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold-pure);
-    }
-
-    /* Kinetic Control Arc (Interactive Trigger) */
-    .kinetic-actions-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      z-index: 10;
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .kinetic-pill-btn {
-      flex: 1;
-      text-align: center;
-      background: rgba(212, 175, 55, 0.08);
-      border: 1px solid var(--gold-hairline);
-      color: var(--gold-champagne);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 12px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.25s ease;
+      max-width: 1200px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      transform-origin: center center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
     }
 
-    .kinetic-pill-btn:hover {
-      background: var(--gold-pure);
-      color: #050505;
-      font-weight: 700;
-      box-shadow: 0 0 20px var(--gold-glow);
+    .artwork-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: contrast(1.05) brightness(0.98);
+      pointer-events: none;
+    }
+
+    /* Ambient celestial halo */
+    .celestial-halo {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.03) 50%, transparent 70%);
+      pointer-events: none;
+      animation: breatheGlow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes breatheGlow {
+      0% { transform: scale(0.92); opacity: 0.6; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Dynamic Laser Scan Ribbon */
+    .laser-horizon {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.2) 20%, #FFF5DB 50%, rgba(212, 175, 55, 0.2) 80%, transparent 100%);
+      box-shadow: 0 0 18px var(--gold-pure), 0 0 35px rgba(212, 175, 55, 0.5);
+      top: 15%;
+      pointer-events: none;
+      animation: scanLaser 5s ease-in-out infinite alternate;
+      z-index: 10;
+    }
+
+    @keyframes scanLaser {
+      0% { top: 12%; opacity: 0.3; }
+      50% { opacity: 0.9; }
+      100% { top: 88%; opacity: 0.3; }
     }
 
     /* ======================================================================
-       PROTOTYPE 2: LIQUID AMBER & CAUSTICS SHADER EXPERIENCE
+       INTERACTIVE IMPULSE POINTS (Directly on the Face Artwork)
        ====================================================================== */
-    #proto2 {
-      background: radial-gradient(circle at center, #17120D 0%, #080605 80%);
+    .impulse-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 25;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: opacity 0.4s ease;
     }
 
-    /* Background Caustic Canvas */
-    #causticsCanvas {
+    /* Concentric target ring with breathing animation */
+    .node-core {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gold-pure);
+      box-shadow: 0 0 20px var(--gold-pure);
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .node-core::before {
+      content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      opacity: 0.75;
+      top: -9px;
+      left: -9px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-pure);
+      opacity: 0.7;
+      animation: nodePulse 2.4s infinite cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    @keyframes nodePulse {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    .node-label {
+      background: rgba(10, 9, 8, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--gold-border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    }
+
+    .impulse-node:hover .node-core {
+      transform: scale(1.3);
+      box-shadow: 0 0 30px #FFF, 0 0 50px var(--gold-pure);
+    }
+
+    .impulse-node:hover .node-label {
+      border-color: var(--gold-pure);
+      color: #FFF;
+      background: rgba(18, 16, 14, 0.95);
+    }
+
+    /* Exact anatomical coordinates on the face mesh */
+    .node-jawline { top: 56%; left: 38%; }
+    .node-cheekbone { top: 39%; left: 63%; }
+    .node-periorbital { top: 32%; left: 45%; }
+    .node-cellular { top: 72%; left: 51%; }
+
+    /* ======================================================================
+       KINETIC IMPULSE SHOCKWAVE (Triggered on Click)
+       ====================================================================== */
+    .shockwave-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid #FFF8E7;
+      box-shadow: 0 0 40px var(--gold-pure), inset 0 0 20px var(--gold-pure);
+      pointer-events: none;
+      z-index: 40;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+
+    /* ======================================================================
+       EDITORIAL NARRATIVE CARD (Expands after Impulse Zoom)
+       ====================================================================== */
+    .editorial-drawer {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      width: calc(100% - 32px);
+      max-width: 540px;
+      background: var(--glass-panel);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid var(--gold-border);
+      border-radius: 28px;
+      padding: 28px 24px;
+      z-index: 50;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .editorial-drawer.open {
+      transform: translateX(-50%) translateY(0%);
+      opacity: 1;
       pointer-events: auto;
     }
 
-    .liquid-ui-card {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 450px;
-      background: rgba(22, 18, 14, 0.55);
-      backdrop-filter: blur(35px);
-      -webkit-backdrop-filter: blur(35px);
-      border: 1px solid rgba(212, 175, 55, 0.28);
-      border-radius: 32px;
-      padding: 36px 28px;
-      box-shadow: 
-        0 30px 80px rgba(0, 0, 0, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 0 50px rgba(212, 140, 55, 0.15);
+    .drawer-top-bar {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      text-align: center;
-      transform-style: preserve-3d;
-      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    .floating-orb-visual {
-      position: relative;
-      width: 180px;
-      height: 180px;
-      margin: 10px 0 24px 0;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid var(--gold-pure);
-      box-shadow: 
-        0 0 40px rgba(212, 175, 55, 0.35),
-        inset 0 0 30px rgba(212, 175, 55, 0.4);
-      animation: orbFloat 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes orbFloat {
-      0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-12px) rotate(4deg); }
-    }
-
-    .floating-orb-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.1);
-    }
-
-    .liquid-eyebrow {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold-champagne);
-      margin-bottom: 8px;
-    }
-
-    .liquid-heading {
-      font-family: 'Cinzel', serif;
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--text-bright);
       margin-bottom: 14px;
     }
 
-    .liquid-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 24px;
-    }
-
-    .fluid-selectors-row {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      margin-bottom: 24px;
-    }
-
-    .fluid-select-pill {
-      flex: 1;
-      padding: 10px 8px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(212, 175, 55, 0.15);
-      border-radius: 16px;
-      font-family: 'Space Grotesk', sans-serif;
+    .drawer-tag {
       font-size: 10px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .fluid-select-pill.active, .fluid-select-pill:hover {
-      background: rgba(212, 175, 55, 0.18);
-      border-color: var(--gold-pure);
-      color: var(--gold-bright);
-    }
-
-    .liquid-cta-btn {
-      width: 100%;
-      padding: 14px 24px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold-pure) 0%, #A47D1C 100%);
-      color: #050505;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .liquid-cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 36px rgba(212, 175, 55, 0.5);
-    }
-
-    /* ======================================================================
-       PROTOTYPE 3: HAUTE MEDTECH 3D KINETIC RINGS & ARCHITECTURE
-       ====================================================================== */
-    #proto3 {
-      background: #060606;
-    }
-
-    #medtech3DCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: auto;
-    }
-
-    .medtech-hud-overlay {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      pointer-events: none;
-    }
-
-    .medtech-hud-overlay * {
-      pointer-events: auto;
-    }
-
-    .medtech-badge-strip {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .medtech-pill {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      background: rgba(212, 175, 55, 0.08);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 999px;
-      color: var(--gold-champagne);
-    }
-
-    .medtech-title {
-      font-family: 'Cinzel', serif;
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-align: center;
-      color: var(--text-bright);
-      margin-bottom: 240px; /* Space for the 3D rotating gyroscopic rings */
-    }
-
-    @media (min-width: 768px) {
-      .medtech-title { font-size: 36px; margin-bottom: 280px; }
-    }
-
-    /* Interactive MedTech Telemetry Dial Strip */
-    .medtech-specs-bar {
-      width: 100%;
-      background: rgba(14, 13, 12, 0.85);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 20px;
-      padding: 16px 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-      margin-bottom: 16px;
-    }
-
-    .medtech-stat-unit {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .stat-label {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 8px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    .stat-digit {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
       color: var(--gold-pure);
     }
 
-    .medtech-control-actions {
+    .drawer-close-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-light);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       display: flex;
-      gap: 10px;
-      width: 100%;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.25s ease;
     }
 
-    .medtech-action-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 999px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
+    .drawer-close-btn:hover {
+      background: var(--gold-pure);
+      color: #000;
+    }
+
+    .drawer-title {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
       font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1.25;
+      color: var(--text-pure);
+      margin-bottom: 12px;
+    }
+
+    .drawer-text {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .drawer-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .drawer-action-btn {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       text-align: center;
+      text-decoration: none;
       cursor: pointer;
       transition: all 0.25s ease;
     }
 
-    .medtech-action-btn.primary {
-      background: var(--gold-pure);
-      color: #050505;
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-pure) 0%, #A47D1C 100%);
+      color: #040404;
+      font-weight: 700;
       border: none;
-      box-shadow: 0 0 20px var(--gold-glow);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
     }
 
-    .medtech-action-btn.secondary {
+    .btn-gold:hover {
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+    }
+
+    .btn-ghost {
       background: rgba(212, 175, 55, 0.08);
-      color: var(--gold-champagne);
-      border: 1px solid var(--gold-hairline);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-light);
     }
 
-    .medtech-action-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    /* Coordinate Watermark */
-    .hud-watermark {
+    /* ======================================================================
+       BESPOKE MINIMALIST LUXURY HEADER (Editorial, Not SaaS)
+       ====================================================================== */
+    .haute-header {
       position: fixed;
-      bottom: 16px;
-      right: 20px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      z-index: 50;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      padding: 0 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 30;
       pointer-events: none;
     }
 
-    /* Visual Prototype Info Tag */
-    .prototype-info-floating {
-      position: fixed;
-      bottom: 16px;
-      left: 20px;
-      font-family: 'Space Grotesk', sans-serif;
+    @media (min-width: 768px) {
+      .haute-header { padding: 0 44px; }
+    }
+
+    .haute-header * {
+      pointer-events: auto;
+    }
+
+    .brand-mark-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-logo-cinzel {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      color: var(--gold-light);
+    }
+
+    .brand-caption {
       font-size: 9px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold-champagne);
+      color: var(--gold-deep);
+      margin-top: 2px;
+    }
+
+    .perspective-reset-pill {
       background: rgba(14, 13, 12, 0.7);
-      backdrop-filter: blur(10px);
-      padding: 6px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--gold-hairline);
-      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--gold-border);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-pure);
+      cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
+      transition: all 0.25s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .perspective-reset-pill.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .perspective-reset-pill:hover {
+      background: var(--gold-pure);
+      color: #000;
+    }
+
+    /* Bottom editorial coordinate indicator */
+    .bottom-coords-tag {
+      position: fixed;
+      bottom: 24px;
+      left: 28px;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .tap-hint-pill {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      background: rgba(12, 11, 10, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--gold-border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      z-index: 30;
+      pointer-events: none;
+      animation: hintFloat 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes hintFloat {
+      0% { transform: translateY(0); opacity: 0.6; }
+      100% { transform: translateY(-4px); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <div class="viewport-vignette"></div>
-
-  <!-- FLOATING PROTOTYPE SWITCHER (TOP) -->
-  <header class="top-controller-bar">
-    <div class="brand-title">
-      <div class="brand-title-dot"></div>
-      <span>S • K • Y</span>
+  <!-- Bespoke Luxury Header -->
+  <header class="haute-header">
+    <div class="brand-mark-block">
+      <div class="brand-logo-cinzel">S • K • Y</div>
+      <div class="brand-caption">Skin Keep Youthful · Marbella & Málaga</div>
     </div>
 
-    <nav class="proto-nav">
-      <button class="proto-btn active" onclick="switchProto(1)">01 // 3D Голограма</button>
-      <button class="proto-btn" onclick="switchProto(2)">02 // Рідке Золото</button>
-      <button class="proto-btn" onclick="switchProto(3)">03 // Haute MedTech</button>
-    </nav>
+    <!-- Active when zoomed in -->
+    <button class="perspective-reset-pill" id="resetBtn" onclick="resetPerspective()">
+      <span>← Загальний план</span>
+    </button>
   </header>
 
-  <!-- MAIN STAGE -->
-  <main class="prototype-stage">
+  <!-- The Organic Full Viewport (NO PHONE FRAMES) -->
+  <div class="viewport-canvas" id="canvasContainer">
+    <div class="celestial-halo"></div>
+    <div class="laser-horizon"></div>
 
-    <!-- ===================================================================
-         PROTOTYPE 1: 3D KINETIC HOLOGRAPHIC SCANNER
-         =================================================================== -->
-    <section class="proto-panel active" id="proto1">
-      <div class="holo-scanner-wrapper">
-        <div class="holo-header-block">
-          <div class="holo-tag">✦ Прототип 01 · 3D Laser Hologram</div>
-          <h2 class="holo-title">КІНЕТИЧНА АРХІТЕКТУРА</h2>
-        </div>
+    <!-- Zoomable/Pannable Stage -->
+    <div class="visual-stage" id="visualStage">
+      <!-- The approved sculpted artwork directly on canvas -->
+      <img src="winner_concept_1_facemesh.jpg" alt="S•K•Y Facial Architecture" class="artwork-image" id="mainArtwork">
 
-        <!-- 3D Hologram Stage (Tilts with Mouse & Gyro) -->
-        <div class="holo-3d-stage" id="holoStage">
-          <img src="winner_concept_1_facemesh.jpg" alt="3D Holographic Face Mesh" class="holo-art-image" id="holoImage">
-          <div class="kinetic-laser"></div>
-
-          <!-- Interactive Pins -->
-          <div class="holo-pin pin-p1" onclick="pulsePin(this, 'SMAS VECTORS: 4.5mm')">
-            <div class="pin-target"></div>
-            <div class="pin-card-data">SMAS VECTORS // 4.5mm</div>
-          </div>
-
-          <div class="holo-pin pin-p2" onclick="pulsePin(this, 'COLLAGEN LATTICE: 2.5MHz')">
-            <div class="pin-target"></div>
-            <div class="pin-card-data">COLLAGEN LATTICE // 2.5MHz</div>
-          </div>
-
-          <div class="holo-pin pin-p3" onclick="pulsePin(this, 'HYDRATION CORE: 96%')">
-            <div class="pin-target"></div>
-            <div class="pin-card-data">HYDRATION CORE // 96%</div>
-          </div>
-
-          <!-- Bottom HUD Telemetry -->
-          <div class="holo-bottom-hud">
-            <div class="telemetry-col">
-              <span class="telemetry-label">Hardware Sensor</span>
-              <span class="telemetry-val">Zemits Verstand HD</span>
-            </div>
-            <div class="telemetry-col" style="text-align: right;">
-              <span class="telemetry-label">Dynamic Scan</span>
-              <span class="telemetry-val" id="telemetryStatus">ACTIVE 60FPS</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kinetic-actions-row">
-          <button class="kinetic-pill-btn" onclick="triggerScanPulse()">
-            <span>⚡ Запустити 3D Імпульс</span>
-          </button>
-          <button class="kinetic-pill-btn" onclick="rotateHoloStage()">
-            <span>🔄 Розворот 360°</span>
-          </button>
-        </div>
+      <!-- Clickable Impulse Nodes with Anatomical Coordinates -->
+      
+      <!-- Node 1: SMAS Jawline -->
+      <div class="impulse-node node-jawline" onclick="triggerImpulse(this, event, 'smas')">
+        <div class="node-core"></div>
+        <div class="node-label">SMAS Каркас // Овал</div>
       </div>
-    </section>
 
-    <!-- ===================================================================
-         PROTOTYPE 2: LIQUID AMBER & CAUSTICS SHADER EXPERIENCE
-         =================================================================== -->
-    <section class="proto-panel" id="proto2">
-      <!-- Interactive WebGL/Canvas Caustics Background -->
-      <canvas id="causticsCanvas"></canvas>
-
-      <div class="liquid-ui-card" id="liquidCard">
-        <div class="liquid-eyebrow">✦ Прототип 02 · Fluid Optics & Caustics</div>
-        <h2 class="liquid-heading">СЕНСОРНИЙ РЕСЕТ</h2>
-
-        <!-- Floating 3D Orb Artwork -->
-        <div class="floating-orb-visual">
-          <img src="winner_concept_2_cellularorb.jpg" alt="Cellular Liquid Orb">
-        </div>
-
-        <p class="liquid-desc">
-          Глибоке занурення в атмосферу Марбельї: оптичне рідке скло, живі каустичні хвилі басейну та невагома левітація клітинних пептидів.
-        </p>
-
-        <div class="fluid-selectors-row">
-          <div class="fluid-select-pill active" onclick="setFluidMode(this, 1)">Хвиля Океану</div>
-          <div class="fluid-select-pill" onclick="setFluidMode(this, 2)">Рідке Золото</div>
-          <div class="fluid-select-pill" onclick="setFluidMode(this, 3)">Кріо-Глянець</div>
-        </div>
-
-        <button class="liquid-cta-btn" onclick="triggerLiquidSplash()">
-          Активувати Сенсорну Хвилю
-        </button>
+      <!-- Node 2: Cheekbone Collagen Matrix -->
+      <div class="impulse-node node-cheekbone" onclick="triggerImpulse(this, event, 'collagen')">
+        <div class="node-core"></div>
+        <div class="node-label">Колагенова Решітка</div>
       </div>
-    </section>
 
-    <!-- ===================================================================
-         PROTOTYPE 3: HAUTE MEDTECH 3D KINETIC RINGS & ARCHITECTURE
-         =================================================================== -->
-    <section class="proto-panel" id="proto3">
-      <!-- Three.js 3D Kinetic Gyroscopic Rings Canvas -->
-      <canvas id="medtech3DCanvas"></canvas>
-
-      <div class="medtech-hud-overlay">
-        <div class="medtech-badge-strip">
-          <span class="medtech-pill">Swiss Standard 2026</span>
-          <span class="medtech-pill">Acoustic Bio-Harmonics</span>
-        </div>
-
-        <h2 class="medtech-title">HAUTE MEDTECH</h2>
-
-        <!-- Telemetry HUD -->
-        <div class="medtech-specs-bar">
-          <div class="medtech-stat-unit">
-            <span class="stat-label">RF Frequency</span>
-            <span class="stat-digit" id="rfStat">2.5 MHz</span>
-          </div>
-          <div class="medtech-stat-unit">
-            <span class="stat-label">Thermal Target</span>
-            <span class="stat-digit" id="thermalStat">42.0 °C</span>
-          </div>
-          <div class="medtech-stat-unit">
-            <span class="stat-label">Tensor Vector</span>
-            <span class="stat-digit" id="vectorStat">+38 %</span>
-          </div>
-        </div>
-
-        <div class="medtech-control-actions">
-          <button class="medtech-action-btn primary" onclick="boostMedtechRings()">
-            Калібрувати Спектр
-          </button>
-          <button class="medtech-action-btn secondary" onclick="toggleRingSpeed()">
-            Зміна Орбіти
-          </button>
-        </div>
+      <!-- Node 3: Periorbital Eye Zone -->
+      <div class="impulse-node node-periorbital" onclick="triggerImpulse(this, event, 'periorbital')">
+        <div class="node-core"></div>
+        <div class="node-label">Периорбітальний Тонус</div>
       </div>
-    </section>
 
-  </main>
-
-  <div class="prototype-info-floating">
-    <span>Режим:</span> <strong id="activeProtoLabel">01 // 3D Голограма</strong>
+      <!-- Node 4: Cellular Hydro Reset -->
+      <div class="impulse-node node-cellular" onclick="triggerImpulse(this, event, 'cellular')">
+        <div class="node-core"></div>
+        <div class="node-label">Клітинний Ресет</div>
+      </div>
+    </div>
   </div>
 
-  <div class="hud-watermark">
-    COSTA DEL SOL · 36.51° N · MEDTECH FLAGSHIP
+  <!-- Editorial Narrative Drawer (Revealed with bespoke words after impulse) -->
+  <div class="editorial-drawer" id="editorialDrawer">
+    <div class="drawer-top-bar">
+      <span class="drawer-tag" id="drawerTag">АНАТОМІЧНА ТОЧКА 01</span>
+      <button class="drawer-close-btn" onclick="resetPerspective()">✕</button>
+    </div>
+    <h3 class="drawer-title" id="drawerTitle">Чіткість овалу без втручання в міміку</h3>
+    <p class="drawer-text" id="drawerText">
+      Акустична реполяризація зв'язкового апарату на обладнанні Zemits Verstand HD. Скорочення розтягнутого SMAS-шару повертає архітектурну чистоту профілю без скальпеля та філерів.
+    </p>
+    <div class="drawer-actions">
+      <button class="drawer-action-btn btn-gold" id="drawerActionBtn" onclick="transitionToNextScene()">
+        Перейти до структури тканин →
+      </button>
+      <button class="drawer-action-btn btn-ghost" onclick="resetPerspective()">
+        Оглянути все обличчя
+      </button>
+    </div>
   </div>
 
-  <!-- JAVASCRIPT: ADVANCED MOTION & WEBGL SHADERS -->
+  <div class="bottom-coords-tag">
+    36.51° N · MEDTECH HAUTE COUTURE · ZEMITS HD
+  </div>
+
+  <div class="tap-hint-pill" id="tapHint">
+    Торкніться точки для імпульсу
+  </div>
+
   <script>
-    // ========================================================================
-    // 1. PROTOTYPE SWITCHING LOGIC
-    // ========================================================================
-    const protoBtns = document.querySelectorAll('.proto-btn');
-    const protoPanels = document.querySelectorAll('.proto-panel');
-    const activeLabel = document.getElementById('activeProtoLabel');
+    const stage = document.getElementById('visualStage');
+    const drawer = document.getElementById('editorialDrawer');
+    const resetBtn = document.getElementById('resetBtn');
+    const tapHint = document.getElementById('tapHint');
+    const mainArtwork = document.getElementById('mainArtwork');
+    const nodes = document.querySelectorAll('.impulse-node');
 
-    const protoNames = {
-      1: "01 // 3D Голограма",
-      2: "02 // Рідке Золото",
-      3: "03 // Haute MedTech"
+    let isZoomed = false;
+    let activeZone = null;
+
+    // Bespoke Art Director Data (Genuine High-End Editorial, zero AI cliches)
+    const architecturalPoints = {
+      smas: {
+        tag: "АНАТОМІЧНИЙ ВЕКТОР // SMAS",
+        title: "Чистота овалу без спотворення міміки",
+        text: "Акустичне скорочення м'язово-апоневротичної системи на протоколах Zemits Verstand HD. Відновлення природного натягу зв'язок нижньої третини обличчя без розрізів, уколів чи зміни ваших унікальних рис.",
+        zoom: { scale: 1.85, x: 22, y: -12 },
+        nextAction: "Перейти до клітинного каркасу",
+        nextScene: "winner_concept_2_cellularorb.jpg"
+      },
+      collagen: {
+        tag: "ДЕРМАЛЬНА МАТРИЦЯ // 42°C",
+        title: "Неоколагенез та природне сяйво вилиць",
+        text: "Контрольована радіочастотна індукція тепла у глибокі шари дерми. Старі розтягнуті волокна колагену ущільнюються, а фібробласти запускають синтез молодого матриксу, що відбиває сонячне світло.",
+        zoom: { scale: 1.8, x: -24, y: 18 },
+        nextAction: "Дослідити біокапіляри",
+        nextScene: "batch3_concept_2_marble_capillaries.jpg"
+      },
+      periorbital: {
+        tag: "МІКРОСТРУМ // АТФ +500%",
+        title: "Відпочилий погляд без набряків",
+        text: "Клітинна біополяризація відновлює мікроциркуляцію навколо очей. М'який лімфодренаж знімає втому середземноморського сонця за один сеанс, стираючи дрібну сітку заломів.",
+        zoom: { scale: 2.1, x: 5, y: 32 },
+        nextAction: "Перейти до гідро-балансу",
+        nextScene: "batch3_concept_1_acoustic_gold.jpg"
+      },
+      cellular: {
+        tag: "СЕРЕДЗЕМНОМОРСЬКИЙ РЕСЕТ",
+        title: "Глибоке зволоження виснаженої сонцем шкіри",
+        text: "Вихровий вакуумний гідропілінг атравматично очищує пори та доставляє біоміметичні пептиди у відкриті протоки. Абсолютний ефект шовкової шкіри (Glass Skin) з нульовою реабілітацією.",
+        zoom: { scale: 1.75, x: -2, y: -35 },
+        nextAction: "Переглянути орб регенерації",
+        nextScene: "winner_concept_2_cellularorb.jpg"
+      }
     };
 
-    function switchProto(num) {
-      protoBtns.forEach((btn, idx) => {
-        btn.classList.toggle('active', idx === (num - 1));
-      });
+    // TRIGGER KINETIC IMPULSE & CAMERA ZOOM
+    function triggerImpulse(nodeEl, event, pointKey) {
+      event.stopPropagation();
+      const data = architecturalPoints[pointKey];
+      if (!data) return;
 
-      protoPanels.forEach(panel => panel.classList.remove('active'));
-      const activePanel = document.getElementById(`proto${num}`);
-      if (activePanel) {
-        activePanel.classList.add('active');
-      }
+      activeZone = pointKey;
 
-      activeLabel.textContent = protoNames[num] || `0${num}`;
+      // 1. GENERATE VISUAL KINETIC SHOCKWAVE FROM THE TAPPED NODE
+      createShockwave(event.clientX, event.clientY);
 
-      // Trigger specific initializers
-      if (num === 2 && !causticsInitialized) {
-        initCaustics();
-      } else if (num === 3 && !medtechInitialized) {
-        initMedtech3D();
-      }
-    }
-
-    // ========================================================================
-    // 2. PROTOTYPE 1: 3D GYROSCOPIC TILT & KINETIC INTERACTIONS
-    // ========================================================================
-    const holoStage = document.getElementById('holoStage');
-    const holoImage = document.getElementById('holoImage');
-
-    if (holoStage) {
-      // Mouse Parallax & 3D Tilt
-      window.addEventListener('mousemove', (e) => {
-        if (!document.getElementById('proto1').classList.contains('active')) return;
-        const rect = holoStage.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
-        const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
-
-        const rotX = -deltaY * 20;
-        const rotY = deltaX * 20;
-
-        holoStage.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
-        if (holoImage) {
-          holoImage.style.transform = `scale(1.05) translate(${-deltaX * 12}px, ${-deltaY * 12}px)`;
+      // 2. HIDE OTHER NODES TEMPORARILY
+      nodes.forEach(n => {
+        if (n !== nodeEl) {
+          gsap.to(n, { opacity: 0, duration: 0.3 });
         }
       });
 
-      // Mobile Touch Gyro
-      window.addEventListener('deviceorientation', (e) => {
-        if (!document.getElementById('proto1').classList.contains('active')) return;
-        if (e.beta && e.gamma && window.innerWidth < 768) {
-          const tiltX = Math.max(-15, Math.min(15, e.beta - 45)) * 0.7;
-          const tiltY = Math.max(-15, Math.min(15, e.gamma)) * 0.7;
-          holoStage.style.transform = `rotateX(${-tiltX}deg) rotateY(${tiltY}deg)`;
-        }
+      // 3. CINEMATIC CAMERA ZOOM & FOCUS
+      isZoomed = true;
+      resetBtn.classList.add('visible');
+      tapHint.style.display = 'none';
+
+      gsap.to(stage, {
+        scale: data.zoom.scale,
+        xPercent: data.zoom.x,
+        yPercent: data.zoom.y,
+        duration: 0.9,
+        ease: "power3.inOut"
       });
 
-      // Touch Drag Rotation
-      let isDragging = false;
-      let startX, startY;
+      // 4. POPULATE & REVEAL EDITORIAL DRAWER
+      document.getElementById('drawerTag').textContent = data.tag;
+      document.getElementById('drawerTitle').textContent = data.title;
+      document.getElementById('drawerText').textContent = data.text;
+      document.getElementById('drawerActionBtn').textContent = data.nextAction;
 
-      holoStage.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      });
-
-      holoStage.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const deltaX = (e.touches[0].clientX - startX) * 0.2;
-        const deltaY = (e.touches[0].clientY - startY) * 0.2;
-        holoStage.style.transform = `rotateX(${-deltaY}deg) rotateY(${deltaX}deg) scale(1.02)`;
-      });
-
-      holoStage.addEventListener('touchend', () => {
-        isDragging = false;
-        holoStage.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
-      });
-    }
-
-    function triggerScanPulse() {
-      gsap.fromTo('.kinetic-laser', 
-        { boxShadow: '0 0 60px #FFF, 0 0 100px #D4AF37', height: '6px' }, 
-        { boxShadow: '0 0 15px #D4AF37, 0 0 35px #D4AF37', height: '3px', duration: 1.2, ease: 'power2.out' }
-      );
-      gsap.to(holoStage, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.out' });
-      document.getElementById('telemetryStatus').textContent = "PULSE +100%";
       setTimeout(() => {
-        document.getElementById('telemetryStatus').textContent = "ACTIVE 60FPS";
-      }, 1500);
+        drawer.classList.add('open');
+      }, 350);
     }
 
-    function rotateHoloStage() {
-      gsap.to(holoStage, {
-        rotationY: "+=360",
-        duration: 1.8,
-        ease: "power2.inOut",
-        onComplete: () => { holoStage.style.transform = ""; }
-      });
-    }
+    // CREATE KINETIC SHOCKWAVE ELEMENT
+    function createShockwave(x, y) {
+      const ring = document.createElement('div');
+      ring.className = 'shockwave-ring';
+      ring.style.left = x + 'px';
+      ring.style.top = y + 'px';
+      ring.style.width = '40px';
+      ring.style.height = '40px';
+      document.body.appendChild(ring);
 
-    function pulsePin(el, msg) {
-      gsap.to(el, { scale: 1.3, duration: 0.15, yoyo: true, repeat: 1 });
-      document.getElementById('telemetryStatus').textContent = msg.split(':')[0];
-      setTimeout(() => {
-        document.getElementById('telemetryStatus').textContent = "ACTIVE 60FPS";
-      }, 2000);
-    }
-
-    // ========================================================================
-    // 3. PROTOTYPE 2: REAL-TIME CAUSTIC CANVAS SHADER
-    // ========================================================================
-    let causticsInitialized = false;
-    let causticCanvas, causticCtx;
-    let causticTime = 0;
-    let causticColorMode = 1;
-
-    function initCaustics() {
-      causticCanvas = document.getElementById('causticsCanvas');
-      if (!causticCanvas) return;
-      causticCtx = causticCanvas.getContext('2d');
-      causticsInitialized = true;
-
-      function resize() {
-        causticCanvas.width = window.innerWidth;
-        causticCanvas.height = window.innerHeight;
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      function renderCaustics() {
-        if (!document.getElementById('proto2').classList.contains('active')) {
-          requestAnimationFrame(renderCaustics);
-          return;
+      gsap.to(ring, {
+        scale: 14,
+        opacity: 0,
+        borderWidth: '0px',
+        duration: 0.9,
+        ease: "power2.out",
+        onComplete: () => {
+          ring.remove();
         }
-
-        causticTime += 0.02;
-        const w = causticCanvas.width;
-        const h = causticCanvas.height;
-
-        causticCtx.clearRect(0, 0, w, h);
-
-        const cols = Math.floor(w / 45);
-        const rows = Math.floor(h / 45);
-
-        for (let i = 0; i < cols; i++) {
-          for (let j = 0; j < rows; j++) {
-            const x = i * 45;
-            const y = j * 45;
-            const wave = Math.sin(i * 0.3 + causticTime) * Math.cos(j * 0.3 + causticTime * 0.8);
-            const size = Math.max(2, 14 + wave * 12);
-
-            causticCtx.beginPath();
-            causticCtx.arc(x + wave * 8, y + wave * 8, size, 0, Math.PI * 2);
-
-            if (causticColorMode === 1) {
-              causticCtx.fillStyle = `rgba(212, 175, 55, ${0.03 + Math.abs(wave) * 0.08})`;
-            } else if (causticColorMode === 2) {
-              causticCtx.fillStyle = `rgba(255, 195, 77, ${0.05 + Math.abs(wave) * 0.12})`;
-            } else {
-              causticCtx.fillStyle = `rgba(180, 220, 240, ${0.04 + Math.abs(wave) * 0.09})`;
-            }
-            causticCtx.fill();
-          }
-        }
-
-        requestAnimationFrame(renderCaustics);
-      }
-
-      renderCaustics();
-
-      // Liquid card subtle tilt
-      const liquidCard = document.getElementById('liquidCard');
-      window.addEventListener('mousemove', (e) => {
-        if (!document.getElementById('proto2').classList.contains('active')) return;
-        const deltaX = (e.clientX - window.innerWidth / 2) / 30;
-        const deltaY = (e.clientY - window.innerHeight / 2) / 30;
-        liquidCard.style.transform = `perspective(1000px) rotateX(${-deltaY}deg) rotateY(${deltaX}deg)`;
       });
-    }
 
-    function setFluidMode(btn, mode) {
-      document.querySelectorAll('.fluid-select-pill').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      causticColorMode = mode;
-      triggerLiquidSplash();
-    }
-
-    function triggerLiquidSplash() {
-      gsap.fromTo('.floating-orb-visual', 
-        { scale: 0.9, filter: 'brightness(1.5)' },
-        { scale: 1, filter: 'brightness(1)', duration: 0.8, ease: 'elastic.out(1, 0.4)' }
+      // Flash background slightly
+      gsap.fromTo('.celestial-halo', 
+        { opacity: 1, scale: 1.3 }, 
+        { opacity: 0.7, scale: 1, duration: 0.8 }
       );
     }
 
-    // ========================================================================
-    // 4. PROTOTYPE 3: THREE.JS 3D KINETIC GYROSCOPIC RINGS
-    // ========================================================================
-    let medtechInitialized = false;
-    let ringScene, ringCamera, ringRenderer;
-    let ring1, ring2, ring3, ringParticles;
-    let ringSpeedMultiplier = 1;
+    // RESET TO MASTER SCENE
+    function resetPerspective() {
+      drawer.classList.remove('open');
+      resetBtn.classList.remove('visible');
+      tapHint.style.display = 'block';
 
-    function initMedtech3D() {
-      const canvas = document.getElementById('medtech3DCanvas');
-      if (!canvas) return;
-      medtechInitialized = true;
+      gsap.to(stage, {
+        scale: 1,
+        xPercent: 0,
+        yPercent: 0,
+        duration: 0.75,
+        ease: "power3.out",
+        onComplete: () => {
+          nodes.forEach(n => gsap.to(n, { opacity: 1, duration: 0.3 }));
+          isZoomed = false;
+        }
+      });
+    }
 
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+    // SCENE TRANSITION (MORPHING INTO NEXT ARTWORK SCENE)
+    function transitionToNextScene() {
+      if (!activeZone) return;
+      const data = architecturalPoints[activeZone];
+      if (!data || !data.nextScene) return;
 
-      ringScene = new THREE.Scene();
-      ringCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-      ringCamera.position.z = 24;
+      // Create full-screen acoustic flash
+      const flash = document.createElement('div');
+      flash.style.position = 'fixed';
+      flash.style.top = '0';
+      flash.style.left = '0';
+      flash.style.width = '100vw';
+      flash.style.height = '100vh';
+      flash.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, transparent 80%)';
+      flash.style.zIndex = '60';
+      flash.style.pointerEvents = 'none';
+      document.body.appendChild(flash);
 
-      ringRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-      ringRenderer.setSize(w, h);
-      ringRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      // Ring 1 (Outer Gold Torus)
-      const geo1 = new THREE.TorusGeometry(8.5, 0.08, 16, 100);
-      const mat1 = new THREE.MeshBasicMaterial({ color: 0xD4AF37, wireframe: true, transparent: true, opacity: 0.75 });
-      ring1 = new THREE.Mesh(geo1, mat1);
-      ringScene.add(ring1);
-
-      // Ring 2 (Middle Champagne Torus)
-      const geo2 = new THREE.TorusGeometry(6.2, 0.06, 16, 80);
-      const mat2 = new THREE.MeshBasicMaterial({ color: 0xEBD6AD, wireframe: true, transparent: true, opacity: 0.85 });
-      ring2 = new THREE.Mesh(geo2, mat2);
-      ringScene.add(ring2);
-
-      // Ring 3 (Inner Fast Torus)
-      const geo3 = new THREE.TorusGeometry(4.0, 0.05, 16, 60);
-      const mat3 = new THREE.MeshBasicMaterial({ color: 0xFFF2D6, transparent: true, opacity: 0.9 });
-      ring3 = new THREE.Mesh(geo3, mat3);
-      ringScene.add(ring3);
-
-      // Orbital Particle Ring
-      const partCount = 200;
-      const partGeo = new THREE.BufferGeometry();
-      const posArray = new Float32Array(partCount * 3);
-
-      for (let i = 0; i < partCount; i++) {
-        const theta = (i / partCount) * Math.PI * 2;
-        const radius = 9.8 + (Math.random() - 0.5) * 1.5;
-        posArray[i * 3] = Math.cos(theta) * radius;
-        posArray[i * 3 + 1] = (Math.random() - 0.5) * 2;
-        posArray[i * 3 + 2] = Math.sin(theta) * radius;
-      }
-
-      partGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-      const partMat = new THREE.PointsMaterial({ size: 0.15, color: 0xD4AF37, transparent: true, opacity: 0.7 });
-      ringParticles = new THREE.Points(partGeo, partMat);
-      ringScene.add(ringParticles);
-
-      window.addEventListener('resize', () => {
-        ringCamera.aspect = window.innerWidth / window.innerHeight;
-        ringCamera.updateProjectionMatrix();
-        ringRenderer.setSize(window.innerWidth, window.innerHeight);
+      gsap.to(flash, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        onComplete: () => flash.remove()
       });
 
-      // Interactive mouse orbit
-      window.addEventListener('mousemove', (e) => {
-        if (!document.getElementById('proto3').classList.contains('active')) return;
-        const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        ringCamera.position.x = mouseX * 4;
-        ringCamera.position.y = -mouseY * 4;
-        ringCamera.lookAt(0, 0, 0);
+      // Crossfade artwork image
+      gsap.to(mainArtwork, {
+        opacity: 0.2,
+        duration: 0.3,
+        onComplete: () => {
+          mainArtwork.src = data.nextScene;
+          gsap.to(mainArtwork, { opacity: 1, duration: 0.6 });
+        }
       });
 
-      function animate() {
-        requestAnimationFrame(animate);
-        if (!document.getElementById('proto3').classList.contains('active')) return;
+      // Update drawer
+      document.getElementById('drawerTag').textContent = "ГЛИБОКИЙ РІВЕНЬ // ЗАНУРЕННЯ";
+      document.getElementById('drawerTitle').textContent = "Внутрішня мікроструктура регенерації";
+      document.getElementById('drawerText').textContent = "Апаратна дія на рівні ліпідного шару та позаклітинного матриксу. Клітини насичуються поживними елементами, поновлюючи природний бар'єр.";
+      document.getElementById('drawerActionBtn').textContent = "Повернутися до загального плану";
+      document.getElementById('drawerActionBtn').onclick = () => {
+        mainArtwork.src = 'winner_concept_1_facemesh.jpg';
+        resetPerspective();
+      };
+    }
 
-        const speed = 0.015 * ringSpeedMultiplier;
-        ring1.rotation.x += speed * 0.7;
-        ring1.rotation.y += speed * 0.9;
+    // Ambient mouse tilt on master canvas (subtle, quiet luxury)
+    window.addEventListener('mousemove', (e) => {
+      if (isZoomed) return;
+      const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
 
-        ring2.rotation.y += speed * 1.2;
-        ring2.rotation.z += speed * 0.8;
+      stage.style.transform = `rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+    });
 
-        ring3.rotation.x += speed * 1.6;
-        ring3.rotation.z += speed * 1.4;
-
-        ringParticles.rotation.y += speed * 0.5;
-
-        ringRenderer.render(ringScene, ringCamera);
+    // Device orientation for mobile tilt
+    window.addEventListener('deviceorientation', (e) => {
+      if (isZoomed) return;
+      if (e.beta && e.gamma) {
+        const rotX = Math.max(-8, Math.min(8, e.beta - 45)) * 0.4;
+        const rotY = Math.max(-8, Math.min(8, e.gamma)) * 0.4;
+        stage.style.transform = `rotateX(${-rotX}deg) rotateY(${rotY}deg)`;
       }
+    });
 
-      animate();
-    }
-
-    function boostMedtechRings() {
-      gsap.to(ringCamera.position, { z: 18, duration: 0.4, yoyo: true, repeat: 1, ease: 'power2.out' });
-      document.getElementById('rfStat').textContent = "3.8 MHz";
-      document.getElementById('thermalStat').textContent = "42.5 °C";
-      document.getElementById('vectorStat').textContent = "+52 %";
-      setTimeout(() => {
-        document.getElementById('rfStat').textContent = "2.5 MHz";
-        document.getElementById('thermalStat').textContent = "42.0 °C";
-        document.getElementById('vectorStat').textContent = "+38 %";
-      }, 2500);
-    }
-
-    function toggleRingSpeed() {
-      ringSpeedMultiplier = ringSpeedMultiplier === 1 ? 2.5 : 1;
-    }
+    // Close when tapping blank canvas area
+    document.getElementById('canvasContainer').addEventListener('click', (e) => {
+      if (isZoomed && !drawer.contains(e.target)) {
+        resetPerspective();
+      }
+    });
   </script>
 </body>
 </html>
