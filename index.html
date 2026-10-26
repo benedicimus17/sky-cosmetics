@@ -2,26 +2,25 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>S • K • Y — Архітектура Живого Обличчя</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>S • K • Y — Висока Архітектура Обличчя</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
     :root {
-      --void: #030303;
-      --gold-pure: #D4AF37;
-      --gold-light: #F4E8D1;
-      --gold-deep: #8E733E;
-      --gold-glow: rgba(212, 175, 55, 0.45);
-      --gold-border: rgba(212, 175, 55, 0.2);
-      --text-pure: #FAF8F5;
-      --text-sub: #A8A298;
-      --glass-panel: rgba(8, 7, 6, 0.78);
+      --void: #000000;
+      --gold: #D4AF37;
+      --gold-pale: #EFE2C6;
+      --gold-muted: rgba(212, 175, 55, 0.42);
+      --gold-hairline: rgba(212, 175, 55, 0.22);
+      --ivory: #FAF6F0;
+      --ash: rgba(250, 246, 240, 0.58);
     }
 
     * {
@@ -29,6 +28,7 @@
       margin: 0;
       padding: 0;
       -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
@@ -36,697 +36,1085 @@
       width: 100%;
       height: 100%;
       background-color: var(--void);
-      color: var(--text-pure);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
       overflow: hidden;
-      position: relative;
+      position: fixed;
+      inset: 0;
+      touch-action: none;
     }
 
     /* ======================================================================
-       ORGANIC FULL-VIEWPORT VISUAL CANVAS (NO PHONE INSIDE PHONE)
+       1. FULL-BLEED WEBGL SHADER STAGE (ZERO PHONE FRAME, 100% NATIVE SCREEN)
        ====================================================================== */
-    .viewport-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    #webgl-stage {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
       height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      cursor: grab;
-    }
-
-    .viewport-canvas:active {
-      cursor: grabbing;
-    }
-
-    /* Layer containing the imagery with transform origin control */
-    .visual-stage {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      max-width: 1200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform-origin: center center;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform;
-    }
-
-    .artwork-image {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: contrast(1.05) brightness(0.98);
-      pointer-events: none;
-    }
-
-    /* Ambient celestial halo */
-    .celestial-halo {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.03) 50%, transparent 70%);
-      pointer-events: none;
-      animation: breatheGlow 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes breatheGlow {
-      0% { transform: scale(0.92); opacity: 0.6; }
-      100% { transform: scale(1.1); opacity: 1; }
-    }
-
-    /* Dynamic Laser Scan Ribbon */
-    .laser-horizon {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.2) 20%, #FFF5DB 50%, rgba(212, 175, 55, 0.2) 80%, transparent 100%);
-      box-shadow: 0 0 18px var(--gold-pure), 0 0 35px rgba(212, 175, 55, 0.5);
-      top: 15%;
-      pointer-events: none;
-      animation: scanLaser 5s ease-in-out infinite alternate;
-      z-index: 10;
-    }
-
-    @keyframes scanLaser {
-      0% { top: 12%; opacity: 0.3; }
-      50% { opacity: 0.9; }
-      100% { top: 88%; opacity: 0.3; }
+      z-index: 1;
+      display: block;
     }
 
     /* ======================================================================
-       INTERACTIVE IMPULSE POINTS (Directly on the Face Artwork)
+       2. ARCHITECTURAL HUD LAYER (FRAMELESS, NO BOXES, RAZOR HAIRLINES)
        ====================================================================== */
-    .impulse-node {
+    .hud-layer {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: env(safe-area-inset-top, 20px) 22px env(safe-area-inset-bottom, 18px) 22px;
+      background: linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.72) 25%, transparent 44%, transparent 88%, rgba(0,0,0,0.65) 100%);
+    }
+
+    /* Top Minimalist Crest */
+    .top-architecture {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 10px;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .brand-signature {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .brand-monogram {
+      font-family: 'Cinzel', serif;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 0.48em;
+      color: var(--gold-pale);
+    }
+
+    .brand-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8.5px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+    }
+
+    .telemetry-corner {
+      text-align: right;
+      font-family: 'Space Grotesk', sans-serif;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .telemetry-coord {
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      color: var(--gold-pale);
+      opacity: 0.8;
+    }
+
+    .telemetry-live {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .pulse-pip {
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      box-shadow: 0 0 8px var(--gold);
+      animation: pipBlink 2.4s infinite ease-in-out;
+    }
+
+    @keyframes pipBlink {
+      0%, 100% { opacity: 0.3; transform: rotate(45deg) scale(0.8); }
+      50% { opacity: 1; transform: rotate(45deg) scale(1.3); }
+    }
+
+    /* ======================================================================
+       3. JEWELRY-GRADE ANATOMICAL CALLOUTS (0.5PX SVG LEADER LINES, NO PILLS)
+       ====================================================================== */
+    .callouts-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .callout-node {
       position: absolute;
       transform: translate(-50%, -50%);
-      z-index: 25;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: opacity 0.4s ease;
-    }
-
-    /* Concentric target ring with breathing animation */
-    .node-core {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--gold-pure);
-      box-shadow: 0 0 20px var(--gold-pure);
-      position: relative;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .node-core::before {
-      content: '';
-      position: absolute;
-      top: -9px;
-      left: -9px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid var(--gold-pure);
-      opacity: 0.7;
-      animation: nodePulse 2.4s infinite cubic-bezier(0, 0, 0.2, 1);
-    }
-
-    @keyframes nodePulse {
-      0% { transform: scale(0.6); opacity: 0.9; }
-      100% { transform: scale(1.7); opacity: 0; }
-    }
-
-    .node-label {
-      background: rgba(10, 9, 8, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--gold-border);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      white-space: nowrap;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-    }
-
-    .impulse-node:hover .node-core {
-      transform: scale(1.3);
-      box-shadow: 0 0 30px #FFF, 0 0 50px var(--gold-pure);
-    }
-
-    .impulse-node:hover .node-label {
-      border-color: var(--gold-pure);
-      color: #FFF;
-      background: rgba(18, 16, 14, 0.95);
-    }
-
-    /* Exact anatomical coordinates on the face mesh */
-    .node-jawline { top: 56%; left: 38%; }
-    .node-cheekbone { top: 39%; left: 63%; }
-    .node-periorbital { top: 32%; left: 45%; }
-    .node-cellular { top: 72%; left: 51%; }
-
-    /* ======================================================================
-       KINETIC IMPULSE SHOCKWAVE (Triggered on Click)
-       ====================================================================== */
-    .shockwave-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 2px solid #FFF8E7;
-      box-shadow: 0 0 40px var(--gold-pure), inset 0 0 20px var(--gold-pure);
-      pointer-events: none;
-      z-index: 40;
-      transform: translate(-50%, -50%) scale(0);
-      opacity: 1;
-    }
-
-    /* ======================================================================
-       EDITORIAL NARRATIVE CARD (Expands after Impulse Zoom)
-       ====================================================================== */
-    .editorial-drawer {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(120%);
-      width: calc(100% - 32px);
-      max-width: 540px;
-      background: var(--glass-panel);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid var(--gold-border);
-      border-radius: 28px;
-      padding: 28px 24px;
-      z-index: 50;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .editorial-drawer.open {
-      transform: translateX(-50%) translateY(0%);
-      opacity: 1;
       pointer-events: auto;
-    }
-
-    .drawer-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .drawer-tag {
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold-pure);
-    }
-
-    .drawer-close-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--gold-border);
-      color: var(--gold-light);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+      cursor: pointer;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.25s ease;
     }
 
-    .drawer-close-btn:hover {
-      background: var(--gold-pure);
-      color: #000;
+    /* Tiny 6px diamond target on the face */
+    .diamond-reticle {
+      width: 7px;
+      height: 7px;
+      border: 1px solid var(--gold-pale);
+      background: rgba(212, 175, 55, 0.25);
+      transform: rotate(45deg);
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
     }
 
-    .drawer-title {
-      font-family: 'Cinzel', serif;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      line-height: 1.25;
-      color: var(--text-pure);
-      margin-bottom: 12px;
+    .diamond-reticle::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border: 0.5px solid rgba(212, 175, 55, 0.45);
+      animation: diamondWave 3s infinite cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .drawer-text {
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.7;
-      margin-bottom: 20px;
+    @keyframes diamondWave {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(2.4); opacity: 0; }
     }
 
-    .drawer-actions {
+    .callout-node.active .diamond-reticle,
+    .callout-node:hover .diamond-reticle {
+      background: var(--gold-pale);
+      transform: rotate(45deg) scale(1.35);
+      box-shadow: 0 0 20px #FFF, 0 0 35px var(--gold);
+    }
+
+    /* Architectural 45-degree leader line + frameless text in margin */
+    .callout-wing {
+      position: absolute;
+      top: 50%;
       display: flex;
-      gap: 10px;
-    }
-
-    .drawer-action-btn {
-      flex: 1;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold-pure) 0%, #A47D1C 100%);
-      color: #040404;
-      font-weight: 700;
-      border: none;
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
-    }
-
-    .btn-gold:hover {
-      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
-    }
-
-    .btn-ghost {
-      background: rgba(212, 175, 55, 0.08);
-      border: 1px solid var(--gold-border);
-      color: var(--gold-light);
-    }
-
-    /* ======================================================================
-       BESPOKE MINIMALIST LUXURY HEADER (Editorial, Not SaaS)
-       ====================================================================== */
-    .haute-header {
-      position: fixed;
-      top: 24px;
-      left: 0;
-      width: 100%;
-      padding: 0 28px;
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      z-index: 30;
       pointer-events: none;
+      white-space: nowrap;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .callout-wing.left-wing {
+      right: 18px;
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    .callout-wing.right-wing {
+      left: 18px;
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .leader-svg {
+      width: 28px;
+      height: 20px;
+      overflow: visible;
+      flex-shrink: 0;
     }
 
     @media (min-width: 768px) {
-      .haute-header { padding: 0 44px; }
+      .callout-wing.left-wing { right: 26px; }
+      .callout-wing.right-wing { left: 26px; }
+      .leader-svg {
+        width: 84px;
+        height: 28px;
+      }
     }
 
-    .haute-header * {
-      pointer-events: auto;
+    .leader-line {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 0.75;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 0;
+      opacity: 0.65;
+      transition: opacity 0.35s ease, stroke-width 0.35s ease;
     }
 
-    .brand-mark-block {
+    .callout-node.active .leader-line,
+    .callout-node:hover .leader-line {
+      opacity: 1;
+      stroke: var(--gold-pale);
+      stroke-width: 1.1;
+    }
+
+    .wing-typography {
       display: flex;
       flex-direction: column;
+      gap: 1px;
+      padding: 0 6px;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 6px rgba(0, 0, 0, 0.9);
     }
 
-    .brand-logo-cinzel {
-      font-family: 'Cinzel', serif;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.28em;
-      color: var(--gold-light);
+    .wing-index {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
 
-    .brand-caption {
+    .wing-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--ivory);
+      line-height: 1.1;
+    }
+
+    @media (min-width: 768px) {
+      .wing-title {
+        font-size: 18px;
+      }
+    }
+
+    /* ======================================================================
+       4. FRAMELESS EDITORIAL WHISPER & CHRONOGRAPH ARC (BOTTOM)
+       ====================================================================== */
+    .bottom-architecture {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 20;
+    }
+
+    /* Editorial Whisper (Floats in dark air, zero box borders) */
+    .editorial-whisper {
+      text-align: center;
+      max-width: 440px;
+      padding: 0 12px;
+      pointer-events: auto;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.98), 0 1px 8px #000;
+    }
+
+    .whisper-telemetry {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 9px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold-deep);
-      margin-top: 2px;
+      color: var(--gold);
+      margin-bottom: 4px;
     }
 
-    .perspective-reset-pill {
-      background: rgba(14, 13, 12, 0.7);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--gold-border);
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold-pure);
+    .whisper-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--ivory);
+      margin-bottom: 6px;
+    }
+
+    @media (min-width: 768px) {
+      .whisper-headline {
+        font-size: 30px;
+      }
+    }
+
+    .whisper-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14.5px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--ash);
+    }
+
+    /* Living 2.5 MHz Acoustic Frequency Sine String */
+    .frequency-string-wrap {
+      width: 100%;
+      max-width: 340px;
+      height: 28px;
+      position: relative;
+      pointer-events: auto;
+      cursor: ew-resize;
+    }
+
+    #sine-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Swiss Chronograph Dial Arc (Replaces Standard Tabs) */
+    .chronograph-dial {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 62px;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .dial-arc-svg {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 360px;
+      height: 44px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .dial-states {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      width: 100%;
+      max-width: 340px;
+      position: relative;
+      z-index: 5;
+      padding-bottom: 4px;
+    }
+
+    .dial-state-btn {
+      background: none;
+      border: none;
       cursor: pointer;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      transition: all 0.25s ease;
-      opacity: 0;
-      pointer-events: none;
+      gap: 4px;
+      padding: 6px 10px;
+      color: rgba(250, 246, 240, 0.38);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .perspective-reset-pill.visible {
-      opacity: 1;
-      pointer-events: auto;
+    .dial-state-btn:nth-child(1),
+    .dial-state-btn:nth-child(3) {
+      transform: translateY(6px);
     }
 
-    .perspective-reset-pill:hover {
-      background: var(--gold-pure);
-      color: #000;
-    }
-
-    /* Bottom editorial coordinate indicator */
-    .bottom-coords-tag {
-      position: fixed;
-      bottom: 24px;
-      left: 28px;
-      font-size: 9px;
+    .dial-state-roman {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold-deep);
-      z-index: 30;
-      pointer-events: none;
+      color: var(--gold-muted);
+      transition: color 0.3s ease;
     }
 
-    .tap-hint-pill {
+    .dial-state-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .dial-state-btn.active {
+      color: var(--gold-pale);
+    }
+
+    .dial-state-btn.active .dial-state-roman {
+      color: var(--gold);
+    }
+
+    .dial-state-btn.active .dial-state-name {
+      color: var(--ivory);
+      text-shadow: 0 0 14px rgba(212, 175, 55, 0.65);
+    }
+
+    /* Subtle X-Ray Scanner Drag Indicator on Right Margin */
+    .scanner-rail {
       position: fixed;
-      bottom: 24px;
-      right: 28px;
-      background: rgba(12, 11, 10, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--gold-border);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      z-index: 30;
-      pointer-events: none;
-      animation: hintFloat 3s ease-in-out infinite alternate;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 160px;
+      width: 24px;
+      z-index: 15;
+      pointer-events: auto;
+      cursor: ns-resize;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    @keyframes hintFloat {
-      0% { transform: translateY(0); opacity: 0.6; }
-      100% { transform: translateY(-4px); opacity: 1; }
+    .rail-line {
+      width: 0.5px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold-muted), transparent);
+      position: relative;
+    }
+
+    .rail-thumb {
+      position: absolute;
+      left: 50%;
+      top: 30%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 6px;
+      height: 6px;
+      background: var(--gold-pale);
+      box-shadow: 0 0 10px var(--gold);
+    }
+
+    .rail-caption {
+      writing-mode: vertical-rl;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 7.5px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Bespoke Luxury Header -->
-  <header class="haute-header">
-    <div class="brand-mark-block">
-      <div class="brand-logo-cinzel">S • K • Y</div>
-      <div class="brand-caption">Skin Keep Youthful · Marbella & Málaga</div>
-    </div>
+  <!-- 1. FULL-BLEED NATIVE WEBGL SHADER CANVAS -->
+  <canvas id="webgl-stage"></canvas>
 
-    <!-- Active when zoomed in -->
-    <button class="perspective-reset-pill" id="resetBtn" onclick="resetPerspective()">
-      <span>← Загальний план</span>
-    </button>
-  </header>
+  <!-- 2. JEWELRY-GRADE ANATOMICAL CALLOUTS (0.5PX SVG LEADER LINES) -->
+  <div class="callouts-stage" id="calloutsStage">
 
-  <!-- The Organic Full Viewport (NO PHONE FRAMES) -->
-  <div class="viewport-canvas" id="canvasContainer">
-    <div class="celestial-halo"></div>
-    <div class="laser-horizon"></div>
-
-    <!-- Zoomable/Pannable Stage -->
-    <div class="visual-stage" id="visualStage">
-      <!-- The approved sculpted artwork directly on canvas -->
-      <img src="winner_concept_1_facemesh.jpg" alt="S•K•Y Facial Architecture" class="artwork-image" id="mainArtwork">
-
-      <!-- Clickable Impulse Nodes with Anatomical Coordinates -->
-      
-      <!-- Node 1: SMAS Jawline -->
-      <div class="impulse-node node-jawline" onclick="triggerImpulse(this, event, 'smas')">
-        <div class="node-core"></div>
-        <div class="node-label">SMAS Каркас // Овал</div>
-      </div>
-
-      <!-- Node 2: Cheekbone Collagen Matrix -->
-      <div class="impulse-node node-cheekbone" onclick="triggerImpulse(this, event, 'collagen')">
-        <div class="node-core"></div>
-        <div class="node-label">Колагенова Решітка</div>
-      </div>
-
-      <!-- Node 3: Periorbital Eye Zone -->
-      <div class="impulse-node node-periorbital" onclick="triggerImpulse(this, event, 'periorbital')">
-        <div class="node-core"></div>
-        <div class="node-label">Периорбітальний Тонус</div>
-      </div>
-
-      <!-- Node 4: Cellular Hydro Reset -->
-      <div class="impulse-node node-cellular" onclick="triggerImpulse(this, event, 'cellular')">
-        <div class="node-core"></div>
-        <div class="node-label">Клітинний Ресет</div>
+    <!-- Callout 1: Orbital & Temple (Top Left) -->
+    <div class="callout-node active" id="node-0" style="top: 35%; left: 42%;" onclick="activateNode(0, event)">
+      <div class="diamond-reticle"></div>
+      <div class="callout-wing left-wing">
+        <svg class="leader-svg" viewBox="0 0 80 26">
+          <polyline class="leader-line" points="80,13 62,3 0,3" />
+        </svg>
+        <div class="wing-typography">
+          <span class="wing-index">01 · ОРБІТА</span>
+          <span class="wing-title">Світло погляду</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Editorial Narrative Drawer (Revealed with bespoke words after impulse) -->
-  <div class="editorial-drawer" id="editorialDrawer">
-    <div class="drawer-top-bar">
-      <span class="drawer-tag" id="drawerTag">АНАТОМІЧНА ТОЧКА 01</span>
-      <button class="drawer-close-btn" onclick="resetPerspective()">✕</button>
+    <!-- Callout 2: Zygomatic Arch / Collagen Lattice (Mid Right) -->
+    <div class="callout-node" id="node-1" style="top: 45%; left: 58%;" onclick="activateNode(1, event)">
+      <div class="diamond-reticle"></div>
+      <div class="callout-wing right-wing">
+        <svg class="leader-svg" viewBox="0 0 80 26">
+          <polyline class="leader-line" points="0,13 18,3 80,3" />
+        </svg>
+        <div class="wing-typography">
+          <span class="wing-index">02 · МАТРИКС</span>
+          <span class="wing-title">Шовкова дуга</span>
+        </div>
+      </div>
     </div>
-    <h3 class="drawer-title" id="drawerTitle">Чіткість овалу без втручання в міміку</h3>
-    <p class="drawer-text" id="drawerText">
-      Акустична реполяризація зв'язкового апарату на обладнанні Zemits Verstand HD. Скорочення розтягнутого SMAS-шару повертає архітектурну чистоту профілю без скальпеля та філерів.
-    </p>
-    <div class="drawer-actions">
-      <button class="drawer-action-btn btn-gold" id="drawerActionBtn" onclick="transitionToNextScene()">
-        Перейти до структури тканин →
-      </button>
-      <button class="drawer-action-btn btn-ghost" onclick="resetPerspective()">
-        Оглянути все обличчя
-      </button>
+
+    <!-- Callout 3: Mandibular SMAS Vector (Lower Left) -->
+    <div class="callout-node" id="node-2" style="top: 56%; left: 43%;" onclick="activateNode(2, event)">
+      <div class="diamond-reticle"></div>
+      <div class="callout-wing left-wing">
+        <svg class="leader-svg" viewBox="0 0 80 26">
+          <polyline class="leader-line" points="80,13 62,23 0,23" />
+        </svg>
+        <div class="wing-typography">
+          <span class="wing-index">03 · SMAS КАРКАС</span>
+          <span class="wing-title">Лінія профілю</span>
+        </div>
+      </div>
     </div>
+
+    <!-- Callout 4: Cellular Core (Bottom Right) -->
+    <div class="callout-node" id="node-3" style="top: 63%; left: 56%;" onclick="activateNode(3, event)">
+      <div class="diamond-reticle"></div>
+      <div class="callout-wing right-wing">
+        <svg class="leader-svg" viewBox="0 0 80 26">
+          <polyline class="leader-line" points="0,13 18,23 80,23" />
+        </svg>
+        <div class="wing-typography">
+          <span class="wing-index">04 · ГЛИБИНА</span>
+          <span class="wing-title">Живий резонанс</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="bottom-coords-tag">
-    36.51° N · MEDTECH HAUTE COUTURE · ZEMITS HD
+  <!-- Interactive X-Ray Laser Rail (Right Margin) -->
+  <div class="scanner-rail" id="scannerRail" title="Керування променем сканера">
+    <div class="rail-line">
+      <div class="rail-thumb" id="railThumb"></div>
+    </div>
+    <span class="rail-caption">X-RAY</span>
   </div>
 
-  <div class="tap-hint-pill" id="tapHint">
-    Торкніться точки для імпульсу
+  <!-- 3. FRAMELESS HUD ARCHITECTURE -->
+  <div class="hud-layer">
+
+    <!-- Top Bar -->
+    <header class="top-architecture">
+      <div class="brand-signature" onclick="switchScene(0, 0.5, 0.45)">
+        <div class="brand-monogram">S · K · Y</div>
+        <div class="brand-sub">Skin Keep Youthful · Marbella</div>
+      </div>
+
+      <div class="telemetry-corner">
+        <div class="telemetry-coord" id="hudCoord">36.51° N · 04.88° W</div>
+        <div class="telemetry-live">
+          <span class="pulse-pip"></span>
+          <span id="hudFreq">2.50 MHZ HARMONIC</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Bottom Whisper + Sine Wave + Chronograph Arc -->
+    <footer class="bottom-architecture">
+
+      <div class="editorial-whisper" id="whisperBlock">
+        <div class="whisper-telemetry" id="whisperTelemetry">I · БІОМЕТРИЧНИЙ РЕЛЬЄФ · 0.0 ММ</div>
+        <h1 class="whisper-headline" id="whisperHeadline">Чистота скульптурних ліній без втручання</h1>
+        <p class="whisper-body" id="whisperBody">
+          Дотик до точок або оберт хронографа пробуджує оптичну хвилю та відкриває внутрішні шари живого колагену.
+        </p>
+      </div>
+
+      <!-- 2.5 MHz Acoustic Frequency Sine String -->
+      <div class="frequency-string-wrap" id="freqWrap">
+        <canvas id="sine-canvas"></canvas>
+      </div>
+
+      <!-- Swiss Chronograph Curved Dial -->
+      <nav class="chronograph-dial">
+        <svg class="dial-arc-svg" viewBox="0 0 360 44">
+          <!-- Curved hairline arc -->
+          <path d="M 10,38 Q 180,-8 350,38" fill="none" stroke="rgba(212,175,55,0.28)" stroke-width="0.75" />
+          <!-- Fine millimeter chronograph ticks -->
+          <g stroke="rgba(212,175,55,0.45)" stroke-width="0.75">
+            <line x1="30" y1="30" x2="32" y2="35" />
+            <line x1="60" y1="22" x2="61" y2="26" />
+            <line x1="90" y1="17" x2="91" y2="21" />
+            <line x1="120" y1="14" x2="120" y2="18" />
+            <line x1="150" y1="12" x2="150" y2="16" />
+            <line x1="180" y1="9"  x2="180" y2="17" stroke="#D4AF37" stroke-width="1.2" />
+            <line x1="210" y1="12" x2="210" y2="16" />
+            <line x1="240" y1="14" x2="240" y2="18" />
+            <line x1="270" y1="17" x2="269" y2="21" />
+            <line x1="300" y1="22" x2="299" y2="26" />
+            <line x1="330" y1="30" x2="328" y2="35" />
+          </g>
+          <!-- Active indicator diamond on the arc -->
+          <polygon id="arcPointer" points="60,20 64,24 60,28 56,24" fill="#EFE2C6" />
+        </svg>
+
+        <div class="dial-states">
+          <button class="dial-state-btn active" id="dial-0" onclick="switchScene(0, 0.5, 0.45)">
+            <span class="dial-state-roman">I</span>
+            <span class="dial-state-name">Рельєф</span>
+          </button>
+          <button class="dial-state-btn" id="dial-1" onclick="switchScene(1, 0.64, 0.46)">
+            <span class="dial-state-roman">II</span>
+            <span class="dial-state-name">Матрикс</span>
+          </button>
+          <button class="dial-state-btn" id="dial-2" onclick="switchScene(2, 0.52, 0.55)">
+            <span class="dial-state-roman">III</span>
+            <span class="dial-state-name">Резонанс</span>
+          </button>
+        </div>
+      </nav>
+
+    </footer>
+
   </div>
 
+  <!-- ======================================================================
+       4. CUSTOM GLSL SHADER ENGINE (DEPTH PARALLAX + LIQUID SHOCKWAVE + X-RAY)
+       ====================================================================== -->
   <script>
-    const stage = document.getElementById('visualStage');
-    const drawer = document.getElementById('editorialDrawer');
-    const resetBtn = document.getElementById('resetBtn');
-    const tapHint = document.getElementById('tapHint');
-    const mainArtwork = document.getElementById('mainArtwork');
-    const nodes = document.querySelectorAll('.impulse-node');
-
-    let isZoomed = false;
-    let activeZone = null;
-
-    // Bespoke Art Director Data (Genuine High-End Editorial, zero AI cliches)
-    const architecturalPoints = {
-      smas: {
-        tag: "АНАТОМІЧНИЙ ВЕКТОР // SMAS",
-        title: "Чистота овалу без спотворення міміки",
-        text: "Акустичне скорочення м'язово-апоневротичної системи на протоколах Zemits Verstand HD. Відновлення природного натягу зв'язок нижньої третини обличчя без розрізів, уколів чи зміни ваших унікальних рис.",
-        zoom: { scale: 1.85, x: 22, y: -12 },
-        nextAction: "Перейти до клітинного каркасу",
-        nextScene: "winner_concept_2_cellularorb.jpg"
+    // Editorial Data for the 4 Anatomical Nodes & 3 Scenes
+    const NODES_DATA = [
+      {
+        scene: 0,
+        uv: [0.37, 0.64],
+        freq: "2.50 MHZ · PERIORBITAL",
+        telemetry: "01 · ОРБІТАЛЬНИЙ КОНТУР · ГЛИБИНА 1.5 ММ",
+        headline: "Світло відпочилого погляду",
+        body: "Тонка біополяризація знімає спазм колового м'яза та повертає невагому щільність тканинам навколо очей."
       },
-      collagen: {
-        tag: "ДЕРМАЛЬНА МАТРИЦЯ // 42°C",
-        title: "Неоколагенез та природне сяйво вилиць",
-        text: "Контрольована радіочастотна індукція тепла у глибокі шари дерми. Старі розтягнуті волокна колагену ущільнюються, а фібробласти запускають синтез молодого матриксу, що відбиває сонячне світло.",
-        zoom: { scale: 1.8, x: -24, y: 18 },
-        nextAction: "Дослідити біокапіляри",
-        nextScene: "batch3_concept_2_marble_capillaries.jpg"
+      {
+        scene: 1,
+        uv: [0.64, 0.54],
+        freq: "42.0 °C · COLLAGEN LATTICE",
+        telemetry: "02 · ДЕРМАЛЬНИЙ МАТРИКС · ГЛИБИНА 3.0 ММ",
+        headline: "Внутрішнє сплетіння живого золота",
+        body: "Під прозорою поверхнею шкіри пробуджується мережа еластину й колагенових ниток, що тримають високу виличну дугу."
       },
-      periorbital: {
-        tag: "МІКРОСТРУМ // АТФ +500%",
-        title: "Відпочилий погляд без набряків",
-        text: "Клітинна біополяризація відновлює мікроциркуляцію навколо очей. М'який лімфодренаж знімає втому середземноморського сонця за один сеанс, стираючи дрібну сітку заломів.",
-        zoom: { scale: 2.1, x: 5, y: 32 },
-        nextAction: "Перейти до гідро-балансу",
-        nextScene: "batch3_concept_1_acoustic_gold.jpg"
+      {
+        scene: 0,
+        uv: [0.39, 0.41],
+        freq: "4.50 MM · SMAS TENSOR",
+        telemetry: "03 · АРХІТЕКТУРА ОВАЛУ · ГЛИБИНА 4.5 ММ",
+        headline: "Точена лінія профілю без скальпеля",
+        body: "Акустична хвиля ущільнює глибокий зв'язковий каркас обличчя, зберігаючи природну живу пластику кожної риси."
       },
-      cellular: {
-        tag: "СЕРЕДЗЕМНОМОРСЬКИЙ РЕСЕТ",
-        title: "Глибоке зволоження виснаженої сонцем шкіри",
-        text: "Вихровий вакуумний гідропілінг атравматично очищує пори та доставляє біоміметичні пептиди у відкриті протоки. Абсолютний ефект шовкової шкіри (Glass Skin) з нульовою реабілітацією.",
-        zoom: { scale: 1.75, x: -2, y: -35 },
-        nextAction: "Переглянути орб регенерації",
-        nextScene: "winner_concept_2_cellularorb.jpg"
+      {
+        scene: 2,
+        uv: [0.58, 0.34],
+        freq: "ACOUSTIC LEVITATION CORE",
+        telemetry: "04 · КЛІТИННИЙ РЕЗОНАНС · МОЛЕКУЛЯРНИЙ РІВЕНЬ",
+        headline: "Невагома сфера чистого відновлення",
+        body: "Звукові кільця проводять пептидні комплекси крізь ліпідний бар'єр, наповнюючи клітини вологою та внутрішнім сяйвом."
       }
+    ];
+
+    const SCENE_DEFAULTS = [
+      {
+        telemetry: "I · БІОМЕТРИЧНИЙ РЕЛЬЄФ · ПОВЕРХНЯ ТА SMAS",
+        headline: "Чистота скульптурних ліній без втручання",
+        body: "Дотик до прицілів ◈ або поворот хронографа запускає оптичну хвилю та відкриває глибокі рівні тканин.",
+        arcX: 60,
+        calloutsVisible: true
+      },
+      {
+        telemetry: "II · ПІДШКІРНИЙ МАТРИКС · БІОЛЮМІНЕСЦЕНЦІЯ ВОЛОКОН",
+        headline: "Архітектура невидимих колагенових зв'язків",
+        body: "Крізь напівпрозорий рельєф проявляється жива золота сітка капілярів і фібробластів, збуджених теплом 42°C.",
+        arcX: 180,
+        calloutsVisible: true
+      },
+      {
+        telemetry: "III · АКУСТИЧНЕ ЯДРО · КЛІТИННА ЛЕВІТАЦІЯ",
+        headline: "Гармоніка чистої клітинної енергії",
+        body: "Концентричні акустичні хвилі утримують краплю активної сироватки у стані невагомого резонансу.",
+        arcX: 300,
+        calloutsVisible: false
+      }
+    ];
+
+    // ====================================================================
+    // WEBGL SHADER SETUP (Three.js Full-Screen Quad)
+    // ====================================================================
+    const canvas = document.getElementById('webgl-stage');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+    const loader = new THREE.TextureLoader();
+    const tex0 = loader.load('pure_scene_1_facemesh.jpg');
+    const tex1 = loader.load('pure_scene_2_dermal_matrix.jpg');
+    const tex2 = loader.load('pure_scene_3_acoustic_core.jpg');
+
+    [tex0, tex1, tex2].forEach(t => {
+      t.minFilter = THREE.LinearFilter;
+      t.magFilter = THREE.LinearFilter;
+      t.wrapS = THREE.ClampToEdgeWrapping;
+      t.wrapT = THREE.ClampToEdgeWrapping;
+    });
+
+    const uniforms = {
+      uTexfrom: { value: tex0 },
+      uTexto: { value: tex0 },
+      uProgress: { value: 0.0 },
+      uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      uImageAspect: { value: 9.0 / 16.0 },
+      uMouse: { value: new THREE.Vector2(0.0, 0.0) },
+      uRippleCenter: { value: new THREE.Vector2(0.5, 0.5) },
+      uRippleStrength: { value: 0.0 },
+      uRippleTime: { value: 0.0 },
+      uLaserY: { value: 0.68 },
+      uTime: { value: 0.0 }
     };
 
-    // TRIGGER KINETIC IMPULSE & CAMERA ZOOM
-    function triggerImpulse(nodeEl, event, pointKey) {
-      event.stopPropagation();
-      const data = architecturalPoints[pointKey];
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    // Custom Designer Fragment Shader:
+    // 1. Aspect-corrected seamless placement on #000000 void (zero frame borders)
+    // 2. 2.5D Volumetric Depth-Map "Look-At" Parallax
+    // 3. Interactive X-Ray Laser Lens Pass (color-dodge golden lattice amplification)
+    // 4. Liquid Gold Chromatic Shockwave & Smooth Directional Morph (gl-transitions)
+    const fragmentShader = `
+      precision highp float;
+      varying vec2 vUv;
+
+      uniform sampler2D uTexfrom;
+      uniform sampler2D uTexto;
+      uniform float uProgress;
+      uniform vec2 uResolution;
+      uniform float uImageAspect;
+      uniform vec2 uMouse;
+      uniform vec2 uRippleCenter;
+      uniform float uRippleStrength;
+      uniform float uRippleTime;
+      uniform float uLaserY;
+      uniform float uTime;
+
+      // Map screen UV to artwork UV while keeping pure #000000 edges
+      vec2 getArtworkUv(vec2 uv) {
+        float screenAspect = uResolution.x / uResolution.y;
+        vec2 centered = uv - 0.5;
+        if (screenAspect > uImageAspect) {
+          // Wide screen (desktop/tablet): fit height cleanly with breathing room
+          centered.x *= screenAspect / uImageAspect;
+          centered *= 1.06;
+        } else {
+          // Mobile tall screen: fill seamlessly
+          centered.y *= uImageAspect / screenAspect;
+          centered *= 0.96;
+        }
+        return centered + 0.5;
+      }
+
+      // Synthetic volumetric facial depth field + luminance depth for 2.5D Look-At
+      float getSyntheticDepth(vec2 artUv, vec3 texCol) {
+        vec2 p = artUv - vec2(0.5, 0.52);
+        p.x *= 1.35;
+        float headDome = smoothstep(0.45, 0.0, length(p));
+        float noseBridge = smoothstep(0.14, 0.0, length(artUv - vec2(0.5, 0.49)));
+        float luma = dot(texCol, vec3(0.299, 0.587, 0.114));
+        return clamp(headDome * 0.65 + noseBridge * 0.35 + luma * 0.35, 0.0, 1.0);
+      }
+
+      vec4 sampleWithDepthAndChroma(sampler2D tex, vec2 artUv, vec2 parallax, vec2 rippleOffset, float chromaAmt) {
+        if (artUv.x < 0.0 || artUv.x > 1.0 || artUv.y < 0.0 || artUv.y > 1.0) {
+          return vec4(0.0, 0.0, 0.0, 1.0);
+        }
+        vec3 baseSample = texture2D(tex, artUv).rgb;
+        float depth = getSyntheticDepth(artUv, baseSample);
+
+        // 2.5D Look-At displacement scaled by depth
+        vec2 displacedUv = artUv + parallax * (depth - 0.3) * 0.032 + rippleOffset;
+
+        // Chromatic dispersion along the shockwave
+        vec2 shift = (rippleOffset + parallax * 0.004) * chromaAmt;
+        float r = texture2D(tex, clamp(displacedUv + shift * 1.4, 0.001, 0.999)).r;
+        float g = texture2D(tex, clamp(displacedUv, 0.001, 0.999)).g;
+        float b = texture2D(tex, clamp(displacedUv - shift * 1.4, 0.001, 0.999)).b;
+
+        // Smooth vignette fade to pure #000000 at artwork boundaries
+        float edgeX = smoothstep(0.0, 0.08, artUv.x) * smoothstep(1.0, 0.92, artUv.x);
+        float edgeY = smoothstep(0.0, 0.08, artUv.y) * smoothstep(1.0, 0.92, artUv.y);
+        float mask = edgeX * edgeY;
+
+        return vec4(vec3(r, g, b) * mask, 1.0);
+      }
+
+      void main() {
+        vec2 artUv = getArtworkUv(vUv);
+
+        // Subtle autonomous breathing + user Look-At pointer/gyro
+        vec2 breath = vec2(sin(uTime * 0.6) * 0.12, cos(uTime * 0.45) * 0.12);
+        vec2 lookAt = uMouse + breath;
+
+        // Liquid Gold Shockwave calculation
+        vec2 toCenter = vUv - uRippleCenter;
+        toCenter.x *= uResolution.x / uResolution.y;
+        float dist = length(toCenter);
+
+        float waveRadius = uRippleTime * 1.35;
+        float band = exp(-pow((dist - waveRadius) * 9.5, 2.0));
+        float waveSin = sin((dist - waveRadius) * 38.0);
+        vec2 rippleDir = normalize(toCenter + 0.0001);
+        vec2 rippleOffset = rippleDir * waveSin * band * uRippleStrength * 0.038;
+
+        // Sample outgoing and incoming scenes with 2.5D depth & liquid refraction
+        float chroma = 1.0 + band * uRippleStrength * 8.0;
+        vec4 colFrom = sampleWithDepthAndChroma(uTexfrom, artUv, lookAt, rippleOffset, chroma);
+        vec4 colTo   = sampleWithDepthAndChroma(uTexto,   artUv, lookAt, rippleOffset * 0.7, chroma);
+
+        // Radial + Luma organic shader morph (gl-transitions CrossWarp + Radial Luma)
+        float radialMask = smoothstep(
+          uProgress * 1.45 - 0.25,
+          uProgress * 1.45 + 0.25,
+          1.0 - dist * 0.65 + dot(colTo.rgb, vec3(0.33)) * 0.25
+        );
+        float mixFactor = clamp(mix(uProgress, radialMask, 0.65), 0.0, 1.0);
+        vec3 color = mix(colFrom.rgb, colTo.rgb, mixFactor);
+
+        // Add golden caustic flash on the shockwave ring crest
+        vec3 goldCrest = vec3(0.95, 0.78, 0.38) * band * uRippleStrength * 0.55;
+        color += goldCrest;
+
+        // Interactive X-Ray Laser Scanner Pass
+        float laserDist = abs(vUv.y - uLaserY);
+        float laserBeam = exp(-laserDist * 140.0);
+        float laserAura = exp(-laserDist * 22.0);
+
+        // Inside the X-Ray lens band, amplify golden filaments & fine holographic scan grid
+        float luma = dot(color, vec3(0.299, 0.587, 0.114));
+        float scanGrid = 0.5 + 0.5 * sin(vUv.x * uResolution.x * 0.45);
+        vec3 xrayHighlight = vec3(1.0, 0.85, 0.48) * pow(luma, 1.2) * laserAura * (0.55 + 0.45 * scanGrid);
+        vec3 laserCoreLine = vec3(1.0, 0.92, 0.72) * laserBeam * (0.28 + luma * 0.75);
+
+        color += xrayHighlight + laserCoreLine;
+
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader,
+      fragmentShader,
+      depthWrite: false,
+      depthTest: false
+    });
+
+    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(quad);
+
+    // ====================================================================
+    // INTERACTION: 2.5D LOOK-AT, SHOCKWAVE IMPULSE & SCENE MORPHING
+    // ====================================================================
+    const textures = [tex0, tex1, tex2];
+    let currentSceneIdx = 0;
+    let targetMouse = { x: 0, y: 0 };
+    let laserAutoSweep = true;
+    let manualLaserY = 0.68;
+    let sineExcitation = 1.0;
+
+    function triggerShockwave(normX, normY) {
+      uniforms.uRippleCenter.value.set(normX, 1.0 - normY);
+      uniforms.uRippleTime.value = 0.0;
+      uniforms.uRippleStrength.value = 1.0;
+      sineExcitation = 3.2;
+
+      gsap.to(uniforms.uRippleTime, {
+        value: 1.25,
+        duration: 1.35,
+        ease: "power2.out"
+      });
+      gsap.to(uniforms.uRippleStrength, {
+        value: 0.0,
+        duration: 1.35,
+        ease: "power2.out"
+      });
+    }
+
+    function updateWhisper(telemetry, headline, body, freq) {
+      const block = document.getElementById('whisperBlock');
+      if (freq) document.getElementById('hudFreq').textContent = freq;
+
+      gsap.to(block, {
+        opacity: 0,
+        y: 6,
+        duration: 0.22,
+        onComplete: () => {
+          document.getElementById('whisperTelemetry').textContent = telemetry;
+          document.getElementById('whisperHeadline').textContent = headline;
+          document.getElementById('whisperBody').textContent = body;
+          gsap.to(block, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" });
+        }
+      });
+    }
+
+    function switchScene(targetIdx, rippleX = 0.5, rippleY = 0.5, customWhisper = null) {
+      triggerShockwave(rippleX, rippleY);
+
+      // Update Chronograph Dial UI
+      document.querySelectorAll('.dial-state-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === targetIdx);
+      });
+
+      const sceneMeta = SCENE_DEFAULTS[targetIdx];
+      const pointer = document.getElementById('arcPointer');
+      const arcY = targetIdx === 1 ? 4 : 20;
+      const xPos = sceneMeta.arcX;
+      pointer.setAttribute('points', `${xPos},${arcY} ${xPos+4},${arcY+4} ${xPos},${arcY+8} ${xPos-4},${arcY+4}`);
+
+      // Toggle anatomical callouts visibility cleanly
+      const calloutsStage = document.getElementById('calloutsStage');
+      gsap.to(calloutsStage, {
+        opacity: sceneMeta.calloutsVisible ? 1 : 0.18,
+        duration: 0.5
+      });
+
+      if (targetIdx !== currentSceneIdx) {
+        uniforms.uTexfrom.value = textures[currentSceneIdx];
+        uniforms.uTexto.value = textures[targetIdx];
+        uniforms.uProgress.value = 0.0;
+
+        gsap.to(uniforms.uProgress, {
+          value: 1.0,
+          duration: 1.15,
+          ease: "power3.inOut",
+          onComplete: () => {
+            uniforms.uTexfrom.value = textures[targetIdx];
+            uniforms.uProgress.value = 0.0;
+          }
+        });
+        currentSceneIdx = targetIdx;
+      }
+
+      if (customWhisper) {
+        updateWhisper(customWhisper.telemetry, customWhisper.headline, customWhisper.body, customWhisper.freq);
+      } else {
+        updateWhisper(sceneMeta.telemetry, sceneMeta.headline, sceneMeta.body);
+      }
+    }
+
+    function activateNode(nodeIdx, event) {
+      if (event) event.stopPropagation();
+      const data = NODES_DATA[nodeIdx];
       if (!data) return;
 
-      activeZone = pointKey;
-
-      // 1. GENERATE VISUAL KINETIC SHOCKWAVE FROM THE TAPPED NODE
-      createShockwave(event.clientX, event.clientY);
-
-      // 2. HIDE OTHER NODES TEMPORARILY
-      nodes.forEach(n => {
-        if (n !== nodeEl) {
-          gsap.to(n, { opacity: 0, duration: 0.3 });
-        }
+      document.querySelectorAll('.callout-node').forEach((el, i) => {
+        el.classList.toggle('active', i === nodeIdx);
       });
 
-      // 3. CINEMATIC CAMERA ZOOM & FOCUS
-      isZoomed = true;
-      resetBtn.classList.add('visible');
-      tapHint.style.display = 'none';
+      const clickX = event ? (event.clientX / window.innerWidth) : data.uv[0];
+      const clickY = event ? (event.clientY / window.innerHeight) : (1.0 - data.uv[1]);
 
-      gsap.to(stage, {
-        scale: data.zoom.scale,
-        xPercent: data.zoom.x,
-        yPercent: data.zoom.y,
-        duration: 0.9,
-        ease: "power3.inOut"
-      });
-
-      // 4. POPULATE & REVEAL EDITORIAL DRAWER
-      document.getElementById('drawerTag').textContent = data.tag;
-      document.getElementById('drawerTitle').textContent = data.title;
-      document.getElementById('drawerText').textContent = data.text;
-      document.getElementById('drawerActionBtn').textContent = data.nextAction;
-
-      setTimeout(() => {
-        drawer.classList.add('open');
-      }, 350);
-    }
-
-    // CREATE KINETIC SHOCKWAVE ELEMENT
-    function createShockwave(x, y) {
-      const ring = document.createElement('div');
-      ring.className = 'shockwave-ring';
-      ring.style.left = x + 'px';
-      ring.style.top = y + 'px';
-      ring.style.width = '40px';
-      ring.style.height = '40px';
-      document.body.appendChild(ring);
-
-      gsap.to(ring, {
-        scale: 14,
-        opacity: 0,
-        borderWidth: '0px',
-        duration: 0.9,
-        ease: "power2.out",
-        onComplete: () => {
-          ring.remove();
-        }
-      });
-
-      // Flash background slightly
-      gsap.fromTo('.celestial-halo', 
-        { opacity: 1, scale: 1.3 }, 
-        { opacity: 0.7, scale: 1, duration: 0.8 }
-      );
-    }
-
-    // RESET TO MASTER SCENE
-    function resetPerspective() {
-      drawer.classList.remove('open');
-      resetBtn.classList.remove('visible');
-      tapHint.style.display = 'block';
-
-      gsap.to(stage, {
-        scale: 1,
-        xPercent: 0,
-        yPercent: 0,
-        duration: 0.75,
+      // Move X-Ray Laser lens to the tapped anatomical node
+      laserAutoSweep = false;
+      gsap.to(uniforms.uLaserY, {
+        value: 1.0 - clickY,
+        duration: 0.7,
         ease: "power3.out",
-        onComplete: () => {
-          nodes.forEach(n => gsap.to(n, { opacity: 1, duration: 0.3 }));
-          isZoomed = false;
+        onUpdate: () => {
+          document.getElementById('railThumb').style.top = `${(1.0 - uniforms.uLaserY.value) * 100}%`;
         }
       });
+
+      switchScene(data.scene, clickX, clickY, data);
     }
 
-    // SCENE TRANSITION (MORPHING INTO NEXT ARTWORK SCENE)
-    function transitionToNextScene() {
-      if (!activeZone) return;
-      const data = architecturalPoints[activeZone];
-      if (!data || !data.nextScene) return;
+    // Pointer / Touch Look-At & Ripple
+    window.addEventListener('pointermove', (e) => {
+      const nx = (e.clientX / window.innerWidth) * 2.0 - 1.0;
+      const ny = -((e.clientY / window.innerHeight) * 2.0 - 1.0);
+      targetMouse.x = nx;
+      targetMouse.y = ny;
 
-      // Create full-screen acoustic flash
-      const flash = document.createElement('div');
-      flash.style.position = 'fixed';
-      flash.style.top = '0';
-      flash.style.left = '0';
-      flash.style.width = '100vw';
-      flash.style.height = '100vh';
-      flash.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, transparent 80%)';
-      flash.style.zIndex = '60';
-      flash.style.pointerEvents = 'none';
-      document.body.appendChild(flash);
+      const lat = (36.51 + ny * 0.04).toFixed(2);
+      const lon = (4.88 + nx * 0.04).toFixed(2);
+      document.getElementById('hudCoord').textContent = `${lat}° N · 0${lon}° W`;
+    });
 
-      gsap.to(flash, {
-        opacity: 0,
-        duration: 0.8,
+    // Tap anywhere on the WebGL stage for a liquid ripple & X-Ray focus
+    canvas.addEventListener('pointerdown', (e) => {
+      const nx = e.clientX / window.innerWidth;
+      const ny = e.clientY / window.innerHeight;
+      triggerShockwave(nx, ny);
+      laserAutoSweep = false;
+      gsap.to(uniforms.uLaserY, {
+        value: 1.0 - ny,
+        duration: 0.6,
         ease: "power2.out",
-        onComplete: () => flash.remove()
-      });
-
-      // Crossfade artwork image
-      gsap.to(mainArtwork, {
-        opacity: 0.2,
-        duration: 0.3,
-        onComplete: () => {
-          mainArtwork.src = data.nextScene;
-          gsap.to(mainArtwork, { opacity: 1, duration: 0.6 });
+        onUpdate: () => {
+          document.getElementById('railThumb').style.top = `${(1.0 - uniforms.uLaserY.value) * 100}%`;
         }
       });
+    });
 
-      // Update drawer
-      document.getElementById('drawerTag').textContent = "ГЛИБОКИЙ РІВЕНЬ // ЗАНУРЕННЯ";
-      document.getElementById('drawerTitle').textContent = "Внутрішня мікроструктура регенерації";
-      document.getElementById('drawerText').textContent = "Апаратна дія на рівні ліпідного шару та позаклітинного матриксу. Клітини насичуються поживними елементами, поновлюючи природний бар'єр.";
-      document.getElementById('drawerActionBtn').textContent = "Повернутися до загального плану";
-      document.getElementById('drawerActionBtn').onclick = () => {
-        mainArtwork.src = 'winner_concept_1_facemesh.jpg';
-        resetPerspective();
-      };
+    // Mobile Gyroscope 2.5D Look-At
+    window.addEventListener('deviceorientation', (e) => {
+      if (e.gamma !== null && e.beta !== null) {
+        targetMouse.x = Math.max(-1, Math.min(1, e.gamma / 25));
+        targetMouse.y = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+      }
+    });
+
+    // Resize Handler
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+      resizeSineCanvas();
+    });
+
+    // ====================================================================
+    // LIVING 2.5 MHZ ACOUSTIC SINE STRING (CANVAS 2D OSCILLOSCOPE)
+    // ====================================================================
+    const sineCanvas = document.getElementById('sine-canvas');
+    const sineCtx = sineCanvas.getContext('2d');
+
+    function resizeSineCanvas() {
+      const rect = sineCanvas.parentElement.getBoundingClientRect();
+      sineCanvas.width = rect.width * Math.min(window.devicePixelRatio, 2);
+      sineCanvas.height = rect.height * Math.min(window.devicePixelRatio, 2);
+    }
+    resizeSineCanvas();
+
+    function renderSineWave(time) {
+      const w = sineCanvas.width;
+      const h = sineCanvas.height;
+      sineCtx.clearRect(0, 0, w, h);
+
+      sineExcitation += (1.0 - sineExcitation) * 0.04;
+
+      for (let layer = 0; layer < 2; layer++) {
+        sineCtx.beginPath();
+        const amp = (layer === 0 ? 5.5 : 3.0) * sineExcitation * (window.devicePixelRatio || 1);
+        const freq = layer === 0 ? 0.025 : 0.042;
+        const speed = layer === 0 ? 3.2 : -2.4;
+
+        for (let x = 0; x <= w; x += 3) {
+          const normX = x / w;
+          const envelope = Math.sin(normX * Math.PI);
+          const y = h / 2 + Math.sin(x * freq + time * speed) * amp * envelope;
+          if (x === 0) sineCtx.moveTo(x, y);
+          else sineCtx.lineTo(x, y);
+        }
+
+        sineCtx.strokeStyle = layer === 0 ? 'rgba(212, 175, 55, 0.78)' : 'rgba(239, 226, 198, 0.32)';
+        sineCtx.lineWidth = layer === 0 ? 1.2 : 0.8;
+        sineCtx.stroke();
+      }
     }
 
-    // Ambient mouse tilt on master canvas (subtle, quiet luxury)
-    window.addEventListener('mousemove', (e) => {
-      if (isZoomed) return;
-      const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-      const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+    // ====================================================================
+    // MASTER 60FPS RENDER LOOP
+    // ====================================================================
+    const clock = new THREE.Clock();
 
-      stage.style.transform = `rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
-    });
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
+      uniforms.uTime.value = elapsed;
 
-    // Device orientation for mobile tilt
-    window.addEventListener('deviceorientation', (e) => {
-      if (isZoomed) return;
-      if (e.beta && e.gamma) {
-        const rotX = Math.max(-8, Math.min(8, e.beta - 45)) * 0.4;
-        const rotY = Math.max(-8, Math.min(8, e.gamma)) * 0.4;
-        stage.style.transform = `rotateX(${-rotX}deg) rotateY(${rotY}deg)`;
+      // Smoothly interpolate Look-At vector
+      uniforms.uMouse.value.x += (targetMouse.x - uniforms.uMouse.value.x) * 0.06;
+      uniforms.uMouse.value.y += (targetMouse.y - uniforms.uMouse.value.y) * 0.06;
+
+      // Autonomous slow X-Ray laser sweep until user takes manual control
+      if (laserAutoSweep) {
+        const autoY = 0.5 + 0.34 * Math.sin(elapsed * 0.55);
+        uniforms.uLaserY.value = autoY;
+        const thumb = document.getElementById('railThumb');
+        if (thumb) thumb.style.top = `${(1.0 - autoY) * 100}%`;
       }
-    });
 
-    // Close when tapping blank canvas area
-    document.getElementById('canvasContainer').addEventListener('click', (e) => {
-      if (isZoomed && !drawer.contains(e.target)) {
-        resetPerspective();
-      }
-    });
+      renderer.render(scene, camera);
+      renderSineWave(elapsed);
+    }
+
+    animate();
   </script>
 </body>
 </html>
