@@ -334,7 +334,8 @@
       object-fit: cover;
       transform: scale(1.04);
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
     }
 
     /* Opening Iris Flash Overlay */
@@ -893,8 +894,8 @@
 
         <!-- Centerpiece Artwork Stage (CLICKING ANYWHERE ON IT FLIPS!) -->
         <div class="biometric-stage" id="biometricStage" onclick="handleStageClick(event)">
-          <div class="biometric-art-wrap" id="biometricArtWrap">
-            <img src="pure_scene_1_facemesh.jpg" alt="S•K•Y Biometric 3D Holographic Mesh" class="biometric-img" id="heroArtImg">
+          <div class="biometric-art-wrap" id="biometricArtWrap" onclick="triggerHotspot('smas', event)">
+            <img src="pure_scene_1_facemesh.jpg" alt="S•K•Y Biometric 3D Holographic Mesh" class="biometric-img" id="heroArtImg" onclick="triggerHotspot('smas', event)">
             <div class="opening-flash-overlay" id="openingFlash"></div>
             <div class="scanning-laser-line"></div>
 
