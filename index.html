@@ -111,14 +111,13 @@
 
     .brand-logo {
       font-family: 'Cinzel', serif;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.2em;
       color: var(--gold-light);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      white-space: nowrap;
+      display: inline-block;
       text-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
     }
 
@@ -637,6 +636,40 @@
     }
     .dock-btn.active .dock-indicator-dot {
       opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      .app-header {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .brand-logo {
+        font-size: 16px;
+        letter-spacing: 0.16em;
+      }
+      .header-center-chapter {
+        font-size: 8.5px;
+        letter-spacing: 0.08em;
+        padding: 4px 8px;
+        max-width: 155px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .header-whatsapp-btn {
+        font-size: 8.5px;
+        letter-spacing: 0.08em;
+        padding: 5px 9px;
+      }
+      .tactical-hotspot {
+        padding: 4px 8px;
+      }
+      .hotspot-tag-title {
+        font-size: 9px;
+      }
+      .hotspot-tag-sub {
+        font-size: 7.5px;
+      }
     }
   </style>
 </head>
