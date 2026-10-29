@@ -12,7 +12,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- GSAP Core & ScrollTrigger for Cinematic Smooth Scrollytelling -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -295,7 +295,7 @@
       justify-content: space-between;
     }
 
-    /* Pulsing Tactical Hotspots Over Full-Screen Face */
+    /* Pulsing Tactical Biometric Reticles Over Full-Screen Face */
     .tactical-hotspots-wrap {
       position: absolute;
       inset: 0;
@@ -310,70 +310,90 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       transform: translate(-50%, -50%);
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 6px 12px;
-      background: rgba(10, 9, 8, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(212, 175, 55, 0.55);
-      border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: auto;
     }
     .tactical-hotspot:active {
       transform: translate(-50%, -50%) scale(0.92);
-      border-color: #FFF;
-      background: rgba(212, 175, 55, 0.35);
     }
 
-    .hotspot-beacon {
-      width: 22px;
-      height: 22px;
+    .reticle-beacon {
+      width: 26px;
+      height: 26px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none;
+      flex-shrink: 0;
     }
 
     .beacon-core {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: #FFF;
       box-shadow: 0 0 10px #D4AF37, 0 0 20px #FFF;
-      z-index: 2;
+      z-index: 3;
     }
 
     .beacon-ring-1, .beacon-ring-2 {
       position: absolute;
       border-radius: 50%;
       border: 1px solid var(--gold);
-      animation: beaconPulse 2.4s infinite ease-out;
+      animation: beaconPulse 2.8s infinite ease-out;
     }
     .beacon-ring-1 { width: 100%; height: 100%; }
-    .beacon-ring-2 { width: 160%; height: 160%; animation-delay: 0.6s; opacity: 0.5; }
+    .beacon-ring-2 { width: 170%; height: 170%; animation-delay: 0.7s; opacity: 0.4; }
 
     @keyframes beaconPulse {
       0% { transform: scale(0.6); opacity: 1; }
       100% { transform: scale(1.6); opacity: 0; }
     }
 
-    .hotspot-tag-title {
+    .reticle-leader {
+      width: 14px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), rgba(212, 175, 55, 0.25));
+    }
+
+    .reticle-glass-tag {
+      padding: 6px 12px;
+      background: rgba(12, 11, 12, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.36);
+      border-radius: 999px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      white-space: nowrap;
+      transition: all 0.25s;
+    }
+    .tactical-hotspot:hover .reticle-glass-tag,
+    .tactical-hotspot:active .reticle-glass-tag {
+      border-color: var(--gold-light);
+      background: rgba(26, 22, 18, 0.92);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
+    }
+
+    .reticle-tag-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: #FFF;
     }
 
-    .hotspot-tag-sub {
-      font-size: 8px;
-      color: var(--gold);
-      letter-spacing: 0.06em;
+    .reticle-tag-sub {
       font-family: 'Space Grotesk', sans-serif;
+      font-size: 7.5px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
     }
 
     /* Calibrated Hotspot Coordinates */
@@ -385,155 +405,233 @@
     /* Downward Scroll Cue */
     .scroll-cue-pill {
       margin-top: auto;
-      margin-bottom: 12px;
+      margin-bottom: 22px;
       align-self: center;
-      padding: 10px 18px;
+      padding: 10px 22px;
       border-radius: 999px;
-      background: rgba(14, 12, 10, 0.75);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--gold-hairline);
+      background: rgba(14, 13, 14, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       color: var(--gold-light);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
-      animation: floatPrompt 2.6s infinite ease-in-out;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      animation: floatPrompt 2.8s infinite ease-in-out;
+      transition: all 0.25s;
+    }
+    .scroll-cue-pill:active {
+      transform: scale(0.96);
+      background: rgba(212, 175, 55, 0.25);
     }
 
     @keyframes floatPrompt {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      50% { transform: translateY(-5px); }
     }
 
-    .scroll-arrow-icon {
-      font-size: 12px;
+    .cue-dot-live {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .cue-arrow-svg {
+      display: block;
       animation: bounceArrow 1.6s infinite ease-in-out;
+      stroke: var(--gold);
     }
     @keyframes bounceArrow {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
+      50% { transform: translateY(3px); }
     }
 
     /* ======================================================================
-       SCROLLYTELLING STORY CARDS (GLIDE IN AS YOU SCROLL)
+       SCROLLYTELLING EDITORIAL LUXURY CARDS (AWARDS TIER)
        ====================================================================== */
     .scrolly-card {
       width: 100%;
-      max-width: 460px;
+      max-width: 480px;
       margin: 0 auto;
-      background: rgba(14, 12, 10, 0.88);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.15);
+      background: linear-gradient(150deg, rgba(16, 14, 15, 0.90) 0%, rgba(8, 7, 8, 0.96) 100%);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 22px;
+      padding: 22px 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.92), 0 0 40px rgba(212, 175, 55, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       transform: translateY(30px);
       opacity: 0;
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .scrolly-card.active {
       transform: translateY(0);
       opacity: 1;
     }
 
-    .card-chapter-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 4px;
+    /* Eyebrow Label */
+    .card-eyebrow-wrap {
       display: flex;
       align-items: center;
-      gap: 6px;
-    }
-    .card-chapter-num::before {
-      content: '';
-      display: inline-block;
-      width: 16px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    .card-headline {
-      font-family: 'Cinzel', serif;
-      font-size: 19px;
-      font-weight: 700;
-      color: #FFF;
-      letter-spacing: 0.04em;
-      line-height: 1.25;
+      gap: 10px;
       margin-bottom: 8px;
     }
-
-    .card-description {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 14px;
+    .eyebrow-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
-
-    /* 4-Metrics Telemetry HUD Inside Cards */
-    .telemetry-specs-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      margin-bottom: 14px;
+    .eyebrow-accent-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.45), transparent);
     }
-
-    .tele-col {
-      text-align: center;
-    }
-    .tele-lbl {
+    .eyebrow-telemetry {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 2px;
-    }
-    .tele-val {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold-champagne);
     }
 
-    /* Action Buttons in Cards */
-    .card-action-btn {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #D4AF37, #9B791B);
-      color: #000;
-      font-family: 'Space Grotesk', sans-serif;
+    /* Editorial Headline with Cormorant Garamond */
+    .card-headline {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .headline-primary {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #FFF;
+      line-height: 1.15;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    .headline-sub {
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      font-weight: 500;
+      color: var(--gold-champagne);
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      border: none;
+    }
+
+    /* Editorial Quote / Description */
+    .card-editorial-quote {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    /* Luxury Telemetry HUD Inside Cards */
+    .luxury-telemetry-hud {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      margin-bottom: 16px;
+    }
+    .hud-metric {
+      text-align: left;
+    }
+    .hud-metric-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 7.5px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3px;
+    }
+    .hud-metric-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+    .hud-metric-val .unit {
+      font-size: 8.5px;
+      font-weight: 500;
+      color: var(--gold-dim);
+    }
+    .hud-metric-bar {
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .hud-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Luxury Action CTA Button */
+    .luxury-action-cta {
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.95), rgba(160, 125, 30, 0.98));
+      color: #060607;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.35);
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
-      transition: transform 0.2s;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
     }
-    .card-action-btn:active {
+    .luxury-action-cta:active {
       transform: scale(0.97);
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25);
+    }
+    .cta-arrow-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.25s;
+    }
+    .luxury-action-cta:hover .cta-arrow-circle {
+      transform: translateX(3px);
     }
 
     /* ======================================================================
@@ -570,27 +668,31 @@
     }
 
     /* ======================================================================
-       5. BOTTOM DOCK (QUICK SCROLL SHORTCUTS)
+       5. FLOATING LUXURY GLASS DOCK (AWWWARDS CAPSULE)
        ====================================================================== */
     .app-dock {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 0px));
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      background: linear-gradient(to top, rgba(6, 6, 7, 0.96) 0%, rgba(6, 6, 7, 0.65) 65%, transparent 100%);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(92%, 380px);
+      height: 62px;
+      padding: 0 6px;
+      background: rgba(14, 13, 14, 0.78);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 999px;
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
       z-index: 100;
-      box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
     .dock-btn {
+      flex: 1;
+      height: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -600,42 +702,43 @@
       border: none;
       color: var(--text-dim);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
-      padding: 6px 12px;
+      border-radius: 999px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    .dock-icon {
-      font-size: 16px;
-      transition: transform 0.25s;
+    .dock-btn svg {
+      stroke: var(--text-dim);
+      transition: stroke 0.25s, transform 0.25s;
     }
-
     .dock-btn.active {
-      color: var(--gold-light);
+      color: #FFF;
+      background: rgba(212, 175, 55, 0.16);
     }
-    .dock-btn.active .dock-icon {
-      transform: translateY(-2px) scale(1.15);
-      filter: drop-shadow(0 0 8px var(--gold));
+    .dock-btn.active svg {
+      stroke: var(--gold-light);
+      transform: translateY(-1px) scale(1.1);
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
     }
 
     .dock-indicator-dot {
       position: absolute;
-      bottom: -2px;
+      bottom: 4px;
       width: 14px;
       height: 2px;
       border-radius: 999px;
       background: var(--gold);
       box-shadow: 0 0 8px var(--gold);
       opacity: 0;
-      transition: opacity 0.2s;
+      transition: opacity 0.25s, transform 0.25s;
     }
     .dock-btn.active .dock-indicator-dot {
       opacity: 1;
+      transform: scaleX(1.2);
     }
 
     @media (max-width: 480px) {
@@ -661,14 +764,27 @@
         letter-spacing: 0.08em;
         padding: 5px 9px;
       }
-      .tactical-hotspot {
-        padding: 4px 8px;
+      .scrolly-card {
+        padding: 18px 18px;
       }
-      .hotspot-tag-title {
-        font-size: 9px;
+      .headline-primary {
+        font-size: 22px;
       }
-      .hotspot-tag-sub {
-        font-size: 7.5px;
+      .card-editorial-quote {
+        font-size: 11px;
+      }
+      .hud-metric-val {
+        font-size: 11.5px;
+      }
+      .app-dock {
+        bottom: 16px;
+        width: 94%;
+        height: 58px;
+      }
+      .dock-btn {
+        height: 44px;
+        font-size: 8px;
+        letter-spacing: 0.1em;
       }
     }
   </style>
@@ -690,7 +806,7 @@
     <!-- Active Scrolly Chapter Indicator -->
     <div class="header-center-chapter" id="headerChapterBadge">
       <span class="pulse-live-indicator"></span>
-      <span id="chapterTitleText">01 / Сканер Обличчя</span>
+      <span id="chapterTitleText">01 / АНАТОМІЧНИЙ СКАНЕР</span>
     </div>
 
     <a href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D0%B8%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%83%20S%E2%80%A2K%E2%80%A2Y" target="_blank" class="header-whatsapp-btn">
@@ -740,53 +856,57 @@
         
         <!-- Hotspot 1: SMAS Vector -->
         <div class="tactical-hotspot spot-smas" onclick="scrollToSection('sec-smas')">
-          <div class="hotspot-beacon">
+          <div class="reticle-beacon">
             <div class="beacon-core"></div>
             <div class="beacon-ring-1"></div>
             <div class="beacon-ring-2"></div>
           </div>
-          <div>
-            <div class="hotspot-tag-title">01 / SMAS Вектор</div>
-            <div class="hotspot-tag-sub">4.5 mm Термоліфтинг</div>
+          <div class="reticle-leader"></div>
+          <div class="reticle-glass-tag">
+            <div class="reticle-tag-title">01 · SMAS Вектор</div>
+            <div class="reticle-tag-sub">4.5 mm Ліфтинг</div>
           </div>
         </div>
 
         <!-- Hotspot 2: Collagen Matrix -->
         <div class="tactical-hotspot spot-collagen" onclick="scrollToSection('sec-hydro')">
-          <div class="hotspot-beacon">
+          <div class="reticle-glass-tag">
+            <div class="reticle-tag-title">02 · Колагенова Сітка</div>
+            <div class="reticle-tag-sub">+500% Тонус АТФ</div>
+          </div>
+          <div class="reticle-leader" style="transform: rotate(180deg);"></div>
+          <div class="reticle-beacon">
             <div class="beacon-core"></div>
             <div class="beacon-ring-1"></div>
             <div class="beacon-ring-2"></div>
-          </div>
-          <div>
-            <div class="hotspot-tag-title">02 / Колагенова Сітка</div>
-            <div class="hotspot-tag-sub">+500% Тонус АТФ</div>
           </div>
         </div>
 
         <!-- Hotspot 3: Hydro Core -->
         <div class="tactical-hotspot spot-hydro" onclick="scrollToSection('sec-hydro')">
-          <div class="hotspot-beacon">
+          <div class="reticle-beacon">
             <div class="beacon-core"></div>
             <div class="beacon-ring-1"></div>
             <div class="beacon-ring-2"></div>
           </div>
-          <div>
-            <div class="hotspot-tag-title">03 / Гідро-Ресет</div>
-            <div class="hotspot-tag-sub">1.2 MHz Пептиди</div>
+          <div class="reticle-leader"></div>
+          <div class="reticle-glass-tag">
+            <div class="reticle-tag-title">03 · Гідро-Ресет</div>
+            <div class="reticle-tag-sub">1.2 MHz Пептиди</div>
           </div>
         </div>
 
         <!-- Hotspot 4: Villa Concierge -->
         <div class="tactical-hotspot spot-villa" onclick="scrollToSection('sec-villa')">
-          <div class="hotspot-beacon">
+          <div class="reticle-beacon">
             <div class="beacon-core"></div>
             <div class="beacon-ring-1"></div>
             <div class="beacon-ring-2"></div>
           </div>
-          <div>
-            <div class="hotspot-tag-title">04 / Виїзд на Віллу</div>
-            <div class="hotspot-tag-sub">Марбелья VIP Сервіс</div>
+          <div class="reticle-leader"></div>
+          <div class="reticle-glass-tag">
+            <div class="reticle-tag-title">04 · Виїзд на Віллу</div>
+            <div class="reticle-tag-sub">Марбелья VIP</div>
           </div>
         </div>
 
@@ -794,8 +914,11 @@
 
       <!-- Natural Scroll Prompt -->
       <div class="scroll-cue-pill" onclick="scrollToSection('sec-smas')">
+        <span class="cue-dot-live"></span>
         <span>Прокрутіть вниз для 3D-історії</span>
-        <span class="scroll-arrow-icon">↓</span>
+        <svg class="cue-arrow-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
       </div>
 
     </section>
@@ -803,33 +926,51 @@
     <!-- CHAPTER 02: SMAS & COLLAGEN BOOST (SCROLL POSITION ~100vh) -->
     <section class="scrolly-section" id="sec-smas">
       <div class="scrolly-card" id="card-smas">
-        <div class="card-chapter-num">Протокол 01 · Студія Малага</div>
-        <h2 class="card-headline">SMAS & Collagen Boost Architecture</h2>
-        <p class="card-description">
-          Глибоке скульптурне скорочення розтягнутих колагенових волокон та зміцнення контуру щелепи за допомогою мікрофокусованого ультразвуку та біполярного RF Zemits Verstand HD.
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">MÁLAGA ATELIER</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">2.50 MHz · SMAS</span>
+        </div>
+        
+        <h2 class="card-headline">
+          <span class="headline-primary">SMAS Ultrasonic Vector</span>
+          <span class="headline-sub">Скульптурування Контурів Обличчя</span>
+        </h2>
+        
+        <p class="card-editorial-quote">
+          Глибоке фокусоване скорочення зв'язкового апарату SMAS та стимуляція неоколагенезу. Чіткий кут нижньої щелепи без хірургії та відновлювального періоду.
         </p>
 
-        <div class="telemetry-specs-grid">
-          <div class="tele-col">
-            <div class="tele-lbl">Частота</div>
-            <div class="tele-val">2.50 MHz</div>
+        <div class="luxury-telemetry-hud">
+          <div class="hud-metric">
+            <div class="hud-metric-label">Частота</div>
+            <div class="hud-metric-val">2.50 <span class="unit">MHz</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-freq"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Глибина</div>
-            <div class="tele-val">4.5 mm</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Глибина</div>
+            <div class="hud-metric-val">4.5 <span class="unit">mm</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-depth"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Тонус</div>
-            <div class="tele-val">+500 %</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Тонус</div>
+            <div class="hud-metric-val">+500 <span class="unit">%</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-atp"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Час</div>
-            <div class="tele-val">90 хв</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Час</div>
+            <div class="hud-metric-val">90 <span class="unit">хв</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-time"></div></div>
           </div>
         </div>
 
-        <button class="card-action-btn" onclick="bookProtocol('SMAS & Collagen Boost Architecture')">
-          Записатися на цей протокол ➔
+        <button class="luxury-action-cta" onclick="bookProtocol('SMAS Ultrasonic Vector')">
+          <span>Забронювати сеанс у Малазі</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </button>
       </div>
     </section>
@@ -837,33 +978,51 @@
     <!-- CHAPTER 03: DERMAL DENSITY & HYDRO-RESET (SCROLL POSITION ~200vh) -->
     <section class="scrolly-section" id="sec-hydro">
       <div class="scrolly-card" id="card-hydro">
-        <div class="card-chapter-num">Протокол 02 · Клітинний Ресет</div>
-        <h2 class="card-headline">S•K•Y Glow & Hydro-Reset Matrix</h2>
-        <p class="card-description">
-          Атравматична вихрова гідродермабразія та трансдермальна пептидна інфузія. Миттєво усуває сухість після палючого середземноморського сонця, повертаючи ефект зволоженої «скляної шкіри» (Glass Skin).
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">CELLULAR REGÈNE</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">1.20 MHz · PEPTIDES</span>
+        </div>
+
+        <h2 class="card-headline">
+          <span class="headline-primary">S•K•Y Glow & Hydro-Reset</span>
+          <span class="headline-sub">Клітинна Гідратація & Glass Skin</span>
+        </h2>
+
+        <p class="card-editorial-quote">
+          Вихрова апаратна гідродермабразія та трансдермальна пептидна інфузія. Миттєве насичення дерми вологою та антиоксидантами після активного сонця Коста-дель-Соль.
         </p>
 
-        <div class="telemetry-specs-grid">
-          <div class="tele-col">
-            <div class="tele-lbl">Частота</div>
-            <div class="tele-val">1.20 MHz</div>
+        <div class="luxury-telemetry-hud">
+          <div class="hud-metric">
+            <div class="hud-metric-label">Частота</div>
+            <div class="hud-metric-val">1.20 <span class="unit">MHz</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-freq"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Глибина</div>
-            <div class="tele-val">1.5 mm</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Глибина</div>
+            <div class="hud-metric-val">1.5 <span class="unit">mm</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-depth"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">АТФ</div>
-            <div class="tele-val">+320 %</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">АТФ</div>
+            <div class="hud-metric-val">+320 <span class="unit">%</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-atp"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Час</div>
-            <div class="tele-val">60 хв</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Час</div>
+            <div class="hud-metric-val">60 <span class="unit">хв</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-time"></div></div>
           </div>
         </div>
 
-        <button class="card-action-btn" onclick="bookProtocol('S•K•Y Glow & Hydro-Reset Matrix')">
-          Записатися на Hydro-Reset ➔
+        <button class="luxury-action-cta" onclick="bookProtocol('S•K•Y Glow & Hydro-Reset')">
+          <span>Записатися на Hydro-Reset</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </button>
       </div>
     </section>
@@ -871,58 +1030,96 @@
     <!-- CHAPTER 04: MARBELLA VILLA CONCIERGE (SCROLL POSITION ~300vh) -->
     <section class="scrolly-section" id="sec-villa">
       <div class="scrolly-card" id="card-villa">
-        <div class="card-chapter-num">Протокол 03 · VIP Marbella Concierge</div>
-        <h2 class="card-headline">Люксовий Сеанс на Вашій Віллі</h2>
-        <p class="card-description">
-          Ексклюзивний приватний приїзд спеціаліста Марії Стефанюк у вашу резиденцію (*Golden Mile, La Zagaleta, Sierra Blanca, Puerto Banús, Mijas*). Повний стерильний мобільний комплекс Zemits HD та анатомічна SPA-кушетка.
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">MARBELLA VIP</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">RESIDENTIAL SERVICE</span>
+        </div>
+
+        <h2 class="card-headline">
+          <span class="headline-primary">Private Villa Concierge</span>
+          <span class="headline-sub">Ексклюзивний Сеанс на Вашій Віллі</span>
+        </h2>
+
+        <p class="card-editorial-quote">
+          Індивідуальний приїзд спеціаліста Марії Стефанюк (Golden Mile, La Zagaleta, Sierra Blanca). Повний стерильний мобільний комплекс Zemits HD та анатомічна SPA-кушетка.
         </p>
 
-        <div class="telemetry-specs-grid">
-          <div class="tele-col">
-            <div class="tele-lbl">Локація</div>
-            <div class="tele-val">Marbella</div>
+        <div class="luxury-telemetry-hud">
+          <div class="hud-metric">
+            <div class="hud-metric-label">Локація</div>
+            <div class="hud-metric-val">Marbella</div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-loc"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Обладнання</div>
-            <div class="tele-val">Zemits HD</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Стандарт</div>
+            <div class="hud-metric-val">Zemits HD</div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-dev"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Стерильність</div>
-            <div class="tele-val">100 %</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Чистота</div>
+            <div class="hud-metric-val">100 <span class="unit">%</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-ster"></div></div>
           </div>
-          <div class="tele-col">
-            <div class="tele-lbl">Час</div>
-            <div class="tele-val">120 хв</div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Час</div>
+            <div class="hud-metric-val">120 <span class="unit">хв</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-time"></div></div>
           </div>
         </div>
 
-        <button class="card-action-btn" onclick="bookProtocol('Люксовий виїзд на Віллу в Марбельї')">
-          Замовити консьєрж-виїзд на Віллу ➔
+        <button class="luxury-action-cta" onclick="bookProtocol('VIP Виїзд на Віллу в Марбельї')">
+          <span>Замовити VIP-виїзд на Віллу</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </button>
       </div>
     </section>
 
   </main>
 
-  <!-- FIXED BOTTOM NAVIGATION DOCK (FLOATS SEAMLESSLY AT BOTTOM) -->
+  <!-- FIXED FLOATING LUXURY GLASS DOCK (NO EMOJIS, BESPOKE LINE SVGS) -->
   <nav class="app-dock">
     <button class="dock-btn active" id="dock-hero" onclick="scrollToSection('sec-hero')">
-      <span class="dock-icon">✦</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="3"/>
+        <line x1="12" y1="1" x2="12" y2="4"/>
+        <line x1="12" y1="20" x2="12" y2="23"/>
+        <line x1="1" y1="12" x2="4" y2="12"/>
+        <line x1="20" y1="12" x2="23" y2="12"/>
+      </svg>
       <span>Сканер</span>
       <div class="dock-indicator-dot"></div>
     </button>
+    
     <button class="dock-btn" id="dock-smas" onclick="scrollToSection('sec-smas')">
-      <span class="dock-icon">⚙️</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12c3-4 6-4 9 0s6 4 9 0"/>
+        <path d="M2 7c3-4 6-4 9 0s6 4 9 0" opacity="0.45"/>
+        <path d="M2 17c3-4 6-4 9 0s6 4 9 0" opacity="0.45"/>
+      </svg>
       <span>SMAS</span>
       <div class="dock-indicator-dot"></div>
     </button>
+    
     <button class="dock-btn" id="dock-hydro" onclick="scrollToSection('sec-hydro')">
-      <span class="dock-icon">💧</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.5C12 2.5 5 11 5 15.5A7 7 0 0 0 19 15.5C19 11 12 2.5 12 2.5z"/>
+        <path d="M12 18.5a3.5 3.5 0 0 0 3.5-3.5" opacity="0.55"/>
+      </svg>
       <span>Гідро</span>
       <div class="dock-indicator-dot"></div>
     </button>
+    
     <button class="dock-btn" id="dock-villa" onclick="scrollToSection('sec-villa')">
-      <span class="dock-icon">🗝️</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5z"/>
+        <path d="M9 21V12a3 3 0 0 1 6 0v9"/>
+      </svg>
       <span>На Віллу</span>
       <div class="dock-indicator-dot"></div>
     </button>
@@ -966,13 +1163,26 @@
         gsap.to(stageCollagen, { opacity: 0, duration: 0.5 });
         gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
         document.getElementById('card-smas').classList.add('active');
-        updateHeaderAndDock('02 / SMAS Термоліфтинг', 'dock-smas', 1);
+        
+        // Dynamic Telemetry Signal Bars (animate-text / HUD metric fills)
+        document.getElementById('bar-smas-freq').style.width = '85%';
+        document.getElementById('bar-smas-depth').style.width = '90%';
+        document.getElementById('bar-smas-atp').style.width = '100%';
+        document.getElementById('bar-smas-time').style.width = '75%';
+
+        updateHeaderAndDock('02 / SMAS ЛІФТИНГ', 'dock-smas', 1);
       },
       onLeaveBack: () => {
         gsap.to(heroFaceImg, { scale: 1.02, y: 0, duration: 0.6, ease: "power2.out" });
         gsap.to(stageFace, { opacity: 1, duration: 0.5 });
         document.getElementById('card-smas').classList.remove('active');
-        updateHeaderAndDock('01 / Сканер Обличчя', 'dock-hero', 0);
+        
+        document.getElementById('bar-smas-freq').style.width = '0%';
+        document.getElementById('bar-smas-depth').style.width = '0%';
+        document.getElementById('bar-smas-atp').style.width = '0%';
+        document.getElementById('bar-smas-time').style.width = '0%';
+
+        updateHeaderAndDock('01 / АНАТОМІЧНИЙ СКАНЕР', 'dock-hero', 0);
       }
     });
 
@@ -986,13 +1196,25 @@
         gsap.to(stageCollagen, { opacity: 1, scale: 1.02, rotateY: 0, duration: 0.7, ease: "power2.out" });
         gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
         document.getElementById('card-hydro').classList.add('active');
-        updateHeaderAndDock('03 / Клітинний Гідро-Ресет', 'dock-hydro', 2);
+        
+        document.getElementById('bar-hydro-freq').style.width = '60%';
+        document.getElementById('bar-hydro-depth').style.width = '50%';
+        document.getElementById('bar-hydro-atp').style.width = '85%';
+        document.getElementById('bar-hydro-time').style.width = '55%';
+
+        updateHeaderAndDock('03 / КЛІТИННИЙ РЕСЕТ', 'dock-hydro', 2);
       },
       onLeaveBack: () => {
         gsap.to(stageFace, { opacity: 0.85, scale: 1.15, duration: 0.6 });
         gsap.to(stageCollagen, { opacity: 0, scale: 1.1, duration: 0.5 });
         document.getElementById('card-hydro').classList.remove('active');
-        updateHeaderAndDock('02 / SMAS Термоліфтинг', 'dock-smas', 1);
+        
+        document.getElementById('bar-hydro-freq').style.width = '0%';
+        document.getElementById('bar-hydro-depth').style.width = '0%';
+        document.getElementById('bar-hydro-atp').style.width = '0%';
+        document.getElementById('bar-hydro-time').style.width = '0%';
+
+        updateHeaderAndDock('02 / SMAS ЛІФТИНГ', 'dock-smas', 1);
       }
     });
 
@@ -1005,13 +1227,25 @@
         gsap.to(stageCollagen, { opacity: 0, duration: 0.5 });
         gsap.to(stageAcoustic, { opacity: 1, scale: 1.02, rotateY: 0, duration: 0.7, ease: "power2.out" });
         document.getElementById('card-villa').classList.add('active');
-        updateHeaderAndDock('04 / Марбелья VIP Вілла', 'dock-villa', 3);
+        
+        document.getElementById('bar-villa-loc').style.width = '100%';
+        document.getElementById('bar-villa-dev').style.width = '100%';
+        document.getElementById('bar-villa-ster').style.width = '100%';
+        document.getElementById('bar-villa-time').style.width = '95%';
+
+        updateHeaderAndDock('04 / ВІЛЛА МАРБЕЛЬЯ', 'dock-villa', 3);
       },
       onLeaveBack: () => {
         gsap.to(stageCollagen, { opacity: 1, scale: 1.02, duration: 0.6 });
         gsap.to(stageAcoustic, { opacity: 0, scale: 1.1, duration: 0.5 });
         document.getElementById('card-villa').classList.remove('active');
-        updateHeaderAndDock('03 / Клітинний Гідро-Ресет', 'dock-hydro', 2);
+        
+        document.getElementById('bar-villa-loc').style.width = '0%';
+        document.getElementById('bar-villa-dev').style.width = '0%';
+        document.getElementById('bar-villa-ster').style.width = '0%';
+        document.getElementById('bar-villa-time').style.width = '0%';
+
+        updateHeaderAndDock('03 / КЛІТИННИЙ РЕСЕТ', 'dock-hydro', 2);
       }
     });
 
