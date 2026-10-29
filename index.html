@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>S • K • Y | 3D Кінетична Призма (Швейцарська Медицина) — Малага & Марбелья</title>
+  <title>S • K • Y | 3D Holographic Face Mesh (Holo-Sculpt) — Малага & Марбелья</title>
 
   <!-- Aggressive Anti-Cache Meta Tags -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -318,12 +318,12 @@
     .biometric-art-wrap {
       position: relative;
       width: 100%;
-      max-width: 370px;
-      height: 350px;
-      border-radius: 22px;
+      max-width: 410px;
+      height: 420px;
+      border-radius: 24px;
       overflow: hidden;
       border: 1px solid var(--gold-hairline);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(212, 175, 55, 0.2);
       transition: transform 0.4s ease-out;
       cursor: pointer;
     }
@@ -444,21 +444,21 @@
       pointer-events: none;
     }
 
-    /* Hotspot Coordinates on Face Artwork */
+    /* Hotspot Coordinates on Face Artwork (Calibrated to Holo-Sculpt) */
     .spot-smas {
-      top: 68%;
-      left: 32%;
+      top: 66%;
+      left: 74%;
     }
     .spot-collagen {
-      top: 50%;
-      left: 72%;
+      top: 62%;
+      left: 26%;
     }
     .spot-hydro {
-      top: 32%;
-      left: 38%;
+      top: 76%;
+      left: 50%;
     }
     .spot-villa {
-      top: 86%;
+      top: 89%;
       left: 50%;
     }
 
@@ -895,11 +895,11 @@
         <!-- Centerpiece Artwork Stage (CLICKING ANYWHERE ON IT FLIPS!) -->
         <div class="biometric-stage" id="biometricStage" onclick="handleStageClick(event)">
           <div class="biometric-art-wrap" id="biometricArtWrap" onclick="triggerHotspot('smas', event)">
-            <img src="pure_scene_1_facemesh.jpg" alt="S•K•Y Biometric 3D Holographic Mesh" class="biometric-img" id="heroArtImg" onclick="triggerHotspot('smas', event)">
+            <img src="holo_sculpt_pure_master.jpg" alt="S•K•Y 3D Holographic Face Mesh (Holo-Sculpt)" class="biometric-img" id="heroArtImg" onclick="triggerHotspot('smas', event)">
             <div class="opening-flash-overlay" id="openingFlash"></div>
             <div class="scanning-laser-line"></div>
 
-            <!-- Hotspot 1: SMAS Vector -->
+            <!-- Hotspot 1: SMAS Vector (Right Jawline) -->
             <div class="tactical-hotspot spot-smas" onclick="triggerHotspot('smas', event)" data-key="smas">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
@@ -912,7 +912,7 @@
               </div>
             </div>
 
-            <!-- Hotspot 2: Collagen Dermal Matrix -->
+            <!-- Hotspot 2: Collagen Dermal Matrix (Left Cheek) -->
             <div class="tactical-hotspot spot-collagen" onclick="triggerHotspot('collagen', event)" data-key="collagen">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
@@ -920,12 +920,12 @@
                 <div class="beacon-ring-2"></div>
               </div>
               <div class="hotspot-tag-content">
-                <div class="hotspot-tag-title">02 / Матрикс АТФ</div>
-                <div class="hotspot-tag-sub">+500% Тонус клітин</div>
+                <div class="hotspot-tag-title">02 / Колагенова Сітка</div>
+                <div class="hotspot-tag-sub">+500% Тонус АТФ</div>
               </div>
             </div>
 
-            <!-- Hotspot 3: Hydro-Reset -->
+            <!-- Hotspot 3: Hydro-Reset (Center Chin Core) -->
             <div class="tactical-hotspot spot-hydro" onclick="triggerHotspot('hydro', event)" data-key="hydro">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
@@ -938,7 +938,7 @@
               </div>
             </div>
 
-            <!-- Hotspot 4: Marbella Villa Concierge -->
+            <!-- Hotspot 4: Marbella Villa Concierge (Collar/Neck) -->
             <div class="tactical-hotspot spot-villa" onclick="triggerHotspot('villa', event)" data-key="villa">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
