@@ -3,24 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>S • K • Y | 3D Full-Bleed Holographic Architecture — Малага & Марбелья</title>
+  <title>S • K • Y | Кінематографічний 3D Скролітелінг — Малага & Марбелья</title>
 
-  <!-- Aggressive Anti-Cache Meta Tags -->
+  <!-- Anti-Cache Meta Tags -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-
-  <!-- PWA & Mobile App Meta -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#060607">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <!-- GSAP for tactile animations & physics -->
+  <!-- GSAP Core & ScrollTrigger for Cinematic Smooth Scrollytelling -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
     :root {
@@ -36,7 +32,7 @@
       --text-muted: #A8A298;
       --text-dim: #6E685E;
       --top-header-height: 60px;
-      --bottom-dock-height: 68px;
+      --bottom-dock-height: 64px;
     }
 
     * {
@@ -45,21 +41,24 @@
       padding: 0;
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
     }
 
-    html, body {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       background-color: var(--void);
       color: var(--ivory);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      overflow: hidden;
-      position: fixed;
-      inset: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
     }
 
-    /* Dynamic Ambient Background Canvas */
+    /* Ambient Canvas */
     #bg-canvas {
       position: fixed;
       inset: 0;
@@ -69,13 +68,12 @@
       z-index: 1;
     }
 
-    /* Ambient Radial Glow */
     .ambient-glow {
       position: fixed;
-      width: 550px;
-      height: 550px;
+      width: 600px;
+      height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 65%);
       pointer-events: none;
       z-index: 2;
     }
@@ -83,7 +81,7 @@
     .glow-bottom { bottom: -200px; left: -150px; }
 
     /* ======================================================================
-       1. TOP APP BAR (FLOATS SEAMLESSLY DIRECTLY OVER THE FULL-SCREEN FACE)
+       1. FIXED STICKY APP HEADER (FLOATS ON TOP OF FULL-BLEED ART)
        ====================================================================== */
     .app-header {
       position: fixed;
@@ -92,11 +90,11 @@
       right: 0;
       height: calc(var(--top-header-height) + env(safe-area-inset-top, 0px));
       padding-top: env(safe-area-inset-top, 0px);
-      padding-left: 18px;
-      padding-right: 18px;
-      background: linear-gradient(to bottom, rgba(6, 6, 7, 0.92) 0%, rgba(6, 6, 7, 0.55) 65%, transparent 100%);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      padding-left: 20px;
+      padding-right: 20px;
+      background: linear-gradient(to bottom, rgba(6, 6, 7, 0.95) 0%, rgba(6, 6, 7, 0.6) 70%, transparent 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(212, 175, 55, 0.15);
       display: flex;
       align-items: center;
@@ -113,7 +111,7 @@
 
     .brand-logo {
       font-family: 'Cinzel', serif;
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.28em;
       color: var(--gold-light);
@@ -138,36 +136,30 @@
       50% { transform: scale(1.3); opacity: 1; }
     }
 
-    /* Mode Switcher in Header */
-    .header-mode-toggle {
+    .header-center-chapter {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-champagne);
       display: flex;
+      align-items: center;
+      gap: 6px;
       background: rgba(14, 12, 10, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--gold-hairline);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 5px 12px;
       border-radius: 999px;
-      padding: 2px;
-      gap: 2px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
     }
 
-    .mode-tab-btn {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 5px 11px;
-      border-radius: 999px;
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .mode-tab-btn.active {
-      background: linear-gradient(135deg, #D4AF37, #9B791B);
-      color: #000;
-      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+    .pulse-live-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 8px #4ADE80;
     }
 
     .header-whatsapp-btn {
@@ -177,86 +169,83 @@
       letter-spacing: 0.12em;
       padding: 6px 14px;
       border-radius: 999px;
-      background: rgba(212, 175, 55, 0.18);
-      border: 1px solid var(--gold);
-      color: var(--gold-champagne);
+      background: linear-gradient(135deg, #E6CA65, #B38F26);
+      color: #000;
       text-decoration: none;
       cursor: pointer;
-      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.2);
+      box-shadow: 0 2px 14px rgba(212, 175, 55, 0.35);
       transition: transform 0.2s;
     }
     .header-whatsapp-btn:active {
       transform: scale(0.95);
-      background: var(--gold);
-      color: #000;
     }
 
     /* ======================================================================
-       2. 3D CHRONO-SPATIAL PRISM STAGE (100% FULL-BLEED VIEWPORT)
+       2. FIXED PINNED 3D STAGE (BACKGROUND THAT TRANSFORMS AS YOU SCROLL!)
        ====================================================================== */
-    .prism-viewport {
+    .pinned-stage {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
+      z-index: 5;
+      pointer-events: none;
+      overflow: hidden;
       perspective: 1600px;
-      z-index: 10;
-      overflow: hidden;
     }
 
-    .prism-cube {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.85s cubic-bezier(0.18, 0.9, 0.28, 1);
-    }
-
-    .prism-cube.flipped {
-      transform: rotateY(180deg);
-    }
-
-    /* The 2 Faces of the 3D Prism */
-    .prism-face {
+    /* The 3 Background Layers that smoothly crossfade/rotate as you scroll */
+    .stage-layer {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      overflow: hidden;
-    }
-
-    /* ======================================================================
-       FRONT FACE: 100% FULL-SCREEN BIOMETRIC FACE ARTWORK & TACTILE HOTSPOTS
-       ====================================================================== */
-    .face-front {
-      transform: rotateY(0deg);
-      background: #060607;
-      cursor: pointer;
-    }
-
-    /* Full-Bleed Artwork Layer */
-    .fullbleed-art-layer {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
     }
 
-    .fullbleed-face-img {
+    /* Layer 1: Holo-Sculpt 3D Face */
+    .layer-face {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+
+    .holo-sculpt-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 40%;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      transform: scale(1.02);
+      object-position: center 38%;
       pointer-events: auto;
       cursor: pointer;
+    }
+
+    /* Layer 2: Macro Obsidian Collagen Lattice */
+    .layer-collagen {
+      opacity: 0;
+      transform: scale(1.1) rotateY(15deg);
+    }
+
+    .collagen-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    /* Layer 3: Acoustic Optical Cellular Core */
+    .layer-acoustic {
+      opacity: 0;
+      transform: scale(1.1) rotateY(-15deg);
+    }
+
+    .acoustic-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
 
     /* Full-Screen Scanning Laser Line */
@@ -268,9 +257,9 @@
       height: 2px;
       background: linear-gradient(90deg, transparent 5%, #FFEAA7 30%, #D4AF37 50%, #FFEAA7 70%, transparent 95%);
       box-shadow: 0 0 20px #D4AF37, 0 0 35px #FFEAA7;
-      animation: laserSweep 3.6s infinite ease-in-out;
+      animation: laserSweep 3.8s infinite ease-in-out;
       pointer-events: none;
-      z-index: 12;
+      z-index: 10;
     }
 
     @keyframes laserSweep {
@@ -280,98 +269,53 @@
       100% { top: 100%; opacity: 0; }
     }
 
-    /* Opening Iris Flash Overlay */
-    .opening-flash-overlay {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, rgba(255, 235, 170, 0.85) 0%, transparent 70%);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 15;
+    /* ======================================================================
+       3. NATURAL SCROLLING NARRATIVE SECTIONS (SCROLLYTELLING CHAPTERS)
+       ====================================================================== */
+    .scroll-container {
+      position: relative;
+      z-index: 20;
+      width: 100%;
     }
 
-    /* Full-Bleed Floating UI Layer */
-    .fullbleed-ui-overlay {
+    .scrolly-section {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 0px) + 24px);
+      padding-top: calc(var(--top-header-height) + env(safe-area-inset-top, 0px) + 20px);
+      position: relative;
+    }
+
+    /* SECTION 1: HERO SCANNER (100vh) */
+    .section-hero {
+      justify-content: space-between;
+    }
+
+    /* Pulsing Tactical Hotspots Over Full-Screen Face */
+    .tactical-hotspots-wrap {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      z-index: 20;
       pointer-events: none;
-      padding-top: calc(var(--top-header-height) + env(safe-area-inset-top, 0px) + 8px);
-      padding-bottom: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 0px) + 12px);
-      padding-left: 18px;
-      padding-right: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      z-index: 25;
     }
 
-    .scanner-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      pointer-events: auto;
-    }
-
-    .scanner-mode-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold-champagne);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(10, 9, 8, 0.6);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 5px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-    }
-
-    .pulse-indicator-live {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #4ADE80;
-      box-shadow: 0 0 8px #4ADE80;
-    }
-
-    .scanner-hint-pill {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      cursor: pointer;
-      animation: hintGlow 2.5s infinite ease-in-out;
-    }
-
-    @keyframes hintGlow {
-      0%, 100% { box-shadow: 0 0 6px rgba(212, 175, 55, 0.2); }
-      50% { box-shadow: 0 0 18px rgba(212, 175, 55, 0.65); }
-    }
-
-    /* Tactical Pulsing Hotspots Over Full-Screen Face */
     .tactical-hotspot {
       position: absolute;
-      z-index: 25;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
       transform: translate(-50%, -50%);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 6px 10px;
-      background: rgba(10, 9, 8, 0.82);
+      padding: 6px 12px;
+      background: rgba(10, 9, 8, 0.85);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(212, 175, 55, 0.55);
@@ -382,7 +326,7 @@
     .tactical-hotspot:active {
       transform: translate(-50%, -50%) scale(0.92);
       border-color: #FFF;
-      background: rgba(212, 175, 55, 0.3);
+      background: rgba(212, 175, 55, 0.35);
     }
 
     .hotspot-beacon {
@@ -424,7 +368,6 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       color: #FFF;
-      pointer-events: none;
     }
 
     .hotspot-tag-sub {
@@ -432,347 +375,147 @@
       color: var(--gold);
       letter-spacing: 0.06em;
       font-family: 'Space Grotesk', sans-serif;
-      pointer-events: none;
     }
 
-    /* Calibrated Hotspot Coordinates on Full-Screen Face */
-    .spot-smas {
-      top: 55%;
-      left: 77%;
-    }
-    .spot-collagen {
-      top: 50%;
-      left: 23%;
-    }
-    .spot-hydro {
-      top: 67%;
-      left: 50%;
-    }
-    .spot-villa {
-      top: 78%;
-      left: 50%;
-    }
+    /* Calibrated Hotspot Coordinates */
+    .spot-smas { top: 54%; left: 78%; }
+    .spot-collagen { top: 48%; left: 22%; }
+    .spot-hydro { top: 66%; left: 50%; }
+    .spot-villa { top: 78%; left: 50%; }
 
-    /* Floating Center Trigger Action Pill */
-    .floating-center-controls {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      pointer-events: auto;
-    }
-
-    .center-flip-prompt {
-      width: 100%;
-      max-width: 360px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(155, 121, 27, 0.22));
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.35);
-      transition: all 0.2s;
-    }
-    .center-flip-prompt:active {
-      transform: scale(0.96);
-      background: var(--gold);
-      color: #000;
-    }
-
-    /* Specialist Floating Bar at Bottom */
-    .front-footer-strip {
-      width: 100%;
-      max-width: 360px;
-      background: rgba(14, 12, 10, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+    /* Downward Scroll Cue */
+    .scroll-cue-pill {
+      margin-top: auto;
+      margin-bottom: 12px;
+      align-self: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(14, 12, 10, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--gold-hairline);
-      border-radius: 12px;
-      padding: 8px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .specialist-mini-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .spec-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2A2418, #15130F);
-      border: 1px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold-champagne);
-    }
-
-    .spec-text-name {
-      font-size: 11px;
-      font-weight: 600;
-      color: #FFF;
-      letter-spacing: 0.02em;
-    }
-
-    .spec-text-handle {
-      font-size: 9px;
-      color: var(--gold);
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .flip-cta-btn {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 6px 10px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #FFF;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .flip-cta-btn:active {
-      transform: scale(0.95);
-      background: var(--gold);
-      color: #000;
-    }
-
-    /* ======================================================================
-       REVERSE FACE CONTENT: DEEP PROTOCOL MATRIX & TELEMETRY
-       ====================================================================== */
-    .face-back {
-      transform: rotateY(180deg);
-      background: radial-gradient(circle at 50% 28%, rgba(28, 24, 18, 0.94) 0%, #050506 90%);
-      padding-top: calc(var(--top-header-height) + env(safe-area-inset-top, 0px) + 12px);
-      padding-bottom: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 0px) + 12px);
-      padding-left: 18px;
-      padding-right: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow-y: auto;
-    }
-
-    .reverse-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 8px;
-    }
-
-    .reverse-back-btn {
+      color: var(--gold-light);
       font-family: 'Space Grotesk', sans-serif;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 7px 12px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(155, 121, 27, 0.15));
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
       cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+      animation: floatPrompt 2.6s infinite ease-in-out;
+    }
+
+    @keyframes floatPrompt {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .scroll-arrow-icon {
+      font-size: 12px;
+      animation: bounceArrow 1.6s infinite ease-in-out;
+    }
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    /* ======================================================================
+       SCROLLYTELLING STORY CARDS (GLIDE IN AS YOU SCROLL)
+       ====================================================================== */
+    .scrolly-card {
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      background: rgba(14, 12, 10, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--gold-hairline);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.15);
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .scrolly-card.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .card-chapter-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    .reverse-back-btn:active {
-      transform: scale(0.95);
+    .card-chapter-num::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
       background: var(--gold);
-      color: #000;
     }
 
-    .reverse-protocol-pills {
-      display: flex;
-      gap: 5px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding-bottom: 2px;
-    }
-    .reverse-protocol-pills::-webkit-scrollbar { display: none; }
-
-    .proto-pill {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--text-muted);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-    .proto-pill.active {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: var(--gold);
-      color: var(--gold-light);
-    }
-
-    /* Reverse Macro Showcase Container */
-    .reverse-showcase {
-      width: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .macro-visual-box {
-      width: 100%;
-      height: 180px;
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      border: 1px solid var(--gold-hairline);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
-      cursor: pointer;
-    }
-
-    .macro-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .macro-overlay-telemetry {
-      position: absolute;
-      bottom: 8px;
-      left: 10px;
-      right: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(8, 8, 8, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 5px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-    }
-
-    .macro-chip-item {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 8px;
-      color: var(--text-muted);
-    }
-    .macro-chip-val {
-      font-weight: 700;
-      color: var(--gold-light);
-    }
-
-    /* Protocol Detail Card */
-    .protocol-meta-block {
-      background: rgba(16, 14, 12, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--gold-hairline);
-      border-radius: 14px;
-      padding: 14px 16px;
-    }
-
-    .protocol-eyebrow {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 3px;
-    }
-
-    .protocol-main-title {
+    .card-headline {
       font-family: 'Cinzel', serif;
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 700;
       color: #FFF;
       letter-spacing: 0.04em;
       line-height: 1.25;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .protocol-body-desc {
-      font-size: 11px;
+    .card-description {
+      font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 12px;
+      line-height: 1.55;
+      margin-bottom: 14px;
     }
 
-    /* Protocol Telemetry Specs Grid */
-    .specs-metric-row {
+    /* 4-Metrics Telemetry HUD Inside Cards */
+    .telemetry-specs-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
       background: rgba(0, 0, 0, 0.5);
       padding: 8px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 14px;
     }
 
-    .metric-col {
+    .tele-col {
       text-align: center;
     }
-    .metric-lbl {
+    .tele-lbl {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 8px;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       margin-bottom: 2px;
     }
-    .metric-val {
+    .tele-val {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 11px;
       font-weight: 700;
       color: var(--gold-champagne);
     }
 
-    /* Direct Booking CTA Bar */
-    .reverse-action-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .primary-book-btn {
+    /* Action Buttons in Cards */
+    .card-action-btn {
       width: 100%;
-      padding: 13px;
+      padding: 12px 16px;
       border-radius: 10px;
       background: linear-gradient(135deg, #D4AF37, #9B791B);
       color: #000;
@@ -783,19 +526,52 @@
       text-transform: uppercase;
       border: none;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
       transition: transform 0.2s;
     }
-    .primary-book-btn:active {
+    .card-action-btn:active {
       transform: scale(0.97);
     }
 
     /* ======================================================================
-       3. BOTTOM DOCK (FLOATS DIRECTLY OVER THE FULL-SCREEN FACE)
+       4. FLOATING SCROLL PROGRESS INDICATOR (SIDE / BOTTOM)
+       ====================================================================== */
+    .scroll-progress-hud {
+      position: fixed;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 100;
+      pointer-events: auto;
+    }
+
+    .progress-step-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .progress-step-dot.active {
+      height: 22px;
+      border-radius: 999px;
+      background: var(--gold);
+      border-color: var(--gold-light);
+      box-shadow: 0 0 12px var(--gold);
+    }
+
+    /* ======================================================================
+       5. BOTTOM DOCK (QUICK SCROLL SHORTCUTS)
        ====================================================================== */
     .app-dock {
       position: fixed;
@@ -804,7 +580,7 @@
       right: 0;
       height: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 0px));
       padding-bottom: env(safe-area-inset-bottom, 0px);
-      background: linear-gradient(to top, rgba(6, 6, 7, 0.95) 0%, rgba(6, 6, 7, 0.6) 65%, transparent 100%);
+      background: linear-gradient(to top, rgba(6, 6, 7, 0.96) 0%, rgba(6, 6, 7, 0.65) 65%, transparent 100%);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid rgba(212, 175, 55, 0.15);
@@ -812,7 +588,7 @@
       align-items: center;
       justify-content: space-around;
       z-index: 100;
-      box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.85);
     }
 
     .dock-btn {
@@ -871,17 +647,17 @@
   <div class="ambient-glow glow-top"></div>
   <div class="ambient-glow glow-bottom"></div>
 
-  <!-- Top App Bar: FLOATS DIRECTLY OVER THE FULL-SCREEN FACE ARTWORK -->
+  <!-- FIXED STICKY HEADER (FLOATS SEAMLESSLY OVER THE SCENERY) -->
   <header class="app-header">
-    <div class="brand-group" onclick="flipToFace('front')">
+    <div class="brand-group" onclick="scrollToSection('sec-hero')">
       <div class="brand-pulse-dot"></div>
       <div class="brand-logo">S • K • Y</div>
     </div>
 
-    <!-- Mode Switcher -->
-    <div class="header-mode-toggle">
-      <button class="mode-tab-btn active" id="modeBtnFront" onclick="flipToFace('front')">3D Сканер</button>
-      <button class="mode-tab-btn" id="modeBtnBack" onclick="flipToFace('back')">Протокол ↻</button>
+    <!-- Active Scrolly Chapter Indicator -->
+    <div class="header-center-chapter" id="headerChapterBadge">
+      <span class="pulse-live-indicator"></span>
+      <span id="chapterTitleText">01 / Сканер Обличчя</span>
     </div>
 
     <a href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D0%B8%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%83%20S%E2%80%A2K%E2%80%A2Y" target="_blank" class="header-whatsapp-btn">
@@ -889,487 +665,368 @@
     </a>
   </header>
 
-  <!-- 3D Chrono-Spatial Prism Viewport (100% FULL SCREEN EDGE-TO-EDGE) -->
-  <main class="prism-viewport">
-    <div class="prism-cube" id="prismCube">
-
-      <!-- ================================================================
-           FRONT FACE: 100% FULL-SCREEN FACE ARTWORK & OVERLAID CONTROLS
-           ================================================================ -->
-      <section class="prism-face face-front" id="faceFront" onclick="handleStageClick(event)">
-        
-        <!-- 100% Full-Bleed Artwork Layer -->
-        <div class="fullbleed-art-layer">
-          <img src="holo_sculpt_pure_master.jpg" alt="S•K•Y 3D Holographic Face Mesh (Holo-Sculpt)" class="fullbleed-face-img" id="heroArtImg">
-          <div class="opening-flash-overlay" id="openingFlash"></div>
-          <div class="scanning-laser-line"></div>
-
-          <!-- Hotspot 1: SMAS Vector (Right Jawline) -->
-          <div class="tactical-hotspot spot-smas" onclick="triggerHotspot('smas', event)" data-key="smas">
-            <div class="hotspot-beacon">
-              <div class="beacon-core"></div>
-              <div class="beacon-ring-1"></div>
-              <div class="beacon-ring-2"></div>
-            </div>
-            <div class="hotspot-tag-content">
-              <div class="hotspot-tag-title">01 / SMAS Вектор</div>
-              <div class="hotspot-tag-sub">4.5 mm Термоліфтинг</div>
-            </div>
-          </div>
-
-          <!-- Hotspot 2: Collagen Dermal Matrix (Left Cheek) -->
-          <div class="tactical-hotspot spot-collagen" onclick="triggerHotspot('collagen', event)" data-key="collagen">
-            <div class="hotspot-beacon">
-              <div class="beacon-core"></div>
-              <div class="beacon-ring-1"></div>
-              <div class="beacon-ring-2"></div>
-            </div>
-            <div class="hotspot-tag-content">
-              <div class="hotspot-tag-title">02 / Колагенова Сітка</div>
-              <div class="hotspot-tag-sub">+500% Тонус АТФ</div>
-            </div>
-          </div>
-
-          <!-- Hotspot 3: Hydro-Reset (Center Chin Core) -->
-          <div class="tactical-hotspot spot-hydro" onclick="triggerHotspot('hydro', event)" data-key="hydro">
-            <div class="hotspot-beacon">
-              <div class="beacon-core"></div>
-              <div class="beacon-ring-1"></div>
-              <div class="beacon-ring-2"></div>
-            </div>
-            <div class="hotspot-tag-content">
-              <div class="hotspot-tag-title">03 / Гідро-Ресет</div>
-              <div class="hotspot-tag-sub">1.2 MHz Пептиди</div>
-            </div>
-          </div>
-
-          <!-- Hotspot 4: Marbella Villa Concierge (Collar/Neck) -->
-          <div class="tactical-hotspot spot-villa" onclick="triggerHotspot('villa', event)" data-key="villa">
-            <div class="hotspot-beacon">
-              <div class="beacon-core"></div>
-              <div class="beacon-ring-1"></div>
-              <div class="beacon-ring-2"></div>
-            </div>
-            <div class="hotspot-tag-content">
-              <div class="hotspot-tag-title">04 / Виїзд на Віллу</div>
-              <div class="hotspot-tag-sub">Марбелья VIP Сервіс</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Full-Bleed Floating Controls Overlay -->
-        <div class="fullbleed-ui-overlay">
-          <div class="scanner-top-bar">
-            <div class="scanner-mode-title">
-              <span class="pulse-indicator-live"></span>
-              3D Біометричний Сканер
-            </div>
-            <div class="scanner-hint-pill" onclick="flipToFace('back')">
-              Торкніться для перевороту ↻
-            </div>
-          </div>
-
-          <div class="floating-center-controls">
-            <!-- Big Center Action Trigger Pill -->
-            <button class="center-flip-prompt" onclick="triggerHotspot('smas', event)">
-              <span>↻</span> РОЗКРУТИТИ 3D ПРИЗМУ (180°)
-            </button>
-
-            <!-- Front Specialist Strip Floating at Bottom -->
-            <div class="front-footer-strip">
-              <div class="specialist-mini-info">
-                <div class="spec-avatar">M</div>
-                <div>
-                  <div class="spec-text-name">Марія Стефанюк</div>
-                  <div class="spec-text-handle">@cosmetolog.sky · Zemits HD</div>
-                </div>
-              </div>
-              <button class="flip-cta-btn" onclick="flipToFace('back')">
-                Деталі ↻
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ================================================================
-           REVERSE FACE: DEEP PROTOCOL MATRIX & TELEMETRY
-           ================================================================ -->
-      <section class="prism-face face-back" id="faceBack">
-        
-        <!-- Header & Protocol Quick Selector -->
-        <div class="reverse-header">
-          <button class="reverse-back-btn" onclick="flipToFace('front')">
-            ↺ Сканер
-          </button>
-          <div class="reverse-protocol-pills">
-            <button class="proto-pill active" id="pill-smas" onclick="selectProtocol('smas')">SMAS</button>
-            <button class="proto-pill" id="pill-collagen" onclick="selectProtocol('collagen')">Колаген</button>
-            <button class="proto-pill" id="pill-hydro" onclick="selectProtocol('hydro')">Гідро-Пілінг</button>
-            <button class="proto-pill" id="pill-villa" onclick="selectProtocol('villa')">🗝️ Вілла</button>
-          </div>
-        </div>
-
-        <!-- Protocol Detailed Matrix -->
-        <div class="reverse-showcase">
-          <div class="macro-visual-box" onclick="flipToFace('front')">
-            <img src="pure_scene_2_dermal_matrix.jpg" alt="Macro Dermal Structure" class="macro-img" id="macroImg">
-            <div class="macro-overlay-telemetry">
-              <div class="macro-chip-item">ОБЛАДНАННЯ: <span class="macro-chip-val" id="macroTech">Zemits Verstand HD</span></div>
-              <div class="macro-chip-item">БЕЗПЕКА: <span class="macro-chip-val">Zero Downtime</span></div>
-            </div>
-          </div>
-
-          <div class="protocol-meta-block">
-            <div class="protocol-eyebrow" id="protoEyebrow">Швейцарський Протокол Ліфтингу</div>
-            <h2 class="protocol-main-title" id="protoTitle">SMAS & Collagen Boost Architecture</h2>
-            <p class="protocol-body-desc" id="protoDesc">
-              Глибоке скорочення розтягнутих колагенових волокон та зміцнення м'язового каркаса нижньої третини обличчя за допомогою мікрофокусованого ультразвуку та термоліфтингу. Повна відсутність проколів, синців та періоду реабілітації.
-            </p>
-
-            <!-- 4-Metrics Telemetry HUD -->
-            <div class="specs-metric-row">
-              <div class="metric-col">
-                <div class="metric-lbl">Частота</div>
-                <div class="metric-val" id="metricFreq">2.50 MHz</div>
-              </div>
-              <div class="metric-col">
-                <div class="metric-lbl">Глибина</div>
-                <div class="metric-val" id="metricDepth">4.5 mm</div>
-              </div>
-              <div class="metric-col">
-                <div class="metric-lbl">Тонус</div>
-                <div class="metric-val" id="metricATP">+500 %</div>
-              </div>
-              <div class="metric-col">
-                <div class="metric-lbl">Тривалість</div>
-                <div class="metric-val" id="metricTime">90 хв</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reverse-action-bar">
-            <button class="primary-book-btn" id="protoBookBtn" onclick="bookCurrentProtocol()">
-              Записатися на цей протокол у WhatsApp ➔
-            </button>
-          </div>
-        </div>
-
-      </section>
-
+  <!-- FIXED PINNED 3D STAGE (TRANSFORMS AND EVOLVES AS YOU SCROLL!) -->
+  <div class="pinned-stage" id="pinnedStage">
+    
+    <!-- Layer 1: 3D Holographic Face Mesh (Holo-Sculpt) -->
+    <div class="stage-layer layer-face" id="stageFace">
+      <img src="holo_sculpt_pure_master.jpg" alt="S•K•Y Holo-Sculpt 3D Face Mesh" class="holo-sculpt-img" id="heroFaceImg">
+      <div class="scanning-laser-line"></div>
     </div>
+
+    <!-- Layer 2: Macro Obsidian Collagen Lattice -->
+    <div class="stage-layer layer-collagen" id="stageCollagen">
+      <img src="pure_scene_2_dermal_matrix.jpg" alt="Macro Dermal Collagen Matrix" class="collagen-img">
+    </div>
+
+    <!-- Layer 3: Acoustic Optical Cellular Core -->
+    <div class="stage-layer layer-acoustic" id="stageAcoustic">
+      <img src="pure_scene_3_acoustic_core.jpg" alt="Acoustic Optical Cellular Core" class="acoustic-img">
+    </div>
+
+  </div>
+
+  <!-- FLOATING SIDE SCROLL PROGRESS HUD -->
+  <nav class="scroll-progress-hud">
+    <div class="progress-step-dot active" id="dot-0" onclick="scrollToSection('sec-hero')" title="01 Сканер"></div>
+    <div class="progress-step-dot" id="dot-1" onclick="scrollToSection('sec-smas')" title="02 SMAS"></div>
+    <div class="progress-step-dot" id="dot-2" onclick="scrollToSection('sec-hydro')" title="03 Гідро"></div>
+    <div class="progress-step-dot" id="dot-3" onclick="scrollToSection('sec-villa')" title="04 Вілла"></div>
+  </nav>
+
+  <!-- ====================================================================
+       NATURAL SCROLLING NARRATIVE SECTIONS (SCROLL DOWN WITH THUMB!)
+       ==================================================================== -->
+  <main class="scroll-container">
+
+    <!-- CHAPTER 01: HERO FULL-BLEED SCANNER (100vh) -->
+    <section class="scrolly-section section-hero" id="sec-hero">
+      
+      <!-- Tactical Hotspots overlaying the face on Chapter 1 -->
+      <div class="tactical-hotspots-wrap">
+        
+        <!-- Hotspot 1: SMAS Vector -->
+        <div class="tactical-hotspot spot-smas" onclick="scrollToSection('sec-smas')">
+          <div class="hotspot-beacon">
+            <div class="beacon-core"></div>
+            <div class="beacon-ring-1"></div>
+            <div class="beacon-ring-2"></div>
+          </div>
+          <div>
+            <div class="hotspot-tag-title">01 / SMAS Вектор</div>
+            <div class="hotspot-tag-sub">4.5 mm Термоліфтинг</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 2: Collagen Matrix -->
+        <div class="tactical-hotspot spot-collagen" onclick="scrollToSection('sec-hydro')">
+          <div class="hotspot-beacon">
+            <div class="beacon-core"></div>
+            <div class="beacon-ring-1"></div>
+            <div class="beacon-ring-2"></div>
+          </div>
+          <div>
+            <div class="hotspot-tag-title">02 / Колагенова Сітка</div>
+            <div class="hotspot-tag-sub">+500% Тонус АТФ</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 3: Hydro Core -->
+        <div class="tactical-hotspot spot-hydro" onclick="scrollToSection('sec-hydro')">
+          <div class="hotspot-beacon">
+            <div class="beacon-core"></div>
+            <div class="beacon-ring-1"></div>
+            <div class="beacon-ring-2"></div>
+          </div>
+          <div>
+            <div class="hotspot-tag-title">03 / Гідро-Ресет</div>
+            <div class="hotspot-tag-sub">1.2 MHz Пептиди</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 4: Villa Concierge -->
+        <div class="tactical-hotspot spot-villa" onclick="scrollToSection('sec-villa')">
+          <div class="hotspot-beacon">
+            <div class="beacon-core"></div>
+            <div class="beacon-ring-1"></div>
+            <div class="beacon-ring-2"></div>
+          </div>
+          <div>
+            <div class="hotspot-tag-title">04 / Виїзд на Віллу</div>
+            <div class="hotspot-tag-sub">Марбелья VIP Сервіс</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Natural Scroll Prompt -->
+      <div class="scroll-cue-pill" onclick="scrollToSection('sec-smas')">
+        <span>Прокрутіть вниз для 3D-історії</span>
+        <span class="scroll-arrow-icon">↓</span>
+      </div>
+
+    </section>
+
+    <!-- CHAPTER 02: SMAS & COLLAGEN BOOST (SCROLL POSITION ~100vh) -->
+    <section class="scrolly-section" id="sec-smas">
+      <div class="scrolly-card" id="card-smas">
+        <div class="card-chapter-num">Протокол 01 · Студія Малага</div>
+        <h2 class="card-headline">SMAS & Collagen Boost Architecture</h2>
+        <p class="card-description">
+          Глибоке скульптурне скорочення розтягнутих колагенових волокон та зміцнення контуру щелепи за допомогою мікрофокусованого ультразвуку та біполярного RF Zemits Verstand HD.
+        </p>
+
+        <div class="telemetry-specs-grid">
+          <div class="tele-col">
+            <div class="tele-lbl">Частота</div>
+            <div class="tele-val">2.50 MHz</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Глибина</div>
+            <div class="tele-val">4.5 mm</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Тонус</div>
+            <div class="tele-val">+500 %</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Час</div>
+            <div class="tele-val">90 хв</div>
+          </div>
+        </div>
+
+        <button class="card-action-btn" onclick="bookProtocol('SMAS & Collagen Boost Architecture')">
+          Записатися на цей протокол ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 03: DERMAL DENSITY & HYDRO-RESET (SCROLL POSITION ~200vh) -->
+    <section class="scrolly-section" id="sec-hydro">
+      <div class="scrolly-card" id="card-hydro">
+        <div class="card-chapter-num">Протокол 02 · Клітинний Ресет</div>
+        <h2 class="card-headline">S•K•Y Glow & Hydro-Reset Matrix</h2>
+        <p class="card-description">
+          Атравматична вихрова гідродермабразія та трансдермальна пептидна інфузія. Миттєво усуває сухість після палючого середземноморського сонця, повертаючи ефект зволоженої «скляної шкіри» (Glass Skin).
+        </p>
+
+        <div class="telemetry-specs-grid">
+          <div class="tele-col">
+            <div class="tele-lbl">Частота</div>
+            <div class="tele-val">1.20 MHz</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Глибина</div>
+            <div class="tele-val">1.5 mm</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">АТФ</div>
+            <div class="tele-val">+320 %</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Час</div>
+            <div class="tele-val">60 хв</div>
+          </div>
+        </div>
+
+        <button class="card-action-btn" onclick="bookProtocol('S•K•Y Glow & Hydro-Reset Matrix')">
+          Записатися на Hydro-Reset ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 04: MARBELLA VILLA CONCIERGE (SCROLL POSITION ~300vh) -->
+    <section class="scrolly-section" id="sec-villa">
+      <div class="scrolly-card" id="card-villa">
+        <div class="card-chapter-num">Протокол 03 · VIP Marbella Concierge</div>
+        <h2 class="card-headline">Люксовий Сеанс на Вашій Віллі</h2>
+        <p class="card-description">
+          Ексклюзивний приватний приїзд спеціаліста Марії Стефанюк у вашу резиденцію (*Golden Mile, La Zagaleta, Sierra Blanca, Puerto Banús, Mijas*). Повний стерильний мобільний комплекс Zemits HD та анатомічна SPA-кушетка.
+        </p>
+
+        <div class="telemetry-specs-grid">
+          <div class="tele-col">
+            <div class="tele-lbl">Локація</div>
+            <div class="tele-val">Marbella</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Обладнання</div>
+            <div class="tele-val">Zemits HD</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Стерильність</div>
+            <div class="tele-val">100 %</div>
+          </div>
+          <div class="tele-col">
+            <div class="tele-lbl">Час</div>
+            <div class="tele-val">120 хв</div>
+          </div>
+        </div>
+
+        <button class="card-action-btn" onclick="bookProtocol('Люксовий виїзд на Віллу в Марбельї')">
+          Замовити консьєрж-виїзд на Віллу ➔
+        </button>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Bottom Navigation Dock: FLOATS DIRECTLY OVER THE FULL-SCREEN FACE ARTWORK -->
+  <!-- FIXED BOTTOM NAVIGATION DOCK (FLOATS SEAMLESSLY AT BOTTOM) -->
   <nav class="app-dock">
-    <button class="dock-btn active" id="dockBtnFront" onclick="flipToFace('front')">
+    <button class="dock-btn active" id="dock-hero" onclick="scrollToSection('sec-hero')">
       <span class="dock-icon">✦</span>
-      <span>3D Сканер</span>
+      <span>Сканер</span>
       <div class="dock-indicator-dot"></div>
     </button>
-    <button class="dock-btn" id="dockBtnBack" onclick="flipToFace('back')">
+    <button class="dock-btn" id="dock-smas" onclick="scrollToSection('sec-smas')">
       <span class="dock-icon">⚙️</span>
-      <span>Протоколи</span>
+      <span>SMAS</span>
       <div class="dock-indicator-dot"></div>
     </button>
-    <button class="dock-btn" id="dockBtnVilla" onclick="switchToVillaProtocol()">
+    <button class="dock-btn" id="dock-hydro" onclick="scrollToSection('sec-hydro')">
+      <span class="dock-icon">💧</span>
+      <span>Гідро</span>
+      <div class="dock-indicator-dot"></div>
+    </button>
+    <button class="dock-btn" id="dock-villa" onclick="scrollToSection('sec-villa')">
       <span class="dock-icon">🗝️</span>
       <span>На Віллу</span>
       <div class="dock-indicator-dot"></div>
     </button>
-    <button class="dock-btn" onclick="openWhatsAppDirect()">
-      <span class="dock-icon">💬</span>
-      <span>WhatsApp</span>
-      <div class="dock-indicator-dot"></div>
-    </button>
   </nav>
 
-  <!-- Script for 3D Prism Mechanics, Gyroscope & Full-Bleed Parallax -->
+  <!-- Scrollytelling Engine: GSAP ScrollTrigger & Natural Page Dynamics -->
   <script>
-    // ====================================================================
-    // 1. DATA MATRIX FOR PROTOCOLS
-    // ====================================================================
-    const PROTOCOLS = {
-      smas: {
-        eyebrow: "Швейцарський Протокол Ліфтингу",
-        title: "SMAS & Collagen Boost Architecture",
-        desc: "Глибоке моделювання контуру нижньої щелепи, підтяжка другого підборіддя та ліквідація брилів. Поєднання ультразвукового впливу та біополярного RF скорочує розтягнутий колагеновий каркас без уколів і болю.",
-        img: "pure_scene_2_dermal_matrix.jpg",
-        tech: "Zemits Verstand HD",
-        freq: "2.50 MHz",
-        depth: "4.5 mm",
-        atp: "+500 %",
-        time: "90 хв",
-        whatsapp: "Доброго дня! Я хочу записатися на протокол SMAS & Collagen Boost Architecture (S•K•Y Cosmetics)."
-      },
-      collagen: {
-        eyebrow: "Клітинне Відновлення Дерми",
-        title: "Dermal Matrix ATP Regeneration",
-        desc: "Інтенсивна клітинна реполяризація та відновлення міжклітинного матриксу. Стимулює природний синтез неоколагену типу I та III, підвищуючи тургор та щільність шкіри щік на 80%.",
-        img: "pure_scene_2_dermal_matrix.jpg",
-        tech: "Zemits Collagen Matrix",
-        freq: "2.00 MHz",
-        depth: "3.0 mm",
-        atp: "+450 %",
-        time: "75 хв",
-        whatsapp: "Доброго дня! Я хочу записатися на протокол Dermal Matrix ATP Regeneration (S•K•Y Cosmetics)."
-      },
-      hydro: {
-        eyebrow: "Гідро-Пілінг та Інфузія",
-        title: "S•K•Y Glow & Hydro-Reset",
-        desc: "Атравматичне вакуумне очищення пір та насичення дерми антиоксидантними пептидами. Миттєво прибирає наслідки сухого середземноморського повітря, надаючи ефект скляної шкіри (Glass Skin).",
-        img: "pure_scene_3_acoustic_core.jpg",
-        tech: "Zemits Hydro Vortex",
-        freq: "1.20 MHz",
-        depth: "1.5 mm",
-        atp: "+320 %",
-        time: "60 хв",
-        whatsapp: "Доброго дня! Я хочу записатися на протокол S•K•Y Glow & Hydro-Reset (S•K•Y Cosmetics)."
-      },
-      villa: {
-        eyebrow: "VIP Marbella Concierge Service",
-        title: "Люксовий Сеанс на Вашій Віллі",
-        desc: "Ексклюзивний виїзний сервіс апаратної косметології. Спеціаліст привозить стерильну анатомічну кушетку, одноразові матеріали та комплекс Zemits HD прямо у вашу резиденцію в Марбельї, Малазі чи Міхасі.",
-        img: "pure_scene_3_acoustic_core.jpg",
-        tech: "Zemits Mobile Lab",
-        freq: "Full Range",
-        depth: "4.5 mm",
-        atp: "+500 %",
-        time: "120 хв",
-        whatsapp: "Доброго дня! Мене цікавить Люксовий виїзд на Віллу в Марбельї (S•K•Y Concierge)."
-      }
-    };
+    gsap.registerPlugin(ScrollTrigger);
 
-    let currentProtocolKey = 'smas';
-    let isFlipped = false;
-
-    // ====================================================================
-    // 2. 3D PRISM ROTATION MECHANICS
-    // ====================================================================
-    const prismCube = document.getElementById('prismCube');
-    const dockBtnFront = document.getElementById('dockBtnFront');
-    const dockBtnBack = document.getElementById('dockBtnBack');
-    const dockBtnVilla = document.getElementById('dockBtnVilla');
-    const modeBtnFront = document.getElementById('modeBtnFront');
-    const modeBtnBack = document.getElementById('modeBtnBack');
-
-    function flipToFace(face) {
-      if (face === 'back' && !isFlipped) {
-        // Physical Flip 180deg
-        gsap.to(prismCube, {
-          rotateY: 180,
-          scale: 0.95,
-          duration: 0.45,
-          ease: "power2.in",
-          onComplete: () => {
-            isFlipped = true;
-            prismCube.classList.add('flipped');
-            gsap.to(prismCube, {
-              scale: 1.0,
-              duration: 0.4,
-              ease: "back.out(1.4)"
-            });
-            updateControlsState();
-          }
-        });
-      } else if (face === 'front' && isFlipped) {
-        // Return Flip to 0deg
-        gsap.to(prismCube, {
-          rotateY: 0,
-          scale: 0.95,
-          duration: 0.45,
-          ease: "power2.in",
-          onComplete: () => {
-            isFlipped = false;
-            prismCube.classList.remove('flipped');
-            gsap.to(prismCube, {
-              scale: 1.0,
-              duration: 0.4,
-              ease: "back.out(1.4)"
-            });
-            updateControlsState();
-          }
-        });
+    // Smooth Scroll Helper
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
-    function handleStageClick(event) {
-      // If user tapped directly on full-screen artwork (not a button), trigger default SMAS flip!
-      if (!event.target.closest('.tactical-hotspot') && !event.target.closest('.center-flip-prompt') && !event.target.closest('.front-footer-strip')) {
-        triggerHotspot('smas', event);
-      }
-    }
-
-    function triggerHotspot(key, event) {
-      if (event) {
-        event.stopPropagation();
-        event.preventDefault();
-      }
-
-      // Tactile vibration on mobile
-      if (navigator.vibrate) navigator.vibrate(25);
-
-      const target = event ? event.currentTarget : null;
-      if (target) {
-        gsap.to(target, {
-          scale: 1.25,
-          duration: 0.15,
-          yoyo: true,
-          repeat: 1,
-          ease: "power2.out"
-        });
-      }
-
-      selectProtocol(key);
-      flipToFace('back');
-    }
-
-    function selectProtocol(key) {
-      currentProtocolKey = key;
-      const data = PROTOCOLS[key];
-      if (!data) return;
-
-      // Update pills
-      document.querySelectorAll('.proto-pill').forEach(pill => pill.classList.remove('active'));
-      const activePill = document.getElementById(`pill-${key}`);
-      if (activePill) activePill.classList.add('active');
-
-      // Update fields with soft crossfade
-      gsap.to(['#protoTitle', '#protoDesc', '#macroImg', '.specs-metric-row'], {
-        opacity: 0,
-        y: 6,
-        duration: 0.12,
-        onComplete: () => {
-          document.getElementById('protoEyebrow').textContent = data.eyebrow;
-          document.getElementById('protoTitle').textContent = data.title;
-          document.getElementById('protoDesc').textContent = data.desc;
-          document.getElementById('macroImg').src = data.img;
-          document.getElementById('macroTech').textContent = data.tech;
-          document.getElementById('metricFreq').textContent = data.freq;
-          document.getElementById('metricDepth').textContent = data.depth;
-          document.getElementById('metricATP').textContent = data.atp;
-          document.getElementById('metricTime').textContent = data.time;
-
-          gsap.to(['#protoTitle', '#protoDesc', '#macroImg', '.specs-metric-row'], {
-            opacity: 1,
-            y: 0,
-            duration: 0.28,
-            ease: "power2.out"
-          });
-        }
-      });
-    }
-
-    function switchToVillaProtocol() {
-      selectProtocol('villa');
-      flipToFace('back');
-    }
-
-    function bookCurrentProtocol() {
-      const data = PROTOCOLS[currentProtocolKey];
-      const text = encodeURIComponent(data ? data.whatsapp : "Доброго дня! Хочу записатися на консультацію S•K•Y.");
+    function bookProtocol(name) {
+      const text = encodeURIComponent(`Доброго дня! Я хочу записатися на: ${name} (S•K•Y Cosmetics).`);
       window.open(`https://wa.me/34600000000?text=${text}`, '_blank');
     }
 
-    function openWhatsAppDirect() {
-      window.open(`https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BF%D1%80%D0%BE%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8%D1%81%D1%8F%20%D1%89%D0%BE%D0%B4%D0%BE%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%20S%E2%80%A2K%E2%80%A2Y`, '_blank');
-    }
+    // ====================================================================
+    // GSAP SCROLLTRIGGER ORCHESTRATION: CHANGE 3D STAGE UPON SCROLLING
+    // ====================================================================
+    const stageFace = document.getElementById('stageFace');
+    const heroFaceImg = document.getElementById('heroFaceImg');
+    const stageCollagen = document.getElementById('stageCollagen');
+    const stageAcoustic = document.getElementById('stageAcoustic');
+    const chapterTitleText = document.getElementById('chapterTitleText');
 
-    function updateControlsState() {
-      if (isFlipped) {
-        modeBtnFront.classList.remove('active');
-        modeBtnBack.classList.add('active');
-
-        dockBtnFront.classList.remove('active');
-        if (currentProtocolKey === 'villa') {
-          dockBtnBack.classList.remove('active');
-          dockBtnVilla.classList.add('active');
-        } else {
-          dockBtnVilla.classList.remove('active');
-          dockBtnBack.classList.add('active');
-        }
-      } else {
-        modeBtnBack.classList.remove('active');
-        modeBtnFront.classList.add('active');
-
-        dockBtnBack.classList.remove('active');
-        dockBtnVilla.classList.remove('active');
-        dockBtnFront.classList.add('active');
+    // Section 1 -> Section 2: Focus face into SMAS vector & reveal Card
+    ScrollTrigger.create({
+      trigger: "#sec-smas",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        // Face scales & zooms slightly to focus on SMAS jawline
+        gsap.to(heroFaceImg, { scale: 1.15, y: -20, duration: 0.6, ease: "power2.out" });
+        gsap.to(stageFace, { opacity: 0.85, duration: 0.5 });
+        gsap.to(stageCollagen, { opacity: 0, duration: 0.5 });
+        gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
+        document.getElementById('card-smas').classList.add('active');
+        updateHeaderAndDock('02 / SMAS Термоліфтинг', 'dock-smas', 1);
+      },
+      onLeaveBack: () => {
+        gsap.to(heroFaceImg, { scale: 1.02, y: 0, duration: 0.6, ease: "power2.out" });
+        gsap.to(stageFace, { opacity: 1, duration: 0.5 });
+        document.getElementById('card-smas').classList.remove('active');
+        updateHeaderAndDock('01 / Сканер Обличчя', 'dock-hero', 0);
       }
+    });
+
+    // Section 2 -> Section 3: Transition background to Macro Collagen Matrix
+    ScrollTrigger.create({
+      trigger: "#sec-hydro",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        gsap.to(stageFace, { opacity: 0, scale: 0.95, duration: 0.6 });
+        gsap.to(stageCollagen, { opacity: 1, scale: 1.02, rotateY: 0, duration: 0.7, ease: "power2.out" });
+        gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
+        document.getElementById('card-hydro').classList.add('active');
+        updateHeaderAndDock('03 / Клітинний Гідро-Ресет', 'dock-hydro', 2);
+      },
+      onLeaveBack: () => {
+        gsap.to(stageFace, { opacity: 0.85, scale: 1.15, duration: 0.6 });
+        gsap.to(stageCollagen, { opacity: 0, scale: 1.1, duration: 0.5 });
+        document.getElementById('card-hydro').classList.remove('active');
+        updateHeaderAndDock('02 / SMAS Термоліфтинг', 'dock-smas', 1);
+      }
+    });
+
+    // Section 3 -> Section 4: Transition background to Acoustic Cellular Core & Villa
+    ScrollTrigger.create({
+      trigger: "#sec-villa",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        gsap.to(stageCollagen, { opacity: 0, duration: 0.5 });
+        gsap.to(stageAcoustic, { opacity: 1, scale: 1.02, rotateY: 0, duration: 0.7, ease: "power2.out" });
+        document.getElementById('card-villa').classList.add('active');
+        updateHeaderAndDock('04 / Марбелья VIP Вілла', 'dock-villa', 3);
+      },
+      onLeaveBack: () => {
+        gsap.to(stageCollagen, { opacity: 1, scale: 1.02, duration: 0.6 });
+        gsap.to(stageAcoustic, { opacity: 0, scale: 1.1, duration: 0.5 });
+        document.getElementById('card-villa').classList.remove('active');
+        updateHeaderAndDock('03 / Клітинний Гідро-Ресет', 'dock-hydro', 2);
+      }
+    });
+
+    function updateHeaderAndDock(title, dockId, dotIndex) {
+      chapterTitleText.textContent = title;
+
+      // Update Dock
+      document.querySelectorAll('.dock-btn').forEach(btn => btn.classList.remove('active'));
+      const activeDock = document.getElementById(dockId);
+      if (activeDock) activeDock.classList.add('active');
+
+      // Update Side Dots
+      document.querySelectorAll('.progress-step-dot').forEach(dot => dot.classList.remove('active'));
+      const activeDot = document.getElementById(`dot-${dotIndex}`);
+      if (activeDot) activeDot.classList.add('active');
     }
 
     // ====================================================================
-    // 3. CINEMATIC OPENING SEQUENCE ("ВІДКРИТТЯ")
+    // MOUSE & GYROSCOPE SUBTLE PARALLAX
     // ====================================================================
-    function runOpeningSequence() {
-      const tl = gsap.timeline();
-
-      // 1. Zoom artwork from space
-      tl.fromTo('#heroArtImg', 
-        { scale: 0.92, opacity: 0 },
-        { scale: 1.02, opacity: 1, duration: 0.9, ease: "power3.out" }
-      );
-
-      // 2. Optical flash
-      tl.fromTo('#openingFlash',
-        { opacity: 0.85 },
-        { opacity: 0, duration: 0.5, ease: "power2.out" },
-        "-=0.6"
-      );
-
-      // 3. Hotspots pop in with staggered spring
-      tl.fromTo('.tactical-hotspot',
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.45, stagger: 0.08, ease: "back.out(2)" },
-        "-=0.3"
-      );
-
-      // 4. Center CTA button entrance
-      tl.fromTo('.floating-center-controls',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
-        "-=0.2"
-      );
-    }
-
-    window.addEventListener('DOMContentLoaded', runOpeningSequence);
-
-    // ====================================================================
-    // 4. FULL-SCREEN MOUSE & GYROSCOPE PARALLAX
-    // ====================================================================
-    const heroArtImg = document.getElementById('heroArtImg');
-
     window.addEventListener('mousemove', (e) => {
-      if (isFlipped) return;
       const x = (e.clientX / window.innerWidth) - 0.5;
       const y = (e.clientY / window.innerHeight) - 0.5;
 
-      gsap.to(heroArtImg, {
-        x: x * 20,
-        y: y * 20,
-        scale: 1.05,
-        duration: 0.4,
+      gsap.to('.stage-layer', {
+        x: x * 15,
+        y: y * 15,
+        duration: 0.5,
         ease: "power1.out"
       });
     });
 
-    // Mobile Device Orientation
+    // Mobile Orientation
     window.addEventListener('deviceorientation', (e) => {
-      if (!isFlipped && e.beta && e.gamma && window.innerWidth < 768) {
-        const tiltX = Math.max(-12, Math.min(12, e.gamma / 2.5));
-        const tiltY = Math.max(-12, Math.min(12, (e.beta - 45) / 2.5));
-        gsap.to(heroArtImg, {
+      if (e.beta && e.gamma && window.innerWidth < 768) {
+        const tiltX = Math.max(-10, Math.min(10, e.gamma / 3));
+        const tiltY = Math.max(-10, Math.min(10, (e.beta - 45) / 3));
+        gsap.to('.stage-layer', {
           x: tiltX,
           y: tiltY,
-          duration: 0.4,
+          duration: 0.5,
           ease: "power1.out"
         });
       }
     });
 
     // ====================================================================
-    // 5. LIVING GOLDEN AMBIENT CANVAS PARTICLES
+    // DYNAMIC LIVING GOLDEN PARTICLES (CANVAS 2D)
     // ====================================================================
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
@@ -1384,9 +1041,7 @@
     resizeCanvas();
 
     class Particle {
-      constructor() {
-        this.reset();
-      }
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
@@ -1398,9 +1053,7 @@
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-          this.reset();
-        }
+        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
       }
       draw() {
         ctx.beginPath();
@@ -1410,16 +1063,11 @@
       }
     }
 
-    for (let i = 0; i < 35; i++) {
-      particles.push(new Particle());
-    }
+    for (let i = 0; i < 35; i++) particles.push(new Particle());
 
     function animateParticles() {
       ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
+      particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animateParticles);
     }
     animateParticles();
