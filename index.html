@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>S • K • Y | Швейцарська Кінетична Призма — Малага & Марбелья</title>
+  <title>S • K • Y | 3D Кінетична Призма (Швейцарська Медицина) — Малага & Марбелья</title>
+
+  <!-- Aggressive Anti-Cache Meta Tags -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
   <!-- PWA & Mobile App Meta -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,7 +17,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <!-- GSAP for tactile animations & physics -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -25,11 +30,11 @@
       --gold-light: #F7EAD0;
       --gold-champagne: #EBD6AD;
       --gold-dim: #7A6538;
-      --gold-hairline: rgba(212, 175, 55, 0.22);
-      --gold-glow: rgba(212, 175, 55, 0.4);
+      --gold-hairline: rgba(212, 175, 55, 0.25);
+      --gold-glow: rgba(212, 175, 55, 0.45);
       --ivory: #FAF7F2;
-      --text-muted: #A39D93;
-      --text-dim: #686258;
+      --text-muted: #A8A298;
+      --text-dim: #6E685E;
       --top-header-height: 60px;
       --bottom-dock-height: 68px;
     }
@@ -70,7 +75,7 @@
       width: 500px;
       height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.09) 0%, transparent 65%);
       pointer-events: none;
       z-index: 2;
     }
@@ -87,9 +92,9 @@
       right: 0;
       height: calc(var(--top-header-height) + env(safe-area-inset-top, 0px));
       padding-top: env(safe-area-inset-top, 0px);
-      padding-left: 18px;
-      padding-right: 18px;
-      background: rgba(6, 6, 7, 0.88);
+      padding-left: 16px;
+      padding-right: 16px;
+      background: rgba(6, 6, 7, 0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--gold-hairline);
@@ -132,36 +137,34 @@
       50% { transform: scale(1.3); opacity: 1; }
     }
 
-    .header-telemetry {
+    /* 3D Mode Switcher in Header */
+    .header-mode-toggle {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--gold-hairline);
+      border-radius: 999px;
+      padding: 2px;
+      gap: 2px;
     }
 
-    .telemetry-chip {
+    .mode-tab-btn {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 999px;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--gold-hairline);
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.25s;
     }
-
-    .telemetry-chip::before {
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 6px var(--gold);
+    .mode-tab-btn.active {
+      background: linear-gradient(135deg, #D4AF37, #9B791B);
+      color: #000;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
     }
 
     .header-whatsapp-btn {
@@ -169,17 +172,19 @@
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.12em;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 999px;
-      background: linear-gradient(135deg, #E6CA65, #B38F26);
-      color: #000;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-champagne);
       text-decoration: none;
-      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.3);
       cursor: pointer;
       transition: transform 0.2s;
     }
     .header-whatsapp-btn:active {
       transform: scale(0.95);
+      background: var(--gold);
+      color: #000;
     }
 
     /* ======================================================================
@@ -220,7 +225,6 @@
       height: 100%;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      border-radius: 0;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
@@ -234,16 +238,16 @@
     /* FRONT FACE: Biometric 3D Scanner */
     .face-front {
       transform: rotateY(0deg);
-      background: radial-gradient(circle at 50% 38%, rgba(20, 18, 16, 0.8) 0%, #060607 80%);
+      background: radial-gradient(circle at 50% 36%, rgba(22, 19, 16, 0.85) 0%, #060607 80%);
       justify-content: space-between;
-      padding: 16px 20px 20px;
+      padding: 12px 18px 16px;
     }
 
     /* REVERSE FACE: Deep Protocol Matrix */
     .face-back {
       transform: rotateY(180deg);
-      background: radial-gradient(circle at 50% 30%, rgba(26, 22, 17, 0.9) 0%, #050506 85%);
-      padding: 16px 20px 20px;
+      background: radial-gradient(circle at 50% 28%, rgba(28, 24, 18, 0.92) 0%, #050506 85%);
+      padding: 12px 18px 16px;
       justify-content: space-between;
     }
 
@@ -261,46 +265,67 @@
     .scanner-mode-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--gold-champagne);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pulse-indicator-live {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 8px #4ADE80;
     }
 
     .scanner-hint-pill {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      padding: 3px 8px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      cursor: pointer;
+      animation: hintGlow 2.5s infinite ease-in-out;
     }
 
-    /* Central 3D Artwork Stage */
+    @keyframes hintGlow {
+      0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+      50% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.6); }
+    }
+
+    /* Central 3D Artwork Stage - CLICKABLE FULL AREA */
     .biometric-stage {
       position: relative;
       width: 100%;
       flex: 1;
-      min-height: 340px;
+      min-height: 330px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 10px 0;
+      margin: 8px 0;
+      cursor: pointer;
     }
 
     .biometric-art-wrap {
       position: relative;
       width: 100%;
-      max-width: 380px;
-      height: 380px;
-      border-radius: 24px;
+      max-width: 370px;
+      height: 350px;
+      border-radius: 22px;
       overflow: hidden;
       border: 1px solid var(--gold-hairline);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.12);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15);
       transition: transform 0.4s ease-out;
+      cursor: pointer;
     }
 
     .biometric-img {
@@ -309,6 +334,17 @@
       object-fit: cover;
       transform: scale(1.04);
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    /* Opening Iris Flash Overlay */
+    .opening-flash-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(255, 235, 170, 0.8) 0%, transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 15;
     }
 
     /* Scanning Laser Line */
@@ -332,28 +368,39 @@
       100% { top: 100%; opacity: 0; }
     }
 
-    /* Pulsing Tactical Hotspots (The user clicks these to flip the scene) */
+    /* Tactical Hotspots - FULL TOUCH TARGET */
     .tactical-hotspot {
       position: absolute;
-      z-index: 20;
+      z-index: 25;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
       transform: translate(-50%, -50%);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 6px 8px;
+      background: rgba(10, 9, 8, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+      pointer-events: auto;
     }
     .tactical-hotspot:active {
       transform: translate(-50%, -50%) scale(0.92);
+      border-color: #FFF;
+      background: rgba(212, 175, 55, 0.25);
     }
 
     .hotspot-beacon {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      pointer-events: none;
     }
 
     .beacon-core {
@@ -379,34 +426,21 @@
       100% { transform: scale(1.6); opacity: 0; }
     }
 
-    .hotspot-tag {
-      background: rgba(14, 12, 10, 0.88);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      padding: 5px 10px;
-      border-radius: 6px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
-      white-space: nowrap;
-      pointer-events: none;
-    }
-
     .hotspot-tag-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: #FFF;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      pointer-events: none;
     }
 
     .hotspot-tag-sub {
       font-size: 8px;
       color: var(--gold);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       font-family: 'Space Grotesk', sans-serif;
+      pointer-events: none;
     }
 
     /* Hotspot Coordinates on Face Artwork */
@@ -427,31 +461,61 @@
       left: 50%;
     }
 
-    /* Bottom Information Strip on Front Face */
+    /* Center Tactile Trigger Pill */
+    .center-flip-prompt {
+      margin-top: 8px;
+      width: 100%;
+      max-width: 370px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(155, 121, 27, 0.15));
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+      transition: all 0.2s;
+    }
+    .center-flip-prompt:active {
+      transform: scale(0.96);
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* Bottom Specialist Strip on Front Face */
     .front-footer-strip {
       width: 100%;
-      background: rgba(16, 14, 12, 0.75);
+      background: rgba(14, 12, 10, 0.8);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--gold-hairline);
-      border-radius: 14px;
-      padding: 12px 16px;
+      border-radius: 12px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       z-index: 5;
     }
 
     .specialist-mini-info {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .spec-avatar {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2A2418, #15130F);
       border: 1px solid var(--gold);
@@ -459,40 +523,39 @@
       align-items: center;
       justify-content: center;
       font-family: 'Cinzel', serif;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--gold-champagne);
     }
 
     .spec-text-name {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: #FFF;
       letter-spacing: 0.02em;
     }
 
     .spec-text-handle {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--gold);
       font-family: 'Space Grotesk', sans-serif;
     }
 
     .flip-cta-btn {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 8px 14px;
-      border-radius: 8px;
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFF;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      gap: 4px;
     }
     .flip-cta-btn:active {
       transform: scale(0.95);
@@ -508,7 +571,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .reverse-back-btn {
@@ -519,9 +582,9 @@
       text-transform: uppercase;
       padding: 6px 12px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #FFF;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(155, 121, 27, 0.15));
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -529,11 +592,13 @@
     }
     .reverse-back-btn:active {
       transform: scale(0.95);
+      background: var(--gold);
+      color: #000;
     }
 
     .reverse-protocol-pills {
       display: flex;
-      gap: 6px;
+      gap: 4px;
       overflow-x: auto;
       scrollbar-width: none;
       padding-bottom: 2px;
@@ -544,9 +609,9 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 9px;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 5px 10px;
+      padding: 5px 8px;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -556,7 +621,7 @@
       transition: all 0.2s;
     }
     .proto-pill.active {
-      background: rgba(212, 175, 55, 0.2);
+      background: rgba(212, 175, 55, 0.25);
       border-color: var(--gold);
       color: var(--gold-light);
     }
@@ -568,17 +633,18 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
     }
 
     .macro-visual-box {
       width: 100%;
-      height: 180px;
-      border-radius: 16px;
+      height: 165px;
+      border-radius: 14px;
       overflow: hidden;
       position: relative;
       border: 1px solid var(--gold-hairline);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      cursor: pointer;
     }
 
     .macro-img {
@@ -590,23 +656,23 @@
 
     .macro-overlay-telemetry {
       position: absolute;
-      bottom: 10px;
-      left: 12px;
-      right: 12px;
+      bottom: 8px;
+      left: 10px;
+      right: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(8, 8, 8, 0.82);
+      background: rgba(8, 8, 8, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
     }
 
     .macro-chip-item {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
+      font-size: 8px;
       color: var(--text-muted);
     }
     .macro-chip-val {
@@ -616,12 +682,12 @@
 
     /* Protocol Detail Card */
     .protocol-meta-block {
-      background: rgba(18, 16, 14, 0.7);
+      background: rgba(16, 14, 12, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--gold-hairline);
-      border-radius: 14px;
-      padding: 14px 16px;
+      border-radius: 12px;
+      padding: 12px 14px;
     }
 
     .protocol-eyebrow {
@@ -631,24 +697,24 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .protocol-main-title {
       font-family: 'Cinzel', serif;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: #FFF;
       letter-spacing: 0.04em;
       line-height: 1.25;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .protocol-body-desc {
       font-size: 11px;
       color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 12px;
+      line-height: 1.45;
+      margin-bottom: 10px;
     }
 
     /* Protocol Telemetry Specs Grid */
@@ -656,8 +722,8 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 8px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 6px;
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -670,8 +736,8 @@
       font-size: 8px;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 2px;
+      letter-spacing: 0.06em;
+      margin-bottom: 1px;
     }
     .metric-val {
       font-family: 'Space Grotesk', sans-serif;
@@ -684,8 +750,8 @@
     .reverse-action-bar {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-top: 4px;
+      gap: 6px;
+      margin-top: 2px;
     }
 
     .primary-book-btn {
@@ -697,7 +763,7 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       border: none;
       cursor: pointer;
@@ -722,7 +788,7 @@
       right: 0;
       height: calc(var(--bottom-dock-height) + env(safe-area-inset-bottom, 0px));
       padding-bottom: env(safe-area-inset-bottom, 0px);
-      background: rgba(6, 6, 7, 0.92);
+      background: rgba(6, 6, 7, 0.94);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border-top: 1px solid var(--gold-hairline);
@@ -730,7 +796,7 @@
       align-items: center;
       justify-content: space-around;
       z-index: 100;
-      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.85);
     }
 
     .dock-btn {
@@ -738,7 +804,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 3px;
       background: none;
       border: none;
       color: var(--text-dim);
@@ -795,12 +861,16 @@
       <div class="brand-pulse-dot"></div>
       <div class="brand-logo">S • K • Y</div>
     </div>
-    <div class="header-telemetry">
-      <div class="telemetry-chip">2.50 MHz Resonance</div>
-      <a href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D0%B8%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%83%20S%E2%80%A2K%E2%80%A2Y" target="_blank" class="header-whatsapp-btn">
-        WHATSAPP
-      </a>
+
+    <!-- Mode Switcher -->
+    <div class="header-mode-toggle">
+      <button class="mode-tab-btn active" id="modeBtnFront" onclick="flipToFace('front')">3D Сканер</button>
+      <button class="mode-tab-btn" id="modeBtnBack" onclick="flipToFace('back')">Протокол ↻</button>
     </div>
+
+    <a href="https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D0%B8%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%83%20S%E2%80%A2K%E2%80%A2Y" target="_blank" class="header-whatsapp-btn">
+      WHATSAPP
+    </a>
   </header>
 
   <!-- 3D Chrono-Spatial Prism Viewport -->
@@ -812,69 +882,80 @@
            ================================================================ -->
       <section class="prism-face face-front" id="faceFront">
         <div class="scanner-top-bar">
-          <div class="scanner-mode-title">✦ 3D Біометричний Сканер</div>
-          <div class="scanner-hint-pill">Торкніться точки для 3D-перевороту ↻</div>
+          <div class="scanner-mode-title">
+            <span class="pulse-indicator-live"></span>
+            3D Біометричний Сканер
+          </div>
+          <div class="scanner-hint-pill" onclick="flipToFace('back')">
+            Торкніться для перевороту ↻
+          </div>
         </div>
 
-        <!-- Centerpiece Artwork Stage -->
-        <div class="biometric-stage" id="biometricStage">
+        <!-- Centerpiece Artwork Stage (CLICKING ANYWHERE ON IT FLIPS!) -->
+        <div class="biometric-stage" id="biometricStage" onclick="handleStageClick(event)">
           <div class="biometric-art-wrap" id="biometricArtWrap">
             <img src="pure_scene_1_facemesh.jpg" alt="S•K•Y Biometric 3D Holographic Mesh" class="biometric-img" id="heroArtImg">
+            <div class="opening-flash-overlay" id="openingFlash"></div>
             <div class="scanning-laser-line"></div>
 
             <!-- Hotspot 1: SMAS Vector -->
-            <div class="tactical-hotspot spot-smas" onclick="triggerHotspot('smas', event)">
+            <div class="tactical-hotspot spot-smas" onclick="triggerHotspot('smas', event)" data-key="smas">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
                 <div class="beacon-ring-1"></div>
                 <div class="beacon-ring-2"></div>
               </div>
-              <div class="hotspot-tag">
+              <div class="hotspot-tag-content">
                 <div class="hotspot-tag-title">01 / SMAS Вектор</div>
                 <div class="hotspot-tag-sub">4.5 mm Термоліфтинг</div>
               </div>
             </div>
 
             <!-- Hotspot 2: Collagen Dermal Matrix -->
-            <div class="tactical-hotspot spot-collagen" onclick="triggerHotspot('collagen', event)">
+            <div class="tactical-hotspot spot-collagen" onclick="triggerHotspot('collagen', event)" data-key="collagen">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
                 <div class="beacon-ring-1"></div>
                 <div class="beacon-ring-2"></div>
               </div>
-              <div class="hotspot-tag">
+              <div class="hotspot-tag-content">
                 <div class="hotspot-tag-title">02 / Матрикс АТФ</div>
                 <div class="hotspot-tag-sub">+500% Тонус клітин</div>
               </div>
             </div>
 
             <!-- Hotspot 3: Hydro-Reset -->
-            <div class="tactical-hotspot spot-hydro" onclick="triggerHotspot('hydro', event)">
+            <div class="tactical-hotspot spot-hydro" onclick="triggerHotspot('hydro', event)" data-key="hydro">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
                 <div class="beacon-ring-1"></div>
                 <div class="beacon-ring-2"></div>
               </div>
-              <div class="hotspot-tag">
+              <div class="hotspot-tag-content">
                 <div class="hotspot-tag-title">03 / Гідро-Ресет</div>
                 <div class="hotspot-tag-sub">1.2 MHz Пептиди</div>
               </div>
             </div>
 
             <!-- Hotspot 4: Marbella Villa Concierge -->
-            <div class="tactical-hotspot spot-villa" onclick="triggerHotspot('villa', event)">
+            <div class="tactical-hotspot spot-villa" onclick="triggerHotspot('villa', event)" data-key="villa">
               <div class="hotspot-beacon">
                 <div class="beacon-core"></div>
                 <div class="beacon-ring-1"></div>
                 <div class="beacon-ring-2"></div>
               </div>
-              <div class="hotspot-tag">
+              <div class="hotspot-tag-content">
                 <div class="hotspot-tag-title">04 / Виїзд на Віллу</div>
                 <div class="hotspot-tag-sub">Марбелья VIP Сервіс</div>
               </div>
             </div>
 
           </div>
+
+          <!-- Big Center Action Trigger Pill -->
+          <button class="center-flip-prompt" onclick="triggerHotspot('smas', event)">
+            <span>↻</span> РОЗКРУТИТИ 3D ПРИЗМУ (180°)
+          </button>
         </div>
 
         <!-- Front Footer Specialist Strip -->
@@ -887,7 +968,7 @@
             </div>
           </div>
           <button class="flip-cta-btn" onclick="flipToFace('back')">
-            Деталі протоколів ↻
+            Деталі ↻
           </button>
         </div>
       </section>
@@ -912,7 +993,7 @@
 
         <!-- Protocol Detailed Matrix -->
         <div class="reverse-showcase">
-          <div class="macro-visual-box">
+          <div class="macro-visual-box" onclick="flipToFace('front')">
             <img src="pure_scene_2_dermal_matrix.jpg" alt="Macro Dermal Structure" class="macro-img" id="macroImg">
             <div class="macro-overlay-telemetry">
               <div class="macro-chip-item">ОБЛАДНАННЯ: <span class="macro-chip-val" id="macroTech">Zemits Verstand HD</span></div>
@@ -984,7 +1065,7 @@
     </button>
   </nav>
 
-  <!-- Script for 3D Prism Mechanics & Gyroscope -->
+  <!-- Script for 3D Prism Mechanics, Gyroscope & Cinematic Opening -->
   <script>
     // ====================================================================
     // 1. DATA MATRIX FOR PROTOCOLS
@@ -1050,13 +1131,15 @@
     const dockBtnFront = document.getElementById('dockBtnFront');
     const dockBtnBack = document.getElementById('dockBtnBack');
     const dockBtnVilla = document.getElementById('dockBtnVilla');
+    const modeBtnFront = document.getElementById('modeBtnFront');
+    const modeBtnBack = document.getElementById('modeBtnBack');
 
     function flipToFace(face) {
       if (face === 'back' && !isFlipped) {
         // Physical Flip 180deg
         gsap.to(prismCube, {
           rotateY: 180,
-          scale: 0.96,
+          scale: 0.95,
           duration: 0.45,
           ease: "power2.in",
           onComplete: () => {
@@ -1067,14 +1150,14 @@
               duration: 0.4,
               ease: "back.out(1.4)"
             });
-            updateDockState();
+            updateControlsState();
           }
         });
       } else if (face === 'front' && isFlipped) {
         // Return Flip to 0deg
         gsap.to(prismCube, {
           rotateY: 0,
-          scale: 0.96,
+          scale: 0.95,
           duration: 0.45,
           ease: "power2.in",
           onComplete: () => {
@@ -1085,20 +1168,32 @@
               duration: 0.4,
               ease: "back.out(1.4)"
             });
-            updateDockState();
+            updateControlsState();
           }
         });
       }
     }
 
-    function triggerHotspot(key, event) {
-      if (event) event.stopPropagation();
+    function handleStageClick(event) {
+      // If user tapped directly on artwork (not a hotspot), trigger default SMAS flip!
+      if (!event.target.closest('.tactical-hotspot') && !event.target.closest('.center-flip-prompt')) {
+        triggerHotspot('smas', event);
+      }
+    }
 
-      // Tactile Pulse on clicked hotspot
+    function triggerHotspot(key, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+
+      // Tactile vibration on mobile
+      if (navigator.vibrate) navigator.vibrate(25);
+
       const target = event ? event.currentTarget : null;
       if (target) {
         gsap.to(target, {
-          scale: 1.35,
+          scale: 1.3,
           duration: 0.15,
           yoyo: true,
           repeat: 1,
@@ -1124,7 +1219,7 @@
       gsap.to(['#protoTitle', '#protoDesc', '#macroImg', '.specs-metric-row'], {
         opacity: 0,
         y: 6,
-        duration: 0.15,
+        duration: 0.12,
         onComplete: () => {
           document.getElementById('protoEyebrow').textContent = data.eyebrow;
           document.getElementById('protoTitle').textContent = data.title;
@@ -1139,7 +1234,7 @@
           gsap.to(['#protoTitle', '#protoDesc', '#macroImg', '.specs-metric-row'], {
             opacity: 1,
             y: 0,
-            duration: 0.3,
+            duration: 0.28,
             ease: "power2.out"
           });
         }
@@ -1161,8 +1256,11 @@
       window.open(`https://wa.me/34600000000?text=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B4%D0%BD%D1%8F!%20%D0%AF%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BF%D1%80%D0%BE%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D1%83%D0%B2%D0%B0%D1%82%D0%B8%D1%81%D1%8F%20%D1%89%D0%BE%D0%B4%D0%BE%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%20S%E2%80%A2K%E2%80%A2Y`, '_blank');
     }
 
-    function updateDockState() {
+    function updateControlsState() {
       if (isFlipped) {
+        modeBtnFront.classList.remove('active');
+        modeBtnBack.classList.add('active');
+
         dockBtnFront.classList.remove('active');
         if (currentProtocolKey === 'villa') {
           dockBtnBack.classList.remove('active');
@@ -1172,6 +1270,9 @@
           dockBtnBack.classList.add('active');
         }
       } else {
+        modeBtnBack.classList.remove('active');
+        modeBtnFront.classList.add('active');
+
         dockBtnBack.classList.remove('active');
         dockBtnVilla.classList.remove('active');
         dockBtnFront.classList.add('active');
@@ -1179,7 +1280,43 @@
     }
 
     // ====================================================================
-    // 3. TACTILE GYROSCOPE & MOUSE PARALLAX
+    // 3. CINEMATIC OPENING SEQUENCE ("ВІДКРИТТЯ")
+    // ====================================================================
+    function runOpeningSequence() {
+      const tl = gsap.timeline();
+
+      // 1. Zoom artwork from space
+      tl.fromTo('#heroArtImg', 
+        { scale: 0.88, opacity: 0 },
+        { scale: 1.04, opacity: 1, duration: 0.9, ease: "power3.out" }
+      );
+
+      // 2. Optical flash
+      tl.fromTo('#openingFlash',
+        { opacity: 0.9 },
+        { opacity: 0, duration: 0.5, ease: "power2.out" },
+        "-=0.6"
+      );
+
+      // 3. Hotspots pop in with staggered spring
+      tl.fromTo('.tactical-hotspot',
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.45, stagger: 0.08, ease: "back.out(2)" },
+        "-=0.3"
+      );
+
+      // 4. Center CTA button entrance
+      tl.fromTo('.center-flip-prompt',
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
+        "-=0.2"
+      );
+    }
+
+    window.addEventListener('DOMContentLoaded', runOpeningSequence);
+
+    // ====================================================================
+    // 4. TACTILE GYROSCOPE & MOUSE PARALLAX
     // ====================================================================
     const biometricArtWrap = document.getElementById('biometricArtWrap');
     const heroArtImg = document.getElementById('heroArtImg');
@@ -1192,8 +1329,8 @@
         const y = (e.clientY - rect.top) / rect.height - 0.5;
 
         gsap.to(heroArtImg, {
-          x: x * 18,
-          y: y * 18,
+          x: x * 16,
+          y: y * 16,
           scale: 1.08,
           duration: 0.3,
           ease: "power1.out"
@@ -1205,7 +1342,7 @@
           x: 0,
           y: 0,
           scale: 1.04,
-          duration: 0.6,
+          duration: 0.5,
           ease: "power2.out"
         });
       });
@@ -1213,8 +1350,8 @@
       // Mobile Device Orientation
       window.addEventListener('deviceorientation', (e) => {
         if (!isFlipped && e.beta && e.gamma && window.innerWidth < 768) {
-          const tiltX = Math.max(-12, Math.min(12, e.gamma / 2.5));
-          const tiltY = Math.max(-12, Math.min(12, (e.beta - 45) / 2.5));
+          const tiltX = Math.max(-10, Math.min(10, e.gamma / 2.8));
+          const tiltY = Math.max(-10, Math.min(10, (e.beta - 45) / 2.8));
           gsap.to(heroArtImg, {
             x: tiltX,
             y: tiltY,
@@ -1226,7 +1363,7 @@
     }
 
     // ====================================================================
-    // 4. LIVING GOLDEN AMBIENT CANVAS PARTICLES
+    // 5. LIVING GOLDEN AMBIENT CANVAS PARTICLES
     // ====================================================================
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
