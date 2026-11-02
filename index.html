@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>S • K • Y | Skin · Keep · Youthful — Елітні Курси Догляду та Омолодження</title>
+  <title>S • K • Y | Skin · Keep · Youthful — Елітні Курси Збереження Природної Молодості</title>
 
   <!-- Anti-Cache Meta Tags -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -118,82 +118,85 @@
       text-decoration: none;
       white-space: nowrap;
       display: inline-block;
-      text-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+      text-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
     }
 
     .brand-pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 12px var(--gold);
-      animation: pulseDot 2.2s infinite ease-in-out;
-    }
-
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(0.85); opacity: 0.6; }
-      50% { transform: scale(1.3); opacity: 1; }
-    }
-
-    .header-center-chapter {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold-champagne);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(14, 12, 10, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 5px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(212, 175, 55, 0.25);
-    }
-
-    .pulse-live-indicator {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #4ADE80;
-      box-shadow: 0 0 8px #4ADE80;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: pulseBrandDot 2s infinite ease-in-out;
+    }
+    @keyframes pulseBrandDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .header-center-chapter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      background: rgba(14, 13, 14, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--gold-champagne);
+      text-transform: uppercase;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pulse-live-indicator {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #4EED96;
+      box-shadow: 0 0 8px #4EED96;
     }
 
     .header-whatsapp-btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gold-light);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       letter-spacing: 0.12em;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #E6CA65, #B38F26);
-      color: #000;
+      text-transform: uppercase;
       text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 2px 14px rgba(212, 175, 55, 0.35);
-      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s;
     }
     .header-whatsapp-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.96);
+      background: rgba(212, 175, 55, 0.3);
     }
 
     /* ======================================================================
-       2. FIXED PINNED 3D STAGE (BACKGROUND THAT TRANSFORMS AS YOU SCROLL!)
+       2. FIXED 3D VISUAL STAGE (PINNED BEHIND NATURAL SCROLLING CONTENT)
        ====================================================================== */
     .pinned-stage {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      z-index: 5;
       pointer-events: none;
+      z-index: 5;
       overflow: hidden;
-      perspective: 1600px;
     }
 
-    /* The 3 Background Layers that smoothly crossfade/rotate as you scroll */
     .stage-layer {
       position: absolute;
       inset: 0;
@@ -542,6 +545,29 @@
       font-weight: 400;
     }
 
+    /* Highlight Feature Badge inside Card */
+    .card-feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+      letter-spacing: 0.08em;
+    }
+    .card-feature-pill .bullet {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
     /* Luxury Telemetry HUD Inside Cards */
     .luxury-telemetry-hud {
       display: grid;
@@ -634,6 +660,17 @@
       transform: translateX(3px);
     }
 
+    /* Secondary Action Button (e.g. Waiting List / Tripwire) */
+    .luxury-action-secondary {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gold-light);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+    .luxury-action-secondary:active {
+      background: rgba(212, 175, 55, 0.25);
+    }
+
     /* ======================================================================
        4. FLOATING SCROLL PROGRESS INDICATOR (SIDE / BOTTOM)
        ====================================================================== */
@@ -644,7 +681,7 @@
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       z-index: 100;
       pointer-events: auto;
     }
@@ -660,7 +697,7 @@
       position: relative;
     }
     .progress-step-dot.active {
-      height: 22px;
+      height: 20px;
       border-radius: 999px;
       background: var(--gold);
       border-color: var(--gold-light);
@@ -675,10 +712,10 @@
       bottom: 22px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(92%, 380px);
+      width: min(94%, 420px);
       height: 62px;
       padding: 0 6px;
-      background: rgba(14, 13, 14, 0.78);
+      background: rgba(14, 13, 14, 0.82);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(212, 175, 55, 0.28);
@@ -702,9 +739,9 @@
       border: none;
       color: var(--text-dim);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 8.5px;
+      font-size: 8px;
       font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
       position: relative;
@@ -751,40 +788,43 @@
         letter-spacing: 0.16em;
       }
       .header-center-chapter {
-        font-size: 8.5px;
+        font-size: 8px;
         letter-spacing: 0.08em;
         padding: 4px 8px;
-        max-width: 155px;
+        max-width: 140px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
       .header-whatsapp-btn {
-        font-size: 8.5px;
+        font-size: 8px;
         letter-spacing: 0.08em;
-        padding: 5px 9px;
+        padding: 5px 8px;
       }
       .scrolly-card {
         padding: 18px 18px;
       }
       .headline-primary {
-        font-size: 22px;
+        font-size: 21px;
       }
       .card-editorial-quote {
         font-size: 11px;
       }
       .hud-metric-val {
-        font-size: 11.5px;
+        font-size: 11px;
       }
       .app-dock {
-        bottom: 16px;
-        width: 94%;
-        height: 58px;
+        bottom: 14px;
+        width: 95%;
+        height: 56px;
       }
       .dock-btn {
-        height: 44px;
-        font-size: 8px;
-        letter-spacing: 0.1em;
+        height: 42px;
+        font-size: 7.5px;
+        letter-spacing: 0.08em;
+      }
+      .scroll-progress-hud {
+        right: 8px;
       }
     }
   </style>
@@ -835,12 +875,16 @@
 
   </div>
 
-  <!-- FLOATING SIDE SCROLL PROGRESS HUD -->
+  <!-- FLOATING SIDE SCROLL PROGRESS HUD (8 CHAPTERS) -->
   <nav class="scroll-progress-hud">
     <div class="progress-step-dot active" id="dot-0" onclick="scrollToSection('sec-hero')" title="01 Сканер"></div>
-    <div class="progress-step-dot" id="dot-1" onclick="scrollToSection('sec-smas')" title="02 SMAS"></div>
-    <div class="progress-step-dot" id="dot-2" onclick="scrollToSection('sec-hydro')" title="03 Гідро"></div>
-    <div class="progress-step-dot" id="dot-3" onclick="scrollToSection('sec-villa')" title="04 Вілла"></div>
+    <div class="progress-step-dot" id="dot-1" onclick="scrollToSection('sec-smas')" title="02 Sculpt"></div>
+    <div class="progress-step-dot" id="dot-2" onclick="scrollToSection('sec-hydro')" title="03 Glass Skin"></div>
+    <div class="progress-step-dot" id="dot-3" onclick="scrollToSection('sec-total')" title="04 Total Age"></div>
+    <div class="progress-step-dot" id="dot-4" onclick="scrollToSection('sec-villa')" title="05 Виїзд"></div>
+    <div class="progress-step-dot" id="dot-5" onclick="scrollToSection('sec-tripwire')" title="06 Знайомство"></div>
+    <div class="progress-step-dot" id="dot-6" onclick="scrollToSection('sec-inject')" title="07 Ін'єкції"></div>
+    <div class="progress-step-dot" id="dot-7" onclick="scrollToSection('sec-expert')" title="08 Експерт"></div>
   </nav>
 
   <!-- ====================================================================
@@ -863,8 +907,8 @@
           </div>
           <div class="reticle-leader"></div>
           <div class="reticle-glass-tag">
-            <div class="reticle-tag-title">01 · SMAS Вектор</div>
-            <div class="reticle-tag-sub">4.5 mm Ліфтинг</div>
+            <div class="reticle-tag-title">01 · SMAS Овал</div>
+            <div class="reticle-tag-sub">Курс Sculpt & Lift</div>
           </div>
         </div>
 
@@ -877,13 +921,13 @@
           </div>
           <div class="reticle-leader"></div>
           <div class="reticle-glass-tag">
-            <div class="reticle-tag-title">02 · Колагенова Сітка</div>
-            <div class="reticle-tag-sub">+500% Тонус АТФ</div>
+            <div class="reticle-tag-title">02 · Glass Skin</div>
+            <div class="reticle-tag-sub">Гідро-Ресет & Пори</div>
           </div>
         </div>
 
-        <!-- Hotspot 3: Hydro Core -->
-        <div class="tactical-hotspot spot-hydro" onclick="scrollToSection('sec-hydro')">
+        <!-- Hotspot 3: Total Age -->
+        <div class="tactical-hotspot spot-hydro" onclick="scrollToSection('sec-total')">
           <div class="reticle-beacon">
             <div class="beacon-core"></div>
             <div class="beacon-ring-1"></div>
@@ -891,8 +935,8 @@
           </div>
           <div class="reticle-leader"></div>
           <div class="reticle-glass-tag">
-            <div class="reticle-tag-title">03 · Гідро-Ресет</div>
-            <div class="reticle-tag-sub">1.2 MHz Пептиди</div>
+            <div class="reticle-tag-title">03 · Total Age</div>
+            <div class="reticle-tag-sub">Обличчя + Шия 40+</div>
           </div>
         </div>
 
@@ -923,22 +967,27 @@
 
     </section>
 
-    <!-- CHAPTER 02: SMAS & COLLAGEN BOOST (SCROLL POSITION ~100vh) -->
+    <!-- CHAPTER 02: S•K•Y SCULPT & LIFT (SCROLL POSITION ~100vh) -->
     <section class="scrolly-section" id="sec-smas">
       <div class="scrolly-card" id="card-smas">
         <div class="card-eyebrow-wrap">
-          <span class="eyebrow-badge">ПРИВАТНИЙ ПРИЙОМ</span>
+          <span class="eyebrow-badge">ФЛАГМАНСЬКИЙ КУРС</span>
           <span class="eyebrow-accent-line"></span>
-          <span class="eyebrow-telemetry">КУРС ПРОЦЕДУР · 2.50 MHz</span>
+          <span class="eyebrow-telemetry">3–4 СЕАНСИ · 2.50 MHz</span>
         </div>
         
         <h2 class="card-headline">
-          <span class="headline-primary">SMAS Ultrasonic Vector</span>
-          <span class="headline-sub">Скульптурування Контурів Обличчя</span>
+          <span class="headline-primary">S•K•Y Sculpt & Lift</span>
+          <span class="headline-sub">Архітектурне Моделювання Овалу</span>
         </h2>
+
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>Чіткий кут щелепи · Ліквідація другого підборіддя · Без уколів</span>
+        </div>
         
         <p class="card-editorial-quote">
-          Глибоке фокусоване скорочення зв'язкового апарату SMAS та стимуляція неоколагенезу. Чіткий кут нижньої щелепи без хірургії та відновлювального періоду.
+          Глибоке скорочення зв'язкового апарату SMAS та активація синтезу власного молодого колагену. Курсовий результат фіксується на 6–12 місяців без синців і реабілітації.
         </p>
 
         <div class="luxury-telemetry-hud">
@@ -953,19 +1002,19 @@
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-depth"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">Тонус</div>
-            <div class="hud-metric-val">+500 <span class="unit">%</span></div>
+            <div class="hud-metric-label">Курс</div>
+            <div class="hud-metric-val">3–4 <span class="unit">сеанси</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-atp"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">Час</div>
-            <div class="hud-metric-val">90 <span class="unit">хв</span></div>
+            <div class="hud-metric-label">Сеанс</div>
+            <div class="hud-metric-val">80 <span class="unit">хв</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-smas-time"></div></div>
           </div>
         </div>
 
-        <button class="luxury-action-cta" onclick="bookProtocol('Курс SMAS Ultrasonic Vector')">
-          <span>Забронювати курс сеансів</span>
+        <button class="luxury-action-cta" onclick="bookProtocol('Курс S•K•Y Sculpt & Lift')">
+          <span>Забронювати курс Sculpt</span>
           <span class="cta-arrow-circle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -975,49 +1024,54 @@
       </div>
     </section>
 
-    <!-- CHAPTER 03: DERMAL DENSITY & HYDRO-RESET (SCROLL POSITION ~200vh) -->
+    <!-- CHAPTER 03: S•K•Y GLASS SKIN & HYDRO-RESET (SCROLL POSITION ~200vh) -->
     <section class="scrolly-section" id="sec-hydro">
       <div class="scrolly-card" id="card-hydro">
         <div class="card-eyebrow-wrap">
-          <span class="eyebrow-badge">CELLULAR REGÈNE</span>
+          <span class="eyebrow-badge">КЛІТИННЕ ЗВОЛОЖЕННЯ</span>
           <span class="eyebrow-accent-line"></span>
-          <span class="eyebrow-telemetry">1.20 MHz · PEPTIDES</span>
+          <span class="eyebrow-telemetry">3 СЕАНСИ · GLASS SKIN</span>
         </div>
 
         <h2 class="card-headline">
-          <span class="headline-primary">S•K•Y Glow & Hydro-Reset</span>
-          <span class="headline-sub">Клітинна Гідратація & Glass Skin</span>
+          <span class="headline-primary">S•K•Y Glass Skin & Hydro-Reset</span>
+          <span class="headline-sub">Дзеркальне Сяйво та Захист від Сонця</span>
         </h2>
 
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>Очищення пор · Пептидна інфузія · Антиоксидантний бар'єр</span>
+        </div>
+
         <p class="card-editorial-quote">
-          Вихрова апаратна гідродермабразія та трансдермальна пептидна інфузія. Миттєве насичення дерми вологою та антиоксидантами після активного сонця Коста-дель-Соль.
+          Вихрова апаратна ексфоліація та трансдермальне насичення гіалуроновою кислотою. Миттєво стирає сухість після активного сонця Коста-дель-Соль та вирівнює рельєф без тонального крему.
         </p>
 
         <div class="luxury-telemetry-hud">
           <div class="hud-metric">
-            <div class="hud-metric-label">Частота</div>
-            <div class="hud-metric-val">1.20 <span class="unit">MHz</span></div>
+            <div class="hud-metric-label">Тиск</div>
+            <div class="hud-metric-val">1.20 <span class="unit">Bar</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-freq"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">Глибина</div>
-            <div class="hud-metric-val">1.5 <span class="unit">mm</span></div>
+            <div class="hud-metric-label">Пори</div>
+            <div class="hud-metric-val">-65 <span class="unit">%</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-depth"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">АТФ</div>
-            <div class="hud-metric-val">+320 <span class="unit">%</span></div>
+            <div class="hud-metric-label">Курс</div>
+            <div class="hud-metric-val">3 <span class="unit">сеанси</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-atp"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">Час</div>
-            <div class="hud-metric-val">60 <span class="unit">хв</span></div>
+            <div class="hud-metric-label">Сеанс</div>
+            <div class="hud-metric-val">75 <span class="unit">хв</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-hydro-time"></div></div>
           </div>
         </div>
 
-        <button class="luxury-action-cta" onclick="bookProtocol('S•K•Y Glow & Hydro-Reset')">
-          <span>Записатися на Hydro-Reset</span>
+        <button class="luxury-action-cta" onclick="bookProtocol('Курс S•K•Y Glass Skin & Hydro-Reset')">
+          <span>Забронювати курс Glass Skin</span>
           <span class="cta-arrow-circle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -1027,22 +1081,84 @@
       </div>
     </section>
 
-    <!-- CHAPTER 04: PREMIUM OUTCALL CONCIERGE (SCROLL POSITION ~300vh) -->
+    <!-- CHAPTER 04: S•K•Y TOTAL AGE-RESET (SCROLL POSITION ~300vh) -->
+    <section class="scrolly-section" id="sec-total">
+      <div class="scrolly-card" id="card-total">
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">ТОТАЛЬНЕ ОМОЛОДЖЕННЯ 40+</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">4 СЕАНСИ · FACE & NECK</span>
+        </div>
+
+        <h2 class="card-headline">
+          <span class="headline-primary">S•K•Y Total Age-Reset</span>
+          <span class="headline-sub">Обличчя + Шия + Декольте</span>
+        </h2>
+
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>Кільця Венери · Носогубні складки · Пружність шиї</span>
+        </div>
+
+        <p class="card-editorial-quote">
+          Повна комплексна реновація трьох естетичних зон. Синергія глибокого векторного скорочення тканин, лімфодренажного моделювання та посиленого живлення матриксу зрілої дерми.
+        </p>
+
+        <div class="luxury-telemetry-hud">
+          <div class="hud-metric">
+            <div class="hud-metric-label">Зони</div>
+            <div class="hud-metric-val">3 <span class="unit">зони</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-total-zones"></div></div>
+          </div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Колаген</div>
+            <div class="hud-metric-val">+420 <span class="unit">%</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-total-col"></div></div>
+          </div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Курс</div>
+            <div class="hud-metric-val">4 <span class="unit">сеанси</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-total-atp"></div></div>
+          </div>
+          <div class="hud-metric">
+            <div class="hud-metric-label">Сеанс</div>
+            <div class="hud-metric-val">90 <span class="unit">хв</span></div>
+            <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-total-time"></div></div>
+          </div>
+        </div>
+
+        <button class="luxury-action-cta" onclick="bookProtocol('Курс S•K•Y Total Age-Reset')">
+          <span>Забронювати Total Age-Reset</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 05: PREMIUM OUTCALL CONCIERGE (SCROLL POSITION ~400vh) -->
     <section class="scrolly-section" id="sec-villa">
       <div class="scrolly-card" id="card-villa">
         <div class="card-eyebrow-wrap">
-          <span class="eyebrow-badge">PREMIUM OUTCALL</span>
+          <span class="eyebrow-badge">PREMIUM CONCIERGE</span>
           <span class="eyebrow-accent-line"></span>
           <span class="eyebrow-telemetry">ВИЇЗНИЙ СЕРВІС</span>
         </div>
 
         <h2 class="card-headline">
           <span class="headline-primary">Private Concierge Outcall</span>
-          <span class="headline-sub">Ексклюзивний Виїзний Сеанс</span>
+          <span class="headline-sub">Преміальний Виїзд до Ваших Дверей</span>
         </h2>
 
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>Анатомічна SPA-кушетка · Стерильний сет · Повна приватність</span>
+        </div>
+
         <p class="card-editorial-quote">
-          Індивідуальний виїзд спеціаліста Марії Стефанюк до вашої локації. Повний мобільний стерильний комплекс та анатомічна SPA-кушетка для вашого максимального комфорту.
+          Спеціаліст Марія Стефанюк приїжджає прямо до вашого дому зі складною анатомічною кушеткою, медичними захисними покриттями та портативним комплексом S•K•Y. Нуль заторів та паркінгів.
         </p>
 
         <div class="luxury-telemetry-hud">
@@ -1052,8 +1168,8 @@
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-loc"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">Комплекс</div>
-            <div class="hud-metric-val">S•K•Y</div>
+            <div class="hud-metric-label">Логістика</div>
+            <div class="hud-metric-val">100 <span class="unit">%</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-dev"></div></div>
           </div>
           <div class="hud-metric">
@@ -1062,14 +1178,116 @@
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-ster"></div></div>
           </div>
           <div class="hud-metric">
-            <div class="hud-metric-label">Час</div>
-            <div class="hud-metric-val">120 <span class="unit">хв</span></div>
+            <div class="hud-metric-label">Сеанс</div>
+            <div class="hud-metric-val">100 <span class="unit">хв</span></div>
             <div class="hud-metric-bar"><div class="hud-bar-fill" id="bar-villa-time"></div></div>
           </div>
         </div>
 
-        <button class="luxury-action-cta" onclick="bookProtocol('Преміальний Виїзний Сеанс')">
+        <button class="luxury-action-cta" onclick="bookProtocol('Преміальний Виїзний Курс S•K•Y')">
           <span>Замовити виїзний сеанс</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 06: INTRO & DIAGNOSTIC TRIPWIRE (SCROLL POSITION ~500vh) -->
+    <section class="scrolly-section" id="sec-tripwire">
+      <div class="scrolly-card" id="card-tripwire">
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">ВХІДНИЙ КРОК</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">100% ПЕРЕЗАЛІК У КУРС</span>
+        </div>
+
+        <h2 class="card-headline">
+          <span class="headline-primary">Сеанс-Знайомство & Діагностика</span>
+          <span class="headline-sub">Тест-Драйв Естетичної Системи S•K•Y</span>
+        </h2>
+
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>3D-аналіз дерми + Тест-сеанс зволоження + Карта курсу (75 хв)</span>
+        </div>
+
+        <p class="card-editorial-quote">
+          Ідеальний перший крок для нових гостей: детальний аналіз товщини дерми, тест-процедура гідро-відновлення та складання персональної програми. <strong style="color:var(--gold-light);">Вартість сеансу-знайомства повністю зараховується як депозит у курс при рішенні в день візиту!</strong>
+        </p>
+
+        <button class="luxury-action-cta" onclick="bookProtocol('Сеанс-Знайомство & Діагностика S•K•Y (75 хв)')">
+          <span>Записатися на Знайомство</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 07: INJECTABLE EXPANSION (+6 MONTHS) (SCROLL POSITION ~600vh) -->
+    <section class="scrolly-section" id="sec-inject">
+      <div class="scrolly-card" id="card-inject">
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">РОЗШИРЕННЯ СИСТЕМИ</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">SOON · FRENCH TOUCH</span>
+        </div>
+
+        <h2 class="card-headline">
+          <span class="headline-primary">S•K•Y Injectable Couture</span>
+          <span class="headline-sub">Делікатна Ін'єкційна Естетика</span>
+        </h2>
+
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>Natural Lip Refresh · Radiesse неоколагенез · PDRN полінуклеотиди</span>
+        </div>
+
+        <p class="card-editorial-quote">
+          Майбутнє розширення платформи S•K•Y: фізіологічні мікродози препаратів світового класу для збереження абсолютної природності міміки. Жодного ефекту «переколотого обличчя». Першочерговий доступ для клієнтів апаратних курсів.
+        </p>
+
+        <button class="luxury-action-cta luxury-action-secondary" onclick="bookProtocol('Лист очікування: Ін\'єкційне Крило S•K•Y')">
+          <span>Приєднатися до листа очікування</span>
+          <span class="cta-arrow-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- CHAPTER 08: SPECIALIST & CONCIERGE BOOKING (SCROLL POSITION ~700vh) -->
+    <section class="scrolly-section" id="sec-expert">
+      <div class="scrolly-card" id="card-expert">
+        <div class="card-eyebrow-wrap">
+          <span class="eyebrow-badge">ЕКСПЕРТ & КОНСЬЄРЖ</span>
+          <span class="eyebrow-accent-line"></span>
+          <span class="eyebrow-telemetry">MARIIA STEFANIUK</span>
+        </div>
+
+        <h2 class="card-headline">
+          <span class="headline-primary">Марія Стефанюк</span>
+          <span class="headline-sub">Засновник & Експерт S•K•Y (@cosmetolog.sky)</span>
+        </h2>
+
+        <div class="card-feature-pill">
+          <span class="bullet"></span>
+          <span>Приватна Студія у Малазі · Преміальний Виїзд · Instagram @cosmetolog.sky</span>
+        </div>
+
+        <p class="card-editorial-quote">
+          «Моя місія — зберегти вашу природну красу так, щоб усі бачили свіжість та відпочилий погляд, але ніхто не здогадався про косметологічне втручання. Бездоганна стерильність та клубна приватність 1 на 1.»
+        </p>
+
+        <button class="luxury-action-cta" onclick="bookProtocol('Персональна Консультація з Марією')">
+          <span>Написати у WhatsApp Консьєрж</span>
           <span class="cta-arrow-circle">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -1081,10 +1299,10 @@
 
   </main>
 
-  <!-- FIXED FLOATING LUXURY GLASS DOCK (NO EMOJIS, BESPOKE LINE SVGS) -->
+  <!-- FIXED FLOATING LUXURY GLASS DOCK (5 INTUITIVE BESPOKE LINE BUTTONS) -->
   <nav class="app-dock">
     <button class="dock-btn active" id="dock-hero" onclick="scrollToSection('sec-hero')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="9"/>
         <circle cx="12" cy="12" r="3"/>
         <line x1="12" y1="1" x2="12" y2="4"/>
@@ -1097,30 +1315,39 @@
     </button>
     
     <button class="dock-btn" id="dock-smas" onclick="scrollToSection('sec-smas')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M2 12c3-4 6-4 9 0s6 4 9 0"/>
         <path d="M2 7c3-4 6-4 9 0s6 4 9 0" opacity="0.45"/>
         <path d="M2 17c3-4 6-4 9 0s6 4 9 0" opacity="0.45"/>
       </svg>
-      <span>SMAS</span>
-      <div class="dock-indicator-dot"></div>
-    </button>
-    
-    <button class="dock-btn" id="dock-hydro" onclick="scrollToSection('sec-hydro')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2.5C12 2.5 5 11 5 15.5A7 7 0 0 0 19 15.5C19 11 12 2.5 12 2.5z"/>
-        <path d="M12 18.5a3.5 3.5 0 0 0 3.5-3.5" opacity="0.55"/>
-      </svg>
-      <span>Гідро</span>
+      <span>Курси</span>
       <div class="dock-indicator-dot"></div>
     </button>
     
     <button class="dock-btn" id="dock-villa" onclick="scrollToSection('sec-villa')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.5z"/>
         <path d="M9 21V12a3 3 0 0 1 6 0v9"/>
       </svg>
       <span>Виїзд</span>
+      <div class="dock-indicator-dot"></div>
+    </button>
+
+    <button class="dock-btn" id="dock-tripwire" onclick="scrollToSection('sec-tripwire')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="12 8 8 12 12 16 16 12 12 8"/>
+      </svg>
+      <span>Знайомство</span>
+      <div class="dock-indicator-dot"></div>
+    </button>
+    
+    <button class="dock-btn" id="dock-expert" onclick="scrollToSection('sec-expert')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>Експерт</span>
       <div class="dock-indicator-dot"></div>
     </button>
   </nav>
@@ -1138,7 +1365,7 @@
     }
 
     function bookProtocol(name) {
-      const text = encodeURIComponent(`Доброго дня! Я хочу записатися на: ${name} (S•K•Y Cosmetics).`);
+      const text = encodeURIComponent(`Доброго дня! Мене цікавить: ${name} (S•K•Y Cosmetics). Підкажіть, будь ласка, деталі та вільні дати для запису.`);
       window.open(`https://wa.me/34600000000?text=${text}`, '_blank');
     }
 
@@ -1151,26 +1378,38 @@
     const stageAcoustic = document.getElementById('stageAcoustic');
     const chapterTitleText = document.getElementById('chapterTitleText');
 
-    // Section 1 -> Section 2: Focus face into SMAS vector & reveal Card
+    function updateHeaderAndDock(title, dockId, dotIndex) {
+      chapterTitleText.textContent = title;
+
+      // Update Dock
+      document.querySelectorAll('.dock-btn').forEach(btn => btn.classList.remove('active'));
+      const activeDock = document.getElementById(dockId);
+      if (activeDock) activeDock.classList.add('active');
+
+      // Update Side Dots
+      document.querySelectorAll('.progress-step-dot').forEach(dot => dot.classList.remove('active'));
+      const activeDot = document.getElementById(`dot-${dotIndex}`);
+      if (activeDot) activeDot.classList.add('active');
+    }
+
+    // 01 -> 02: SMAS Sculpt & Lift
     ScrollTrigger.create({
       trigger: "#sec-smas",
       start: "top 70%",
       end: "bottom 30%",
       onEnter: () => {
-        // Face scales & zooms slightly to focus on SMAS jawline
         gsap.to(heroFaceImg, { scale: 1.15, y: -20, duration: 0.6, ease: "power2.out" });
         gsap.to(stageFace, { opacity: 0.85, duration: 0.5 });
         gsap.to(stageCollagen, { opacity: 0, duration: 0.5 });
         gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
         document.getElementById('card-smas').classList.add('active');
         
-        // Dynamic Telemetry Signal Bars (animate-text / HUD metric fills)
         document.getElementById('bar-smas-freq').style.width = '85%';
         document.getElementById('bar-smas-depth').style.width = '90%';
         document.getElementById('bar-smas-atp').style.width = '100%';
         document.getElementById('bar-smas-time').style.width = '75%';
 
-        updateHeaderAndDock('02 / SMAS ЛІФТИНГ', 'dock-smas', 1);
+        updateHeaderAndDock('02 / S•K•Y SCULPT & LIFT', 'dock-smas', 1);
       },
       onLeaveBack: () => {
         gsap.to(heroFaceImg, { scale: 1.02, y: 0, duration: 0.6, ease: "power2.out" });
@@ -1186,7 +1425,7 @@
       }
     });
 
-    // Section 2 -> Section 3: Transition background to Macro Collagen Matrix
+    // 02 -> 03: Glass Skin & Hydro-Reset
     ScrollTrigger.create({
       trigger: "#sec-hydro",
       start: "top 70%",
@@ -1197,12 +1436,12 @@
         gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
         document.getElementById('card-hydro').classList.add('active');
         
-        document.getElementById('bar-hydro-freq').style.width = '60%';
-        document.getElementById('bar-hydro-depth').style.width = '50%';
+        document.getElementById('bar-hydro-freq').style.width = '65%';
+        document.getElementById('bar-hydro-depth').style.width = '65%';
         document.getElementById('bar-hydro-atp').style.width = '85%';
-        document.getElementById('bar-hydro-time').style.width = '55%';
+        document.getElementById('bar-hydro-time').style.width = '70%';
 
-        updateHeaderAndDock('03 / КЛІТИННИЙ РЕСЕТ', 'dock-hydro', 2);
+        updateHeaderAndDock('03 / GLASS SKIN & HYDRO', 'dock-smas', 2);
       },
       onLeaveBack: () => {
         gsap.to(stageFace, { opacity: 0.85, scale: 1.15, duration: 0.6 });
@@ -1214,11 +1453,42 @@
         document.getElementById('bar-hydro-atp').style.width = '0%';
         document.getElementById('bar-hydro-time').style.width = '0%';
 
-        updateHeaderAndDock('02 / SMAS ЛІФТИНГ', 'dock-smas', 1);
+        updateHeaderAndDock('02 / S•K•Y SCULPT & LIFT', 'dock-smas', 1);
       }
     });
 
-    // Section 3 -> Section 4: Transition background to Acoustic Cellular Core & Villa
+    // 03 -> 04: Total Age-Reset
+    ScrollTrigger.create({
+      trigger: "#sec-total",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        gsap.to(stageCollagen, { opacity: 0.7, scale: 1.05, duration: 0.6 });
+        gsap.to(stageAcoustic, { opacity: 0.6, scale: 1.0, duration: 0.6 });
+        document.getElementById('card-total').classList.add('active');
+
+        document.getElementById('bar-total-zones').style.width = '100%';
+        document.getElementById('bar-total-col').style.width = '95%';
+        document.getElementById('bar-total-atp').style.width = '100%';
+        document.getElementById('bar-total-time').style.width = '90%';
+
+        updateHeaderAndDock('04 / TOTAL AGE-RESET', 'dock-smas', 3);
+      },
+      onLeaveBack: () => {
+        gsap.to(stageCollagen, { opacity: 1, scale: 1.02, duration: 0.6 });
+        gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
+        document.getElementById('card-total').classList.remove('active');
+
+        document.getElementById('bar-total-zones').style.width = '0%';
+        document.getElementById('bar-total-col').style.width = '0%';
+        document.getElementById('bar-total-atp').style.width = '0%';
+        document.getElementById('bar-total-time').style.width = '0%';
+
+        updateHeaderAndDock('03 / GLASS SKIN & HYDRO', 'dock-smas', 2);
+      }
+    });
+
+    // 04 -> 05: Outcall Concierge
     ScrollTrigger.create({
       trigger: "#sec-villa",
       start: "top 70%",
@@ -1233,11 +1503,11 @@
         document.getElementById('bar-villa-ster').style.width = '100%';
         document.getElementById('bar-villa-time').style.width = '95%';
 
-        updateHeaderAndDock('04 / ВИЇЗНА ПОСЛУГА', 'dock-villa', 3);
+        updateHeaderAndDock('05 / ВИЇЗНА ПОСЛУГА', 'dock-villa', 4);
       },
       onLeaveBack: () => {
-        gsap.to(stageCollagen, { opacity: 1, scale: 1.02, duration: 0.6 });
-        gsap.to(stageAcoustic, { opacity: 0, scale: 1.1, duration: 0.5 });
+        gsap.to(stageCollagen, { opacity: 0.7, scale: 1.05, duration: 0.6 });
+        gsap.to(stageAcoustic, { opacity: 0.6, scale: 1.0, duration: 0.5 });
         document.getElementById('card-villa').classList.remove('active');
         
         document.getElementById('bar-villa-loc').style.width = '0%';
@@ -1245,23 +1515,69 @@
         document.getElementById('bar-villa-ster').style.width = '0%';
         document.getElementById('bar-villa-time').style.width = '0%';
 
-        updateHeaderAndDock('03 / КЛІТИННИЙ РЕСЕТ', 'dock-hydro', 2);
+        updateHeaderAndDock('04 / TOTAL AGE-RESET', 'dock-smas', 3);
       }
     });
 
-    function updateHeaderAndDock(title, dockId, dotIndex) {
-      chapterTitleText.textContent = title;
+    // 05 -> 06: Intro & Diagnostics Tripwire
+    ScrollTrigger.create({
+      trigger: "#sec-tripwire",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        gsap.to(stageAcoustic, { opacity: 0.4, scale: 0.95, duration: 0.6 });
+        gsap.to(stageFace, { opacity: 0.65, scale: 1.0, duration: 0.6 });
+        document.getElementById('card-tripwire').classList.add('active');
 
-      // Update Dock
-      document.querySelectorAll('.dock-btn').forEach(btn => btn.classList.remove('active'));
-      const activeDock = document.getElementById(dockId);
-      if (activeDock) activeDock.classList.add('active');
+        updateHeaderAndDock('06 / СЕАНС-ЗНАЙОМСТВО', 'dock-tripwire', 5);
+      },
+      onLeaveBack: () => {
+        gsap.to(stageAcoustic, { opacity: 1, scale: 1.02, duration: 0.6 });
+        gsap.to(stageFace, { opacity: 0, duration: 0.5 });
+        document.getElementById('card-tripwire').classList.remove('active');
 
-      // Update Side Dots
-      document.querySelectorAll('.progress-step-dot').forEach(dot => dot.classList.remove('active'));
-      const activeDot = document.getElementById(`dot-${dotIndex}`);
-      if (activeDot) activeDot.classList.add('active');
-    }
+        updateHeaderAndDock('05 / ВИЇЗНА ПОСЛУГА', 'dock-villa', 4);
+      }
+    });
+
+    // 06 -> 07: Injectable Expansion (+6 Months)
+    ScrollTrigger.create({
+      trigger: "#sec-inject",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        gsap.to(stageAcoustic, { opacity: 0, duration: 0.5 });
+        gsap.to(stageFace, { opacity: 0.85, scale: 1.08, duration: 0.7 });
+        document.getElementById('card-inject').classList.add('active');
+
+        updateHeaderAndDock('07 / INJECTABLE COUTURE', 'dock-tripwire', 6);
+      },
+      onLeaveBack: () => {
+        gsap.to(stageFace, { opacity: 0.65, scale: 1.0, duration: 0.6 });
+        document.getElementById('card-inject').classList.remove('active');
+
+        updateHeaderAndDock('06 / СЕАНС-ЗНАЙОМСТВО', 'dock-tripwire', 5);
+      }
+    });
+
+    // 07 -> 08: Expert & Specialist
+    ScrollTrigger.create({
+      trigger: "#sec-expert",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        gsap.to(stageFace, { opacity: 0.35, scale: 0.98, duration: 0.7 });
+        document.getElementById('card-expert').classList.add('active');
+
+        updateHeaderAndDock('08 / ЕКСПЕРТ & ЗАПИС', 'dock-expert', 7);
+      },
+      onLeaveBack: () => {
+        gsap.to(stageFace, { opacity: 0.85, scale: 1.08, duration: 0.6 });
+        document.getElementById('card-expert').classList.remove('active');
+
+        updateHeaderAndDock('07 / INJECTABLE COUTURE', 'dock-tripwire', 6);
+      }
+    });
 
     // ====================================================================
     // MOUSE & GYROSCOPE SUBTLE PARALLAX
