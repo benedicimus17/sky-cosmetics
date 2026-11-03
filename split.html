@@ -121,6 +121,90 @@
       background: rgba(212, 175, 55, 0.08);
     }
 
+    .hero-slogan-bar {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 6px 18px;
+      border-radius: 30px;
+      background: rgba(212, 175, 55, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 900px) {
+      .hero-slogan-bar {
+        display: none;
+      }
+    }
+
+    /* Hero Central Headline Island */
+    .hero-central-headline {
+      position: absolute;
+      top: 96px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      text-align: center;
+      pointer-events: none;
+      width: 90%;
+      max-width: 780px;
+    }
+
+    .brand-crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .crest-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 10px var(--gold-primary);
+    }
+
+    .crest-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+    }
+
+    .main-slogan-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      line-height: 1.2;
+      color: #FFFFFF;
+      letter-spacing: 0.08em;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.3);
+      margin-bottom: 6px;
+    }
+
+    .main-slogan-sub {
+      font-size: 13px;
+      color: #D1D5DB;
+      letter-spacing: 0.06em;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    @media (max-width: 768px) {
+      .hero-central-headline {
+        top: 72px;
+      }
+      .main-slogan-title {
+        font-size: 20px;
+      }
+      .main-slogan-sub {
+        font-size: 11px;
+      }
+    }
+
     /* Main Split Container */
     .split-portal {
       position: relative;
@@ -481,10 +565,24 @@
         <p>Skin · Keep · Youthful</p>
       </div>
     </a>
+    <div class="hero-slogan-bar">
+      <span>АРХІТЕКТУРА ЗБЕРЕЖЕННЯ ПРИРОДНОЇ МОЛОДОСТІ</span>
+    </div>
     <div class="header-links">
-      <a href="index.html" class="flagship-link">← Головна Вітрина (Holo-Sculpt)</a>
+      <a href="index.html" class="flagship-link">← Головна Вітрина S•K•Y</a>
     </div>
   </header>
+
+  <!-- Hero Central Title Island -->
+  <div class="hero-central-headline">
+    <div class="brand-crest">
+      <span class="crest-dot"></span>
+      <span class="crest-text">S • K • Y · ЕКСКЛЮЗИВНИЙ ВИБІР ФОРМАТУ</span>
+      <span class="crest-dot"></span>
+    </div>
+    <h2 class="main-slogan-title">Архітектура Збереження Природної Молодості</h2>
+    <p class="main-slogan-sub">Оберіть персональний простір вашого омолодження на Коста-дель-Соль</p>
+  </div>
 
   <!-- Interactive 50/50 Dual Portal -->
   <main class="split-portal" id="splitPortal">
