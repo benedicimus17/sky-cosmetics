@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>S•K•Y Cosmetics — 3 Преміальні Концепції Web-App Дизайну</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET & CORE VARIABLES */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* TOP GLOBAL CONTROLLER (STICKY HEADER) */
+    .concept-top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(150, 150, 150, 0.15);
+      background: rgba(15, 17, 22, 0.9);
+      color: #FFFFFF;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-text {
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #E2E8F0;
+      text-transform: uppercase;
+    }
+
+    /* SEGMENTED CONTROL TABS */
+    .concept-nav-pills {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 4px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      gap: 4px;
+    }
+
+    .pill-btn {
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      color: #94A3B8;
+      background: transparent;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-btn:hover {
+      color: #FFFFFF;
+    }
+
+    .pill-btn.active {
+      background: #FFFFFF;
+      color: #0F172A;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .view-container {
+      padding-top: 64px;
+      min-height: 100vh;
+    }
+
+    /* =========================================================================
+       THEME 1: SWISS BIOCLINIC MINIMALIST OS
+       ========================================================================= */
+    .theme-swiss {
+      --bg: #F8F7F4;
+      --card-bg: #FFFFFF;
+      --text-main: #14171A;
+      --text-muted: #5B6570;
+      --accent: #1C332B; /* Deep Alpine Forest */
+      --accent-gold: #B38F52; /* Champagne Bronze */
+      --border: #E2E8F0;
+      --radius: 12px;
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    /* =========================================================================
+       THEME 2: HAUTE ESTHÉTIQUE ATELIER
+       ========================================================================= */
+    .theme-noir {
+      --bg: #090A0D;
+      --card-bg: #111318;
+      --text-main: #F9FAFB;
+      --text-muted: #9CA3AF;
+      --accent: #D4AF37; /* Royal Warm Gold */
+      --accent-gold: #F3E5AB;
+      --border: rgba(212, 175, 55, 0.25);
+      --radius: 16px;
+      --font-display: 'Playfair Display', serif;
+      --font-serif: 'Playfair Display', serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    /* =========================================================================
+       THEME 3: KINETIC BIOMETRIC HUD
+       ========================================================================= */
+    .theme-kinetic {
+      --bg: #0B0E14;
+      --card-bg: rgba(22, 27, 34, 0.75);
+      --text-main: #FFFFFF;
+      --text-muted: #8B949E;
+      --accent: #58A6FF; /* Electric Biometric Blue */
+      --accent-gold: #E3B341;
+      --border: rgba(88, 166, 255, 0.25);
+      --radius: 20px;
+      --font-display: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    /* SHARED APP CONTAINER STYLES */
+    .app-screen {
+      display: none;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 24px 100px;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .app-screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HERO HEADER */
+    .concept-hero {
+      margin-bottom: 36px;
+    }
+
+    .hero-meta {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 12px;
+      display: inline-block;
+      font-weight: 700;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      max-width: 900px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(15px, 1.2vw, 17px);
+      line-height: 1.6;
+      max-width: 720px;
+    }
+
+    /* GRID LAYOUTS */
+    .app-grid-2col {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .ui-panel {
+      border-radius: var(--radius);
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .app-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 28px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: calc(var(--radius) - 4px);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .app-btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .app-grid-2col {
+        grid-template-columns: 1fr;
+      }
+      .concept-top-bar {
+        padding: 0 16px;
+      }
+      .brand-badge {
+        display: none;
+      }
+      .pill-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body class="theme-swiss">
+
+  <!-- TOP GLOBAL SWITCHER -->
+  <header class="concept-top-bar">
+    <div class="brand-mark">
+      <div class="brand-logo-text">S • K • Y</div>
+      <div class="brand-badge">3 Дизайн-Концепції Web-App</div>
+    </div>
+
+    <!-- TABS -->
+    <nav class="concept-nav-pills">
+      <button class="pill-btn active" onclick="switchConcept(1)">
+        <span>01</span> Swiss Bioclinic
+      </button>
+      <button class="pill-btn" onclick="switchConcept(2)">
+        <span>02</span> Haute Noir Atelier
+      </button>
+      <button class="pill-btn" onclick="switchConcept(3)">
+        <span>03</span> Kinetic Biometric HUD
+      </button>
+    </nav>
+  </header>
+
+  <main class="view-container">
+
+    <!-- =========================================================================
+         CONCEPT 1: SWISS BIOCLINIC MINIMALIST OS (Pure, Luminous, Clinical Trust)
+         ========================================================================= -->
+    <section id="concept-1" class="app-screen active">
+      <div class="concept-hero">
+        <span class="hero-meta" style="color: var(--accent);">Концепція 01 · Swiss Bioclinic OS</span>
+        <h1 class="hero-title" style="font-family: var(--font-display);">Архітектура збереження природної молодості клітин</h1>
+        <p class="hero-subtitle" style="color: var(--text-muted);">
+          Швейцарський мінімалізм високої точності: світла порцелянова естетика, фокус на збереженні власного колагену та інтерактивний конфігуратор лікувального курсу.
+        </p>
+      </div>
+
+      <div class="app-grid-2col">
+        <!-- Left: Interactive Protocol Configurator -->
+        <div class="ui-panel" style="background: var(--card-bg);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);">
+              Конфігуратор Протоколу Трансформації
+            </span>
+            <span style="font-size: 11px; padding: 4px 10px; background: #EEF2F6; border-radius: 12px; font-weight: 600; color: #475569;">
+              Крок 1 з 2
+            </span>
+          </div>
+
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+            1. Оберіть зону обличчя для відновлення тонусу:
+          </p>
+
+          <!-- Zone Selector Chips -->
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 28px;">
+            <button class="zone-chip active" onclick="selectZone(this, 'Овал & Кут щелепи', 'S•K•Y Sculpt & Lift', '3–4 сеанси · Безін\'єкційний SMAS-ліфтинг очних та щелепних зв\'язок')" style="padding: 16px; text-align: left; border-radius: 8px; border: 1.5px solid var(--accent); background: #F0F6F4; cursor: pointer;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--accent); margin-bottom: 4px;">Овал & Кут щелепи</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Птоз, набряклість, чіткий контур</div>
+            </button>
+            <button class="zone-chip" onclick="selectZone(this, 'Тургор & Сяйво', 'S•K•Y Glass Skin & Hydro-Reset', '3 сеанси · Глибока гіалуронова інфузія та делікатний аква-пілінг')" style="padding: 16px; text-align: left; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--text-main); margin-bottom: 4px;">Тургор & Сяйво</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Сухість, тьмяний колір, пори</div>
+            </button>
+            <button class="zone-chip" onclick="selectZone(this, 'Періорбітальна зона', 'S•K•Y Eye Contour Reset', '3 сеанси · Зняття лімфостазу та мікрострумова тонізація')" style="padding: 16px; text-align: left; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--text-main); margin-bottom: 4px;">Зона навколо очей</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Мімічні лінії, сліди втоми</div>
+            </button>
+            <button class="zone-chip" onclick="selectZone(this, 'Шия & Декольте (40+)', 'S•K•Y Total Age-Reset (40+)', '4 сеанси · Комплексне відновлення пружності та дермального матриксу')" style="padding: 16px; text-align: left; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--text-main); margin-bottom: 4px;">Шия & Декольте</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Втрата щільності колагену</div>
+            </button>
+          </div>
+
+          <!-- Format Selector Toggle -->
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+            2. Оберіть бажаний формат прийому:
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px;">
+            <div id="opt-studio" onclick="setFormat('studio')" style="padding: 16px; border-radius: 8px; border: 1.5px solid var(--accent); background: #F0F6F4; cursor: pointer;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--accent); margin-bottom: 2px;">🏛 Закрита Студія 1:1</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Малага · Повна приватність</div>
+            </div>
+            <div id="opt-outcall" onclick="setFormat('outcall')" style="padding: 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer;">
+              <div style="font-weight: 700; font-size: 13px; color: var(--text-main); margin-bottom: 2px;">🚗 Преміум-Консьєрж</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Марбелья · Виїзд до клієнта</div>
+            </div>
+          </div>
+
+          <a href="https://wa.me/34600000000?text=Доброго%20дня,%20Маріє!%20Хочу%20записатися%20на%20сеанс-знайомство%20з%20діагностикою" target="_blank" class="app-btn-primary" style="background: var(--accent); color: #FFFFFF;">
+            Забронювати Сеанс-Знайомство (WhatsApp)
+          </a>
+        </div>
+
+        <!-- Right: Generated Bioclinic Passport -->
+        <div class="ui-panel" style="background: #FFFFFF; border-left: 4px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #E8F0EC; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent); font-size: 16px;">
+              MS
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 15px; color: var(--text-main);">Марія Стефанюк</div>
+              <div style="font-size: 12px; color: var(--text-muted);">@cosmetolog.sky · Спеціаліст S•K•Y (★ 5.0)</div>
+            </div>
+          </div>
+
+          <div style="padding: 20px; background: #F8FAFC; border-radius: 10px; margin-bottom: 24px; border: 1px solid #EDF2F7;">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #64748B; margin-bottom: 6px;">Рекомендований курс:</div>
+            <div id="passport-course" style="font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 6px;">S•K•Y Sculpt & Lift</div>
+            <div id="passport-desc" style="font-size: 12px; color: #475569; line-height: 1.5;">3–4 сеанси · Безін'єкційний SMAS-ліфтинг очних та щелепних зв'язок без синців.</div>
+          </div>
+
+          <div style="border-top: 1px solid #EDF2F7; padding-top: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 13px;">
+              <span style="color: var(--text-muted);">Формат візиту:</span>
+              <strong id="passport-loc" style="color: var(--text-main);">Закрита студія 1:1 (Малага)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 13px;">
+              <span style="color: var(--text-muted);">Сеанс-знайомство & Діагностика (75 хв):</span>
+              <strong style="color: var(--accent);">Депозит 30 €</strong>
+            </div>
+            <div style="font-size: 12px; line-height: 1.5; color: #1E293B; background: #F0FDF4; padding: 14px; border-radius: 8px; border: 1px solid #BBF7D0;">
+              ✨ <strong>100% захист депозиту:</strong> Сума 30 € повністю зараховується у вартість обраного курсу під час першого візиту.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         CONCEPT 2: HAUTE ESTHÉTIQUE ATELIER (French Couture Noir & Warm Obsidian)
+         ========================================================================= -->
+    <section id="concept-2" class="app-screen">
+      <div class="concept-hero">
+        <span class="hero-meta" style="color: var(--accent);">Концепція 02 · Haute Esthétique Atelier</span>
+        <h1 class="hero-title" style="font-family: var(--font-display);">L'Art de Vivre: Тиха розкіш та чуттєвий догляд</h1>
+        <p class="hero-subtitle" style="color: var(--text-muted);">
+          Паризький кутюрний нуар: оксамитовий обсидіан, тепле благородне золото, камерна тиша закритого клубу та вишукані авторські ритуали.
+        </p>
+      </div>
+
+      <!-- Atelier Interactive Dual Wing Selector -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+        <!-- Sanctuary Wing -->
+        <div class="ui-panel" style="background: var(--card-bg); border-color: rgba(212, 175, 55, 0.35); position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #D4AF37, transparent);"></div>
+          <span style="font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 700;">ФОРМАТ I · МАЛАГА</span>
+          <h3 style="font-family: var(--font-display); font-size: 26px; margin: 12px 0; color: #FFFFFF;">Приватне Ательє</h3>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Абсолютна приватність 1:1 у затишній кімнаті-студії закритого типу. Жодних черг, сторонніх звуків чи поспіху. Світло свічок, аромат білого чаю та повне занурення у релаксацію.
+          </p>
+          <ul style="list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #D1D5DB;">
+            <li><span style="color: var(--accent);">✦</span> Стаціонарний преміум-комплекс Zemits HydroVerte</li>
+            <li><span style="color: var(--accent);">✦</span> Анатомічна кушетка з терморегуляцією</li>
+            <li><span style="color: var(--accent);">✦</span> Локація: Малага (10 хв від центру)</li>
+          </ul>
+          <a href="https://wa.me/34600000000?text=Бронювання%20Ательє%20Малага" target="_blank" class="app-btn-primary" style="background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%); color: #090A0D;">
+            Забронювати Сеанс в Ательє
+          </a>
+        </div>
+
+        <!-- Concierge Outcall Wing -->
+        <div class="ui-panel" style="background: var(--card-bg); border-color: rgba(255, 255, 255, 0.1); position: relative; overflow: hidden;">
+          <span style="font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #9CA3AF; font-weight: 700;">ФОРМАТ II · МАРБЕЛЬЯ</span>
+          <h3 style="font-family: var(--font-display); font-size: 26px; margin: 12px 0; color: #FFFFFF;">Виїзний Консьєрж</h3>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Експертний сервіс найвищого рангу з прибуттям до вашої резиденції. Повний комплект мобільного обладнання білого медичного класу та складна стерильна SPA-кушетка.
+          </p>
+          <ul style="list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #D1D5DB;">
+            <li><span style="color: #9CA3AF;">✦</span> Мобільний портативний комплекс Zemits Titanium</li>
+            <li><span style="color: #9CA3AF;">✦</span> Без витрат часу на дорогу та затори</li>
+            <li><span style="color: #9CA3AF;">✦</span> Географія: Марбелья, Золота Миля, Ла Загалета</li>
+          </ul>
+          <a href="https://wa.me/34600000000?text=Виклик%20Консьєржа%20Марбелья" target="_blank" class="app-btn-primary" style="background: transparent; color: #D4AF37; border: 1px solid #D4AF37;">
+            Викликати Консьєржа на Віллу
+          </a>
+        </div>
+      </div>
+
+      <!-- French Touch Philosophy Banner -->
+      <div class="ui-panel" style="background: rgba(17, 19, 24, 0.6); border-color: rgba(212, 175, 55, 0.2); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+        <div>
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 4px;">Маніфест Smart Aging & French Touch</div>
+          <div style="font-family: var(--font-display); font-size: 20px; color: #FFFFFF;">«Ми не змінюємо ваші риси — ми повертаємо їм відпочилий вигляд юності»</div>
+        </div>
+        <div style="font-size: 13px; color: var(--text-muted); max-width: 400px;">
+          Марія Стефанюк — дипломований спеціаліст естетичної косметології (@cosmetolog.sky, рейтинг 5.0).
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         CONCEPT 3: KINETIC BIOMETRIC HUD (Apple Spatial & Frosted Glassmorphism)
+         ========================================================================= -->
+    <section id="concept-3" class="app-screen">
+      <div class="concept-hero">
+        <span class="hero-meta" style="color: var(--accent);">Концепція 03 · Kinetic Biometric HUD</span>
+        <h1 class="hero-title">Spatial Beauty OS: Тактильний контроль та жива біометрія</h1>
+        <p class="hero-subtitle" style="color: var(--text-muted);">
+          Сучасний high-tech інтерфейс нового покоління: просторова візуалізація біометричного каркасу, жива телеметрія шкіри та плавний інтерактивний вибір слотів.
+        </p>
+      </div>
+
+      <div class="app-grid-2col">
+        <!-- Left: Interactive Spatial Before/After Slider Component -->
+        <div class="ui-panel" style="background: var(--card-bg); border-color: var(--border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">
+              Spatial Face Inspector (Результат Курсу)
+            </span>
+            <span style="font-size: 11px; color: var(--accent); background: rgba(88, 166, 255, 0.1); padding: 3px 8px; border-radius: 10px;">
+              Інтерактивно
+            </span>
+          </div>
+
+          <!-- Interactive Slider Box -->
+          <div style="position: relative; height: 320px; border-radius: 12px; overflow: hidden; background: #000000; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
+            <img src="winner_concept_1_facemesh.jpg" alt="Biometric Mesh" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+            
+            <!-- Hologram Overlay Metrics -->
+            <div style="position: absolute; bottom: 16px; left: 16px; background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(10px); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(88, 166, 255, 0.3); font-size: 12px;">
+              <div style="color: #8B949E; font-size: 10px; font-weight: 600;">LIFTING INDEX</div>
+              <div style="color: #58A6FF; font-weight: 700; font-size: 14px;">+38% Колагеновий каркас</div>
+            </div>
+
+            <div style="position: absolute; top: 16px; right: 16px; background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(10px); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(227, 179, 65, 0.3); font-size: 12px;">
+              <div style="color: #8B949E; font-size: 10px; font-weight: 600;">HYDRATION SCORE</div>
+              <div style="color: #E3B341; font-weight: 700; font-size: 14px;">Glass Skin Glow 94/100</div>
+            </div>
+          </div>
+
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            Алгоритм курсу S•K•Y стимулює природне відновлення власних фібробластів без штучних наповнювачів.
+          </p>
+        </div>
+
+        <!-- Right: Real-time Telemetry Dashboard & Instant Slot Booking -->
+        <div class="ui-panel" style="background: var(--card-bg); border-color: var(--border); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px;">
+              Параметри Сеансу
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px;">
+              <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Тривалість сеансу</div>
+                <div style="font-size: 18px; font-weight: 700; color: #FFFFFF;">75 хв</div>
+              </div>
+              <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Реабілітація</div>
+                <div style="font-size: 18px; font-weight: 700; color: #58A6FF;">0 днів</div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Найближчі доступні слоти (Малага / Марбелья):</div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="padding: 6px 12px; border-radius: 20px; background: rgba(88, 166, 255, 0.15); border: 1px solid #58A6FF; font-size: 12px; color: #FFFFFF; cursor: pointer;">Завтра 11:00</span>
+                <span style="padding: 6px 12px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #8B949E; cursor: pointer;">Завтра 15:30</span>
+                <span style="padding: 6px 12px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #8B949E; cursor: pointer;">Четвер 10:00</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="https://wa.me/34600000000?text=Бронювання%20слоту%20через%20HUD" target="_blank" class="app-btn-primary" style="background: #58A6FF; color: #0D1117;">
+            Забронювати Слот в 1 Клік
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // THEME SWITCHER
+    function switchConcept(index) {
+      // Toggle Tabs
+      const pills = document.querySelectorAll('.pill-btn');
+      pills.forEach((p, idx) => {
+        p.classList.toggle('active', idx === index - 1);
+      });
+
+      // Toggle Screens
+      const screens = document.querySelectorAll('.app-screen');
+      screens.forEach((s, idx) => {
+        s.classList.toggle('active', idx === index - 1);
+      });
+
+      // Update Body Theme
+      const body = document.body;
+      if (index === 1) {
+        body.className = 'theme-swiss';
+      } else if (index === 2) {
+        body.className = 'theme-noir';
+      } else if (index === 3) {
+        body.className = 'theme-kinetic';
+      }
+    }
+
+    // INTERACTION HELPERS FOR CONCEPT 1
+    function selectZone(element, title, course, desc) {
+      document.querySelectorAll('.zone-chip').forEach(el => {
+        el.style.border = '1px solid var(--border)';
+        el.style.background = 'var(--card-bg)';
+        const header = el.querySelector('div:first-child');
+        if (header) header.style.color = 'var(--text-main)';
+      });
+      element.style.border = '1.5px solid var(--accent)';
+      element.style.background = '#F0F6F4';
+      const activeHeader = element.querySelector('div:first-child');
+      if (activeHeader) activeHeader.style.color = 'var(--accent)';
+
+      const passportCourse = document.getElementById('passport-course');
+      const passportDesc = document.getElementById('passport-desc');
+      if (passportCourse) passportCourse.textContent = course;
+      if (passportDesc) passportDesc.textContent = desc;
+    }
+
+    function setFormat(format) {
+      const optStudio = document.getElementById('opt-studio');
+      const optOutcall = document.getElementById('opt-outcall');
+      const passportLoc = document.getElementById('passport-loc');
+
+      if (format === 'studio') {
+        optStudio.style.border = '1.5px solid var(--accent)';
+        optStudio.style.background = '#F0F6F4';
+        optOutcall.style.border = '1px solid var(--border)';
+        optOutcall.style.background = 'var(--card-bg)';
+        if (passportLoc) passportLoc.textContent = 'Закрита студія 1:1 (Малага)';
+      } else {
+        optOutcall.style.border = '1.5px solid var(--accent)';
+        optOutcall.style.background = '#F0F6F4';
+        optStudio.style.border = '1px solid var(--border)';
+        optStudio.style.background = 'var(--card-bg)';
+        if (passportLoc) passportLoc.textContent = 'Преміум-Консьєрж (Марбелья)';
+      }
+    }
+  </script>
+</body>
+</html>
