@@ -571,43 +571,29 @@
 
   <!-- Floating Concept Switcher Pill -->
   <nav class="concept-switcher">
-    <span class="switcher-label">Нові Концепти:</span>
-    <button class="pill-btn active" onclick="switchTheme('patio-yacht', this)">1. Патіо & Суперяхта</button>
-    <button class="pill-btn" onclick="switchTheme('artisan-tech', this)">2. Дотик Рук & Сапфір</button>
-    <button class="pill-btn" onclick="switchTheme('botanical-cliff', this)">3. Оранжерея & Скельна Вілла</button>
-    <button class="pill-btn" onclick="switchTheme('swiss-monolith', this)">4. Моноліт (Оригінал)</button>
-    <button class="pill-btn" onclick="switchTheme('biometric-glow', this)">5. Спліт Обличчя</button>
+    <span class="switcher-label">3 Стильові Світи S•K•Y:</span>
+    <button class="pill-btn active" onclick="switchTheme('unified-face', this)">Стиль 1: Єдине Обличчя-Трансформація</button>
+    <button class="pill-btn" onclick="switchTheme('architectural-diptych', this)">Стиль 2: Архітектурний Диптих (Спільний Горизонт)</button>
+    <button class="pill-btn" onclick="switchTheme('macro-alchemy', this)">Стиль 3: Сенсорна Макро-Алхімія (Chanel / Dior)</button>
   </nav>
 
   <script>
     const themes = {
-      'patio-yacht': {
-        leftBg: 'url("concept_13_andalusian_superyacht.jpg")',
-        rightBg: 'url("concept_13_andalusian_superyacht.jpg")',
+      'unified-face': {
+        leftBg: 'url("style_1_unified_biometric_face.jpg")',
+        rightBg: 'url("style_1_unified_biometric_face.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'artisan-tech': {
-        leftBg: 'url("concept_14_artisan_touch_tech.jpg")',
-        rightBg: 'url("concept_14_artisan_touch_tech.jpg")',
+      'architectural-diptych': {
+        leftBg: 'url("style_2_architectural_horizon_diptych.jpg")',
+        rightBg: 'url("style_2_architectural_horizon_diptych.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'botanical-cliff': {
-        leftBg: 'url("concept_15_botanical_cliffside.jpg")',
-        rightBg: 'url("concept_15_botanical_cliffside.jpg")',
-        leftPos: 'left center',
-        rightPos: 'right center'
-      },
-      'swiss-monolith': {
-        leftBg: 'url("split_concept_1_monolith.jpg")',
-        rightBg: 'url("split_concept_1_monolith.jpg")',
-        leftPos: 'left center',
-        rightPos: 'right center'
-      },
-      'biometric-glow': {
-        leftBg: 'url("split_concept_2_biometric_face.jpg")',
-        rightBg: 'url("split_concept_2_biometric_face.jpg")',
+      'macro-alchemy': {
+        leftBg: 'url("style_3_sensory_macro_alchemy.jpg")',
+        rightBg: 'url("style_3_sensory_macro_alchemy.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       }
@@ -629,8 +615,8 @@
       if (btn) btn.classList.add('active');
     }
 
-    // Initialize with Patio & Yacht
-    switchTheme('patio-yacht', document.querySelector('.pill-btn.active'));
+    // Initialize with Unified Face
+    switchTheme('unified-face', document.querySelector('.pill-btn.active'));
   </script>
 </body>
 </html>
