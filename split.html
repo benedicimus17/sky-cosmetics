@@ -571,34 +571,41 @@
 
   <!-- Floating Concept Switcher Pill -->
   <nav class="concept-switcher">
-    <span class="switcher-label">Концепти 2026:</span>
-    <button class="pill-btn active" onclick="switchTheme('paradigm-a', this)">Парадигма A: Бруталізм & Радар</button>
-    <button class="pill-btn" onclick="switchTheme('paradigm-b', this)">Парадигма B: Шовк & Ворп</button>
-    <button class="pill-btn" onclick="switchTheme('paradigm-c', this)">Парадигма C: MedTech Біо-Фізика</button>
-    <button class="pill-btn" onclick="switchTheme('classic-1', this)">Класика: Моноліт 50/50</button>
+    <span class="switcher-label">Концепти S•K•Y:</span>
+    <button class="pill-btn active" onclick="switchTheme('japandi-sunset', this)">1. Світлий Травертин & Захід Сонця</button>
+    <button class="pill-btn" onclick="switchTheme('silk-sanctuary', this)">2. Шовковий Санктуарій & Вілла</button>
+    <button class="pill-btn" onclick="switchTheme('biometric-glow', this)">3. Біометричне Сяйво Обличчя</button>
+    <button class="pill-btn" onclick="switchTheme('glass-portals', this)">4. Кварцові Портали</button>
+    <button class="pill-btn" onclick="switchTheme('swiss-monolith', this)">5. Швейцарський Моноліт</button>
   </nav>
 
   <script>
     const themes = {
-      'paradigm-a': {
-        leftBg: 'url("split_concept_10_brutalist_radar.jpg")',
-        rightBg: 'url("split_concept_10_brutalist_radar.jpg")',
+      'japandi-sunset': {
+        leftBg: 'url("split_concept_9_glasshouse_terrace.jpg")',
+        rightBg: 'url("split_concept_9_glasshouse_terrace.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'paradigm-b': {
-        leftBg: 'url("split_concept_11_kinetic_silk_warp.jpg")',
-        rightBg: 'url("split_concept_11_kinetic_silk_warp.jpg")',
+      'silk-sanctuary': {
+        leftBg: 'url("split_concept_7_silk_sanctuary.jpg")',
+        rightBg: 'url("split_concept_7_silk_sanctuary.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'paradigm-c': {
-        leftBg: 'url("split_concept_12_cellular_acoustic.jpg")',
-        rightBg: 'url("split_concept_12_cellular_acoustic.jpg")',
+      'biometric-glow': {
+        leftBg: 'url("split_concept_8_face_halo.jpg")',
+        rightBg: 'url("split_concept_8_face_halo.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'classic-1': {
+      'glass-portals': {
+        leftBg: 'url("split_concept_3_glass_portals.jpg")',
+        rightBg: 'url("split_concept_3_glass_portals.jpg")',
+        leftPos: 'left center',
+        rightPos: 'right center'
+      },
+      'swiss-monolith': {
         leftBg: 'url("split_concept_1_monolith.jpg")',
         rightBg: 'url("split_concept_1_monolith.jpg")',
         leftPos: 'left center',
@@ -622,8 +629,8 @@
       if (btn) btn.classList.add('active');
     }
 
-    // Initialize with Paradigm A
-    switchTheme('paradigm-a', document.querySelector('.pill-btn.active'));
+    // Initialize with Japandi Sunset
+    switchTheme('japandi-sunset', document.querySelector('.pill-btn.active'));
   </script>
 </body>
 </html>
