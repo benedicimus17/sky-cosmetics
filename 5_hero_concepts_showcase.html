@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S•K•Y Cosmetics — 5 Нових Візуальних Концептів Головної Сторінки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #060709;
+      color: #F8F9FA;
+      font-family: 'Inter', -apple-system, sans-serif;
+      padding-bottom: 80px;
+      line-height: 1.5;
+    }
+    header {
+      padding: 48px 24px 24px;
+      text-align: center;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      background: #090B0E;
+    }
+    .badge {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+      color: #FFFFFF;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #94A3B8;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .container {
+      max-width: 1360px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+    .concept-card {
+      background: #0E1015;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .concept-card:hover {
+      border-color: #D4AF37;
+      box-shadow: 0 24px 60px rgba(212, 175, 55, 0.15);
+    }
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+    }
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .concept-card:hover .image-wrapper img {
+      transform: scale(1.015);
+    }
+    .concept-body {
+      padding: 28px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .concept-info {
+      flex: 1;
+      min-width: 320px;
+    }
+    .concept-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 6px;
+    }
+    .concept-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+    .concept-desc {
+      font-size: 14px;
+      color: #94A3B8;
+      line-height: 1.6;
+    }
+    .concept-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #CBD5E1;
+    }
+    .tag.highlight {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: rgba(212, 175, 55, 0.35);
+      color: #D4AF37;
+    }
+    .btn-action {
+      align-self: center;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: #D4AF37;
+      color: #060709;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-action:hover {
+      background: #F3E5AB;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">S • K • Y COSMETICS · ШТАБ ART DIRECTION</div>
+    <h1>5 Візуальних Концепцій Головного Спліт-Екрана</h1>
+    <p class="subtitle">
+      Створено за точними директивами Власника: комбінований спліт 50/50, портрет з трансформацією шкіри по центру, золотий шов з гербом S•K•Y та збалансований мікс освітлення (2 світлі, 2 нуарні, 1 контрастний захід сонця).
+    </p>
+  </header>
+
+  <main class="container">
+
+    <!-- CONCEPT 1 -->
+    <article class="concept-card">
+      <div class="image-wrapper">
+        <img src="hero_concept_1_morning_travertine.jpg" alt="Концепт 1: Світлий Травертин & Ранкове Сонце">
+      </div>
+      <div class="concept-body">
+        <div class="concept-info">
+          <div class="concept-num">Концепт 01 · Світла Палітра (Travertine Dawn)</div>
+          <h2 class="concept-title">Світлий Травертин & Ранкове Середземноморське Сонце</h2>
+          <p class="concept-desc">
+            <strong>Зліва (Малага Студія)</strong>: Теплий вапняковий травертин, м'яке ранкове світло крізь лляні штори, латунь, флакони з оліями та соковита сяюча Glass Skin.<br>
+            <strong>Справа (Марбелья Консьєрж)</strong>: Відкрита тераса вілли над блакитним морем, інфініті-басейн, шкіряний кейс та точна золота SMAS-сітка (4.5mm SMAS, 2.50 MHz).
+          </p>
+          <div class="concept-tags">
+            <span class="tag highlight">Теплий Травертин</span>
+            <span class="tag">Ранкове Сонце</span>
+            <span class="tag">Glass Skin</span>
+            <span class="tag">Золотий SMAS-радар</span>
+          </div>
+        </div>
+        <a href="hero_concept_1_morning_travertine.jpg" target="_blank" class="btn-action">Відкрити в 8K</a>
+      </div>
+    </article>
+
+    <!-- CONCEPT 2 -->
+    <article class="concept-card">
+      <div class="image-wrapper">
+        <img src="hero_concept_2_swiss_marble.jpg" alt="Концепт 2: Швейцарський Мармур & Ботанічний Затишок">
+      </div>
+      <div class="concept-body">
+        <div class="concept-info">
+          <div class="concept-num">Концепт 02 · Світла Палітра (Swiss MedTech Marble)</div>
+          <h2 class="concept-title">Світлий Швейцарський Мармур & Ботанічний Затишок</h2>
+          <p class="concept-desc">
+            <strong>Зліва (Малага Студія)</strong>: Бездоганний білий мармур Carrara, мінімалістичний бонсай та білі орхідеї, аптечні янтарні флакони, оксамитова чиста шкіра з перловим сяйвом.<br>
+            <strong>Справа (Марбелья Консьєрж)</strong>: Приватна кабана на березі моря під чистим полуденним небом, карбоновий мобільний кейс та делікатні золоті анатомічні вектори (Depth 3.0mm, Vector 1.8kJ).
+          </p>
+          <div class="concept-tags">
+            <span class="tag highlight">Швейцарський Мармур</span>
+            <span class="tag">Ботаніка & Бонсай</span>
+            <span class="tag">Перлове Сяйво</span>
+            <span class="tag">Clinique La Prairie Vibe</span>
+          </div>
+        </div>
+        <a href="hero_concept_2_swiss_marble.jpg" target="_blank" class="btn-action">Відкрити в 8K</a>
+      </div>
+    </article>
+
+    <!-- CONCEPT 3 -->
+    <article class="concept-card">
+      <div class="image-wrapper">
+        <img src="hero_concept_3_velvet_noir.jpg" alt="Концепт 3: Оксамитовий Обсидіан & Золото Свічок">
+      </div>
+      <div class="concept-body">
+        <div class="concept-info">
+          <div class="concept-num">Концепт 03 · Вечірній Нуар (Velvet Obsidian Noir)</div>
+          <h2 class="concept-title">Глибокий Вечірній Нуар: Оксамитовий Обсидіан & Золото Свічок</h2>
+          <p class="concept-desc">
+            <strong>Зліва (Малага Студія)</strong>: Темні обсидіанові ніші з теплим прихованим світлом, полум'я свічок, чорна анатомічна кушетка, чуттєве зволоження та релакс 1:1.<br>
+            <strong>Справа (Марбелья Консьєрж)</strong>: Сутінкова тераса маєтку в Сьєрра-Бланка, індигове вечірнє небо, вогні узбережжя, стильний дорожній кейс та золоті лазерні контури (SMAS Lift 4.5mm, RF 42°C).
+          </p>
+          <div class="concept-tags">
+            <span class="tag highlight">Чорний Обсидіан</span>
+            <span class="tag">Золото Свічок</span>
+            <span class="tag">Chanel Sublimage Vibe</span>
+            <span class="tag">Вечірня Марбелья</span>
+          </div>
+        </div>
+        <a href="hero_concept_3_velvet_noir.jpg" target="_blank" class="btn-action">Відкрити в 8K</a>
+      </div>
+    </article>
+
+    <!-- CONCEPT 4 -->
+    <article class="concept-card">
+      <div class="image-wrapper">
+        <img src="hero_concept_4_midnight_yacht.jpg" alt="Концепт 4: Midnight Blue & Яхта в Пуерто-Банус">
+      </div>
+      <div class="concept-body">
+        <div class="concept-info">
+          <div class="concept-num">Концепт 04 · Вечірній Нуар (Midnight Blue & Superyacht)</div>
+          <h2 class="concept-title">Нічний Сутінковий Кутюр: Midnight Blue & Мегаяхта</h2>
+          <p class="concept-desc">
+            <strong>Зліва (Малага Студія)</strong>: Стіни кольору королівського Midnight Blue, тепле бра з матової латуні, камерне ательє з золотими піпетками сироваток, нічне сяйво відновленої шкіри.<br>
+            <strong>Справа (Марбелья Консьєрж)</strong>: Тікова палуба яхти в Пуерто-Банус у вечірніх сутінках, відблиски зірок на воді, акустична SMAS-сітка з ювелірними каліперами (Focal Vector 3.0mm, Acoustic Tone 100%).
+          </p>
+          <div class="concept-tags">
+            <span class="tag highlight">Midnight Blue</span>
+            <span class="tag">Мегаяхта Puerto Banús</span>
+            <span class="tag">Тікова Палуба</span>
+            <span class="tag">Dior Prestige Vibe</span>
+          </div>
+        </div>
+        <a href="hero_concept_4_midnight_yacht.jpg" target="_blank" class="btn-action">Відкрити в 8K</a>
+      </div>
+    </article>
+
+    <!-- CONCEPT 5 -->
+    <article class="concept-card">
+      <div class="image-wrapper">
+        <img src="hero_concept_5_sunset_dramatic.jpg" alt="Концепт 5: Драматичний Захід Сонця">
+      </div>
+      <div class="concept-body">
+        <div class="concept-info">
+          <div class="concept-num">Концепт 05 · Контрастний Драматичний Люкс (Golden Hour vs Sunset Dusk)</div>
+          <h2 class="concept-title">Контрастний Драматичний Біо-Люкс: Медовий Захід Сонця & Телеметрія</h2>
+          <p class="concept-desc">
+            <strong>Зліва (Малага Студія)</strong>: Андалузьке тепле патіо з теракотою та листям монстери в медовому вечірньому світлі, пружна натуральна Glass Skin з природними веснянками.<br>
+            <strong>Справа (Марбелья Консьєрж)</strong>: Ультрасучасна вілла на скелі під драматичним пурпурово-фіолетовим градієнтом заходу сонця, відкритий титановий кейс та чітка біометрична сітка (Target SMAS 4.5mm, Matrix Lift 98%).
+          </p>
+          <div class="concept-tags">
+            <span class="tag highlight">Теракота & Мед</span>
+            <span class="tag">Пурпуровий Захід Сонця</span>
+            <span class="tag">Високий Контраст</span>
+            <span class="tag">Vogue Editorial Vibe</span>
+          </div>
+        </div>
+        <a href="hero_concept_5_sunset_dramatic.jpg" target="_blank" class="btn-action">Відкрити в 8K</a>
+      </div>
+    </article>
+
+  </main>
+
+</body>
+</html>

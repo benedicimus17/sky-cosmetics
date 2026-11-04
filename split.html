@@ -1102,31 +1102,45 @@
   </footer>
 
 
-  <!-- Floating Concept Switcher Pill -->
+    <!-- Floating Concept Switcher Pill -->
   <nav class="concept-switcher">
-    <span class="switcher-label">3 Стильові Світи S•K•Y:</span>
-    <button class="pill-btn active" onclick="switchTheme('unified-face', this)">Стиль 1: Єдине Обличчя-Трансформація</button>
-    <button class="pill-btn" onclick="switchTheme('architectural-diptych', this)">Стиль 2: Архітектурний Диптих (Спільний Горизонт)</button>
-    <button class="pill-btn" onclick="switchTheme('macro-alchemy', this)">Стиль 3: Сенсорна Макро-Алхімія (Chanel / Dior)</button>
+    <span class="switcher-label">5 Концептів S•K•Y:</span>
+    <button class="pill-btn active" onclick="switchTheme('concept-1', this)">01 · Травертин</button>
+    <button class="pill-btn" onclick="switchTheme('concept-2', this)">02 · Мармур</button>
+    <button class="pill-btn" onclick="switchTheme('concept-3', this)">03 · Нуар</button>
+    <button class="pill-btn" onclick="switchTheme('concept-4', this)">04 · Яхта</button>
+    <button class="pill-btn" onclick="switchTheme('concept-5', this)">05 · Захід Сонця</button>
   </nav>
 
   <script>
     const themes = {
-      'unified-face': {
-        leftBg: 'url("style_1_unified_biometric_face.jpg")',
-        rightBg: 'url("style_1_unified_biometric_face.jpg")',
+      'concept-1': {
+        leftBg: 'url("hero_concept_1_morning_travertine.jpg")',
+        rightBg: 'url("hero_concept_1_morning_travertine.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'architectural-diptych': {
-        leftBg: 'url("style_2_architectural_horizon_diptych.jpg")',
-        rightBg: 'url("style_2_architectural_horizon_diptych.jpg")',
+      'concept-2': {
+        leftBg: 'url("hero_concept_2_swiss_marble.jpg")',
+        rightBg: 'url("hero_concept_2_swiss_marble.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       },
-      'macro-alchemy': {
-        leftBg: 'url("style_3_sensory_macro_alchemy.jpg")',
-        rightBg: 'url("style_3_sensory_macro_alchemy.jpg")',
+      'concept-3': {
+        leftBg: 'url("hero_concept_3_velvet_noir.jpg")',
+        rightBg: 'url("hero_concept_3_velvet_noir.jpg")',
+        leftPos: 'left center',
+        rightPos: 'right center'
+      },
+      'concept-4': {
+        leftBg: 'url("hero_concept_4_midnight_yacht.jpg")',
+        rightBg: 'url("hero_concept_4_midnight_yacht.jpg")',
+        leftPos: 'left center',
+        rightPos: 'right center'
+      },
+      'concept-5': {
+        leftBg: 'url("hero_concept_5_sunset_dramatic.jpg")',
+        rightBg: 'url("hero_concept_5_sunset_dramatic.jpg")',
         leftPos: 'left center',
         rightPos: 'right center'
       }
@@ -1148,8 +1162,8 @@
       if (btn) btn.classList.add('active');
     }
 
-    // Initialize with Unified Face
-    switchTheme('unified-face', document.querySelector('.pill-btn.active'));
+    // Initialize with Concept 1
+    switchTheme('concept-1', document.querySelector('.pill-btn.active'));
   </script>
 </body>
 </html>
